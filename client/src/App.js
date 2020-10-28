@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useEffect } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 const API_URI =
-  process.env.NODE_ENV === "development"
-    ? "http://0.0.0.0:8000/api"
-    : "https://movienightfight.herokuapp.com/api";
+  process.env.NODE_ENV === 'development'
+    ? 'http://0.0.0.0:8000/api'
+    : 'https://movienightfight.herokuapp.com/api'
 
 function App() {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch(`${API_URI}/hello`);
-        const data = await response.json();
-        console.log("data", data);
+        const response = await fetch(`${API_URI}/hello`)
+        const data = await response.json()
+        console.log('data', data)
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error)
       }
     }
 
-    getData();
-  }, []);
+    getData()
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
@@ -38,7 +38,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

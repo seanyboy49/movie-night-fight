@@ -7,6 +7,7 @@ CORS(api)
 
 # Todo: create a route handler to authenticate requests
 
+
 @api.route('/api/hello')
-def hello():    
+def hello():
     return jsonify('hello world')
