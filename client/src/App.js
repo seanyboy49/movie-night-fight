@@ -3,7 +3,9 @@ import logo from "./logo.svg";
 import "./App.css";
 
 const API_URI =
-  process.env.NODE_ENV === "development" ? "http://0.0.0.0:8000/api" : "";
+  process.env.NODE_ENV === "development"
+    ? "http://0.0.0.0:8000/api"
+    : "https://movienightfight.herokuapp.com/api";
 
 function App() {
   useEffect(() => {
