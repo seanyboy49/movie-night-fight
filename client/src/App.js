@@ -16,7 +16,8 @@ function App() {
       try {
         const response = await fetch(`${API_URI}/hello`)
         const data = await response.json()
-        console.log('data', data)
+
+        setDisplayValue(data)
       } catch (error) {
         console.log('error', error)
       }
@@ -44,6 +45,8 @@ function App() {
     }
   }
 
+  if (!displayValue) return null
+
   return (
     <div className="App">
       <form>
@@ -54,7 +57,9 @@ function App() {
         <button onClick={handleSubmit}>submit</button>
       </form>
       <div>
-        <h1>{displayValue}</h1>
+        {displayValue.map((v) => (
+          <h4 key={v}>{v}</h4>
+        ))}
       </div>
     </div>
   )
