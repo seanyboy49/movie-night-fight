@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 
+from ..models import Post
+
 api = Blueprint('api', __name__)
 # Enable CORS on api routes
 CORS(api)
@@ -14,4 +16,9 @@ def hello():
         data = request.get_json()
         return jsonify(data)
 
-    return jsonify('hello world')
+    results = []
+    all_posts = Post.query.all()
+    for post in all_posts:
+        results.append(post.content)
+
+    return jsonify(results)
