@@ -8,7 +8,7 @@ const API_URI =
     : 'https://movienightfight.herokuapp.com/api'
 
 function App() {
-  const [formValue, setFormValue] = useState('')
+  const [formValue, setFormValue] = useState([])
   const [displayValue, setDisplayValue] = useState('')
 
   useEffect(() => {
@@ -39,7 +39,8 @@ function App() {
 
       const data = await response.json()
 
-      setDisplayValue(data)
+      setDisplayValue(displayValue.concat(data))
+      setFormValue('')
     } catch (error) {
       console.log('error', error)
     }
