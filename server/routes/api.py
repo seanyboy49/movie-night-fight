@@ -22,7 +22,7 @@ def hello():
             db.session.commit()
 
             return jsonify(form_content), 201
-      
+
         except:
             return 'There was an issue adding your post', 400
 
