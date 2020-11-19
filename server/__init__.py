@@ -2,7 +2,7 @@ from flask import Flask
 import os
 
 
-from .commands import create_tables, print_hello
+from .commands import create_tables
 from .routes.main import main
 from .routes.api import api
 from .extensions import db
@@ -27,6 +27,5 @@ def create_app(config_file='settings.py'):
 
     # add cli commands
     app.cli.add_command(create_tables)
-    app.cli.add_command(print_hello)
 
     return app

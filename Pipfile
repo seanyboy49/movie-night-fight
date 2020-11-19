@@ -13,6 +13,7 @@ flask-sqlalchemy = "*"
 click = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
+flask-praetorian = "*"
 
 [requires]
 python_version = "3.8"

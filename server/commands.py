@@ -10,6 +10,3 @@ from .models import Post
 def create_tables():
     db.create_all()
 
-@click.command(name="print_hello")
-def print_hello():
-    print('hello world')
