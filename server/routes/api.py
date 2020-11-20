@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
+import flask_praetorian
 
 from ..models import Post
 from ..extensions import db, guard
@@ -51,3 +52,34 @@ def login():
     res = {'access_token': guard.encode_jwt_token(user)}
 
     return res, 200
+
+
+@api.route('/api/refresh', methods=['POST'])
+def refresh():
+    """
+    Refreshes an existing JWT by creating a new one that is a copy of the old
+    except that it has a refreshed access expiration.
+    .. example::
+    $ curl http://localhost:5000/api/refresh -X GET \
+        -H "Authorization: Bearer <your_token>"
+    """
+    print('refresh request')
+    old_token = request.get_data()
+    new_token = guard.refresh_jwt_token(old_token)
+    res = {'access_token': new_token}
+
+    return res, 200
+
+
+@api.route('/api/protected')
+@flask_praetorian.auth_required
+def protected():
+    """
+    A protected endpoint. The auth_required decorate will require a header
+    containing a valid JWT
+    .. example::
+    $ curl http://loclahost:5000/api/protected -X GET \
+        -H "Authorization: Bearer <your_token>"
+    """
+
+    return {"message": f'protected endpoint (allowed user {flask_praetorian.current_user().username})'}
