@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 
 from ..models import Post
-from ..extensions import db
+from ..extensions import db, guard
 
 api = Blueprint('api', __name__)
 # Enable CORS on api routes
@@ -32,3 +32,22 @@ def hello():
         results.append(post.content)
 
     return jsonify(results)
+
+
+@api.route('/api/login', methods=['POST'])
+def login():
+    """
+    Logs a user in by parsing a POST request containing user credentials and
+    issuing a JWT token.
+    .. example::
+    $ curl http://localhost:5000/api/login -X POST \
+        -d '{"username": "Sean", "password": "strongpassword"}'
+    """
+
+    req = request.get_json(force=True)
+    username = req.get('username', None)
+    password = req.get('password', None)
+    user = guard.authenticate(username, password)
+    res = {'access_token': guard.encode_jwt_token(user)}
+
+    return res, 200
