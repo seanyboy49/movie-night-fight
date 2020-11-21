@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+
 import { useConfiguration } from '../../providers/Configuration'
+import { login } from '../../auth'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -20,7 +22,7 @@ const Login = () => {
       })
 
       const { access_token } = await response.json()
-      console.log('access_token', access_token)
+      login(access_token)
     } catch (error) {
       console.log('error', error)
     }
@@ -41,6 +43,7 @@ const Login = () => {
 
         <div>
           <input
+            autoComplete="new-password"
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}

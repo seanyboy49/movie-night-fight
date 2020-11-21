@@ -6,14 +6,14 @@ import Login from './pages/Login'
 import MoviesList from './pages/MoviesList'
 import ConfigurationProvider from './providers/Configuration'
 
-const API_URI =
+const apiUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://0.0.0.0:8000/api'
     : 'https://movienightfight.herokuapp.com/api'
 
 function App() {
   return (
-    <ConfigurationProvider value={{ apiUrl: API_URI }}>
+    <ConfigurationProvider value={{ apiUrl }}>
       <Router>
         <Switch>
           <Route path="/login">
