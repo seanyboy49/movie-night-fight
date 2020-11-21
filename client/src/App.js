@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
 import MoviesList from './pages/MoviesList'
+import ConfigurationProvider from './providers/Configuration'
 
 const API_URI =
   process.env.NODE_ENV === 'development'
@@ -12,21 +13,23 @@ const API_URI =
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
+    <ConfigurationProvider value={{ apiUrl: API_URI }}>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-        <Route path="/home">
-          <Home />
-        </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
 
-        <Route path="/movies-list">
-          <MoviesList />
-        </Route>
-      </Switch>
-    </Router>
+          <Route path="/movies-list">
+            <MoviesList />
+          </Route>
+        </Switch>
+      </Router>
+    </ConfigurationProvider>
   )
 }
 

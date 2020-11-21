@@ -1,15 +1,31 @@
 import React, { useState } from 'react'
+import { useConfiguration } from '../../providers/Configuration'
 
 const Login = () => {
-  const [userName, setUserName] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  function onSubmit() {
-    console.log('submit')
+  const { apiUrl } = useConfiguration()
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    const body = {
+      username,
+      password,
+    }
+    try {
+      const response = await fetch(`${apiUrl}/login`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })
+
+      const data = await response.json()
+      console.log('data', data)
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
-  console.log('userName', userName)
-  console.log('password', password)
   return (
     <>
       <h2>Login</h2>
@@ -18,8 +34,8 @@ const Login = () => {
           <input
             type="text"
             placeholder="Username"
-            onChange={(e) => setUserName(e.target.value)}
-            value={userName}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
           />
         </div>
 
