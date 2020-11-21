@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 
 import { useConfiguration } from '../../providers/Configuration'
-import { login } from '../../auth'
+import { login, logout, useAuth } from '../../auth'
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const { apiUrl } = useConfiguration()
+  const [logged] = useAuth()
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -31,28 +32,32 @@ const Login = () => {
   return (
     <>
       <h2>Login</h2>
-      <form>
-        <div>
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          />
-        </div>
+      {logged ? (
+        <button onClick={logout}>Logout</button>
+      ) : (
+        <form>
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+            />
+          </div>
 
-        <div>
-          <input
-            autoComplete="new-password"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </div>
+          <div>
+            <input
+              autoComplete="new-password"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+          </div>
 
-        <button onClick={onSubmit}>Login Now</button>
-      </form>
+          <button onClick={onSubmit}>Login Now</button>
+        </form>
+      )}
     </>
   )
 }
