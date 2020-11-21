@@ -19,8 +19,8 @@ const Login = () => {
         body: JSON.stringify(body),
       })
 
-      const data = await response.json()
-      console.log('data', data)
+      const { access_token } = await response.json()
+      console.log('access_token', access_token)
     } catch (error) {
       console.log('error', error)
     }
