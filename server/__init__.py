@@ -2,10 +2,11 @@ from flask import Flask
 import os
 
 
-from .commands import create_tables, print_hello
+from .commands import create_tables, create_first_user
 from .routes.main import main
 from .routes.api import api
-from .extensions import db
+from .extensions import db, guard
+from .models import User
 
 
 def create_app(config_file='settings.py'):
@@ -18,6 +19,9 @@ def create_app(config_file='settings.py'):
     # set up configuration from config file
     app.config.from_pyfile(config_file)
 
+    # init praetorian
+    guard.init_app(app, User)
+
     # init the db
     db.init_app(app)
 
@@ -27,6 +31,6 @@ def create_app(config_file='settings.py'):
 
     # add cli commands
     app.cli.add_command(create_tables)
-    app.cli.add_command(print_hello)
+    app.cli.add_command(create_first_user)
 
     return app

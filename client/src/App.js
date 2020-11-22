@@ -1,68 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import './App.css'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import MoviesList from './pages/MoviesList'
+import ConfigurationProvider from './providers/Configuration'
+import MoviesProvider from './providers/Movies'
+import config from './config'
+import Signup from './pages/SignUp'
 
-const API_URI =
-  process.env.NODE_ENV === 'development'
-    ? 'http://0.0.0.0:8000/api'
-    : 'https://movienightfight.herokuapp.com/api'
+const { apiUrl } = config
 
-function App() {
-  const [formValue, setFormValue] = useState([])
-  const [displayValue, setDisplayValue] = useState('')
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await fetch(`${API_URI}/hello`)
-        const data = await response.json()
-
-        setDisplayValue(data)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
-
-    getData()
-  }, [])
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    try {
-      const response = await fetch(`${API_URI}/hello`, {
-        method: 'POST',
-        body: JSON.stringify(formValue),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      const data = await response.json()
-
-      setDisplayValue(displayValue.concat(data))
-      setFormValue('')
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  if (!displayValue) return null
-
+const App = () => {
   return (
-    <div className="App">
-      <form>
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-        />
-        <button onClick={handleSubmit}>submit</button>
-      </form>
-      <div>
-        {displayValue.map((v) => (
-          <h4 key={v}>{v}</h4>
-        ))}
-      </div>
-    </div>
+    <ConfigurationProvider value={{ apiUrl }}>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/signup">
+            <Signup />
+          </Route>
+
+          <Route path="/home">
+            <Home />
+          </Route>
+
+          <MoviesProvider>
+            <Route path="/movies-list">
+              <MoviesList />
+            </Route>
+          </MoviesProvider>
+        </Switch>
+      </Router>
+    </ConfigurationProvider>
   )
 }
 

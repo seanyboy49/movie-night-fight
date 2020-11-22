@@ -1,8 +1,8 @@
 import click
 from flask.cli import with_appcontext
 
-from .extensions import db
-from .models import Post
+from .extensions import db, guard
+from .models import Post, User
 
 
 @click.command(name='create_tables')
@@ -10,6 +10,14 @@ from .models import Post
 def create_tables():
     db.create_all()
 
-@click.command(name="print_hello")
-def print_hello():
-    print('hello world')
+
+@click.command(name='create_first_user')
+@with_appcontext
+def create_first_user():
+    if db.session.query(User).filter_by(username='Sean').count() < 1:
+        db.session.add(User(
+            username='Sean',
+            password=guard.hash_password('strongpassword'),
+            roles='admin'
+        ))
+    db.session.commit()
