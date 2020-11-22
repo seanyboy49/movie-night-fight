@@ -26,7 +26,7 @@ const Signup = () => {
         body: JSON.stringify(body),
       })
 
-      login(access_token)
+      await login(access_token)
       history.push('/movies-list')
     } catch (error) {
       console.log('error', error)
