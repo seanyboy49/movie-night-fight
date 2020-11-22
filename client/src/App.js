@@ -7,6 +7,7 @@ import MoviesList from './pages/MoviesList'
 import ConfigurationProvider from './providers/Configuration'
 import MoviesProvider from './providers/Movies'
 import config from './config'
+import Signup from './pages/SignUp'
 
 const { apiUrl } = config
 
@@ -17,6 +18,10 @@ const App = () => {
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/signup">
+            <Signup />
           </Route>
 
           <Route path="/home">
