@@ -21,14 +21,13 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/signup`, {
+      const { access_token } = await fetch(`${apiUrl}/signup`, {
         method: 'POST',
         body: JSON.stringify(body),
       })
 
-      const { access_token } = await response.json()
-
       login(access_token)
+      history.push('/movies-list')
     } catch (error) {
       console.log('error', error)
     }
