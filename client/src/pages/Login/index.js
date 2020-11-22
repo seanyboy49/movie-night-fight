@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { login, logout, useAuth } from '../../auth'
@@ -7,8 +8,9 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const { apiUrl } = useConfiguration()
   const [logged] = useAuth()
+  const { apiUrl } = useConfiguration()
+  const history = useHistory()
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -24,6 +26,7 @@ const Login = () => {
 
       const { access_token } = await response.json()
       login(access_token)
+      history.push('/movies-list')
     } catch (error) {
       console.log('error', error)
     }

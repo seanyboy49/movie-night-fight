@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
+import { Redirect, useHistory } from 'react-router-dom'
+
+import { login, useAuth } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 
 const Signup = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const [logged] = useAuth()
   const { apiUrl } = useConfiguration()
+  const history = useHistory()
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -16,15 +21,20 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/signup`, {
+      const { access_token } = await fetch(`${apiUrl}/signup`, {
         method: 'POST',
         body: JSON.stringify(body),
       })
 
-      console.log('response', response)
+      login(access_token)
+      history.push('/movies-list')
     } catch (error) {
       console.log('error', error)
     }
+  }
+
+  if (logged) {
+    return <Redirect to="/movies-list" />
   }
 
   return (
