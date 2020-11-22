@@ -21,4 +21,3 @@ def create_first_user():
             roles='admin'
         ))
     db.session.commit()
-    print('user already exists')

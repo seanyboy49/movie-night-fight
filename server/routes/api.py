@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 import flask_praetorian
 
-from ..models import Post
+from ..models import Post, User
 from ..extensions import db, guard
 
 api = Blueprint('api', __name__)
@@ -46,12 +46,45 @@ def login():
     """
 
     req = request.get_json(force=True)
-    username = req.get('username', None)
-    password = req.get('password', None)
+    username = req.get('username')
+    password = req.get('password')
     user = guard.authenticate(username, password)
     res = {'access_token': guard.encode_jwt_token(user)}
 
     return res, 200
+
+
+@api.route('/api/signup', methods=['POST'])
+def signup():
+    """
+    Signs a user up.
+    """
+
+    req = request.get_json(force=True)
+    username = req.get('username')
+    password = req.get('password')
+
+    # Check if user exists
+    if db.session.query(User).filter_by(username=username).count() < 1:
+        try:
+            db.session.add(User(
+                username=username,
+                password=guard.hash_password(password),
+                roles='user'
+            ))
+            db.session.commit()
+            print('successfully added user')
+        except:
+            return "There was a problem signing up", 400
+
+        user = guard.authenticate(username, password)
+        res = {'access_token': guard.encode_jwt_token(user)}
+
+        return res, 200
+
+    else:
+        return "That user already exists", 400
+
 
 
 @api.route('/api/refresh', methods=['POST'])
