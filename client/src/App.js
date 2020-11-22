@@ -5,11 +5,10 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import MoviesList from './pages/MoviesList'
 import ConfigurationProvider from './providers/Configuration'
+import MoviesProvider from './providers/Movies'
+import config from './config'
 
-const apiUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://0.0.0.0:8000/api'
-    : 'https://movienightfight.herokuapp.com/api'
+const { apiUrl } = config
 
 function App() {
   return (
@@ -24,9 +23,11 @@ function App() {
             <Home />
           </Route>
 
-          <Route path="/movies-list">
-            <MoviesList />
-          </Route>
+          <MoviesProvider>
+            <Route path="/movies-list">
+              <MoviesList />
+            </Route>
+          </MoviesProvider>
         </Switch>
       </Router>
     </ConfigurationProvider>
