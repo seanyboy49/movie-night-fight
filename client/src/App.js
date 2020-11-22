@@ -10,7 +10,7 @@ import config from './config'
 
 const { apiUrl } = config
 
-function App() {
+const App = () => {
   return (
     <ConfigurationProvider value={{ apiUrl }}>
       <Router>
