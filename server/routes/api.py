@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 import flask_praetorian
 
-from ..models import Post, User
+from ..models import Post, FlatMate
 from ..extensions import db, guard
 
 api = Blueprint('api', __name__)
@@ -65,9 +65,9 @@ def signup():
     password = req.get('password')
 
     # Check if user exists
-    if db.session.query(User).filter_by(username=username).count() < 1:
+    if db.session.query(FlatMate).filter_by(username=username).count() < 1:
         try:
-            db.session.add(User(
+            db.session.add(FlatMate(
                 username=username,
                 password=guard.hash_password(password),
                 roles='user'
