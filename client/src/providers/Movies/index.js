@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
+import NavigationHeader from '../../components/NavigationHeader'
+
 import { useAuth } from '../../auth'
 
 const MoviesContext = React.createContext()
@@ -17,7 +20,11 @@ const MoviesProvider = ({ children, value }) => {
   }
 
   return (
-    <MoviesContext.Provider value={value}>{children}</MoviesContext.Provider>
+    <MoviesContext.Provider value={value}>
+      <NavigationHeader />
+
+      {children}
+    </MoviesContext.Provider>
   )
 }
 
