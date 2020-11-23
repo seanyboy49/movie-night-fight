@@ -21,10 +21,12 @@ const Signup = () => {
     }
 
     try {
-      const { access_token } = await fetch(`${apiUrl}/signup`, {
+      const response = await fetch(`${apiUrl}/signup`, {
         method: 'POST',
         body: JSON.stringify(body),
       })
+
+      const { access_token } = await response.json()
 
       await login(access_token)
       history.push('/movies-list')
