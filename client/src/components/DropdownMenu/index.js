@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Menu } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
+import { logout } from '../../auth'
 
 const DropdownMenu = ({ isOpen }) => {
   return (
@@ -10,7 +11,7 @@ const DropdownMenu = ({ isOpen }) => {
       <Divider />
       <SmallText>Switch houses</SmallText>
       <Divider />
-      <SmallText>Log out</SmallText>
+      <SmallText onClick={logout}>Log out</SmallText>
     </Menu>
   )
 }

@@ -11,6 +11,7 @@ export const NavContainer = styled.div`
   padding: 1rem;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid #ccc;
 
   > * {
     margin-left: auto;

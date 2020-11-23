@@ -15,11 +15,4 @@ export const Menu = styled.div`
   p {
     text-align: center;
   }
-
-  p:not(:last-child) {
-    :after {
-      content: '';
-      border-bottom: 1px solid black;
-    }
-  }
 `
