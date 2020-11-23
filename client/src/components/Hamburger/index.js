@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
+
 import { StyledBurger } from './styled'
 
-const Burger = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
+const Burger = ({ onClick, isOpen }) => {
   return (
-    <StyledBurger isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+    <StyledBurger isOpen={isOpen} onClick={() => onClick(!isOpen)}>
       <div />
       <div />
       <div />
