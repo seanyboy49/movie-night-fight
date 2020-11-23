@@ -6,7 +6,7 @@ class Post(db.Model):
     content = db.Column(db.Text)
 
 
-class User(db.Model):
+class FlatMate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
     password = db.Column(db.Text)
