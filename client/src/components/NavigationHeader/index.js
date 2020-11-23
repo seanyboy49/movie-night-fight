@@ -13,8 +13,8 @@ const NavigationHeader = () => {
         <AppTitle>Movie Night Fight</AppTitle>
 
         <Hamburger onClick={setIsOpen} isOpen={isOpen} />
+        <DropdownMenu isOpen={isOpen} />
       </NavContainer>
-      <DropdownMenu isOpen={isOpen} />
     </>
   )
 }
