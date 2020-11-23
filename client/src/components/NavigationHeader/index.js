@@ -3,17 +3,29 @@ import styled from 'styled-components'
 
 import Hamburger from '../Hamburger'
 
-const NavHeader = styled.h1`
+const AppTitle = styled.h1`
   font-family: bevan;
   font-size: 20px;
 `
 
+const NavContainer = styled.div`
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    margin-left: auto;
+  }
+`
+
 const NavigationHeader = () => {
   return (
-    <>
-      <NavHeader>Movie Night Fight</NavHeader>
+    <NavContainer>
+      <AppTitle>Movie Night Fight</AppTitle>
+
       <Hamburger />
-    </>
+    </NavContainer>
   )
 }
 
