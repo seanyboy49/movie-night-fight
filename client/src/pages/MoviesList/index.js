@@ -1,7 +1,7 @@
 import React from 'react'
 
 const MoviesList = () => {
-  return <h1>Movies List</h1>
+  return <h1></h1>
 }
 
 export default MoviesList
