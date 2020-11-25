@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { login, logout, useAuth } from '../../auth'
+import Button from '../../components/Button'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -58,7 +59,8 @@ const Login = () => {
             />
           </div>
 
-          <button onClick={onSubmit}>Login Now</button>
+          {/* <button onClick={onSubmit}>Login Now</button> */}
+          <Button text={'LOG IN'} onSubmit={onSubmit} />
         </form>
       )}
     </>
