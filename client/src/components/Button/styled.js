@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const ButtonContainer = styled.div`
   background-color: black;
@@ -20,7 +20,6 @@ export const LeftCutout = styled.div`
   height: 25px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  //   border-radius: 100%;
   border-left: none;
 `
 
@@ -41,6 +40,19 @@ export const TicketButton = styled.div`
   font-family: bebas neue;
   font-size: 27px;
   color: white;
-  padding: 6px 25px;
+  padding: ${(props) => props.padding || '6px 25px'};
   cursor: pointer;
+`
+
+const spin = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`
+
+export const ReelImage = styled.img`
+  animation: ${spin} 3s linear infinite;
 `
