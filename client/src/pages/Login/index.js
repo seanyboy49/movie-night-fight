@@ -8,6 +8,7 @@ import Button from '../../components/Button'
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const [logged] = useAuth()
   const { apiUrl } = useConfiguration()
@@ -15,6 +16,7 @@ const Login = () => {
 
   async function onSubmit(e) {
     e.preventDefault()
+    setIsLoading(true)
     const body = {
       username,
       password,
@@ -30,8 +32,13 @@ const Login = () => {
       history.push('/movies-list')
     } catch (error) {
       console.log('error', error)
+    } finally {
+      setIsLoading(false)
     }
   }
+
+  const isFormInvalid = !username || !password
+  console.log('isFormInvalid', isFormInvalid)
 
   return (
     <>
@@ -60,7 +67,12 @@ const Login = () => {
           </div>
 
           {/* <button onClick={onSubmit}>Login Now</button> */}
-          <Button text={'LOG IN'} onSubmit={onSubmit} />
+          <Button
+            text={'LOG IN'}
+            onSubmit={onSubmit}
+            isLoading={isLoading}
+            isDisabled={isFormInvalid}
+          />
         </form>
       )}
     </>

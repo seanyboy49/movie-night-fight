@@ -35,13 +35,14 @@ export const RightCutout = styled.div`
   border-right: none;
 `
 
-export const TicketButton = styled.div`
+export const TicketButton = styled.button`
   border: 5px solid white;
   font-family: bebas neue;
   font-size: 27px;
   color: white;
   padding: ${(props) => props.padding || '6px 25px'};
   cursor: pointer;
+  background-color: transparent;
 `
 
 const spin = keyframes`
