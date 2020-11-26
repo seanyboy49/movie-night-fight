@@ -19,13 +19,22 @@ describe('<Button />', () => {
     expect(onSubmit).toHaveBeenCalled()
   })
 
-  it.only('should show loading spinner if isLoading is true', () => {
+  it('should show loading spinner if isLoading is true', () => {
     const wrapper = mount(<Button {...defaultProps} isLoading={true} />)
 
     const reel = wrapper.find('img')
+    // check if something exist, toBeFalsy for opposite effect
     expect(reel).toBeTruthy()
   })
 
-  it('should show text if isLoading is false', () => {})
-  it('should disable button if isDisabled is true', () => {})
+  //   it('should show text if isLoading is false', () => {
+  //       const wrapper = mount(<Button {...defaultProps} />)
+
+  //   })
+  it('should disable button if isDisabled is true', () => {
+    const wrapper = mount(<Button {...defaultProps} isDisabled={true} />)
+    const button = wrapper.find('button')
+
+    expect(button.prop('disabled')).toBeTruthy()
+  })
 })
