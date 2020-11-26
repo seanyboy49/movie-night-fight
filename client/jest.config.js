@@ -11,8 +11,7 @@ module.exports = {
   testEnvironmentOptions: {
     enzymeAdapter: 'react16',
   },
-  testRunner:
-    '/Users/seanl/repos/movie-night-fight/client/node_modules/jest-circus/runner.js',
+  testRunner: '<rootDir>/node_modules/jest-circus/runner.js',
   transform: {
     '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
