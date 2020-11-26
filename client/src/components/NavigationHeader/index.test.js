@@ -9,7 +9,6 @@ describe('<NavigationHeader />', () => {
 
     expect(wrapper).toIncludeText('Movie Night Fight')
 
-    expect('AppTitle').toExist()
     expect(wrapper).toMatchSnapshot()
   })
 })
