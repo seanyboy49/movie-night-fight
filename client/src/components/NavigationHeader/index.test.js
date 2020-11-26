@@ -8,6 +8,8 @@ describe('<NavigationHeader />', () => {
     const wrapper = shallow(<NavigationHeader />)
 
     expect(wrapper).toIncludeText('Movie Night Fight')
+
+    expect('AppTitle').toExist()
     expect(wrapper).toMatchSnapshot()
   })
 })
