@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import Button from '.'
 
 const onSubmit = jest.fn()
