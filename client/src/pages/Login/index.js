@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { useConfiguration } from '../../providers/Configuration'
 import { login, logout, useAuth } from '../../auth'
 import Button from '../../components/Button'
+import AccountPrompt from '../../components/AccountPrompt'
+import { Background } from '../../styles/Background'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -40,8 +42,15 @@ const Login = () => {
   const isFormInvalid = !username || !password
 
   return (
-    <>
-      <h2>Login</h2>
+    <Background>
+      <AccountPrompt
+        text={'LOG IN'}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        isDisabled={isFormInvalid}
+        page={'SIGN IN TO YOUR ACCOUNT'}
+      />
+      {/* <h2>Login</h2>
       {logged ? (
         <button onClick={logout}>Logout</button>
       ) : (
@@ -71,8 +80,8 @@ const Login = () => {
             isDisabled={isFormInvalid}
           />
         </form>
-      )}
-    </>
+      )} */}
+    </Background>
   )
 }
 

@@ -5,6 +5,11 @@ export const SmallText = styled.p`
   font-size: 18px;
 `
 
+export const H2 = styled.h2`
+  font-family: bebas neue;
+  font-size: 30px;
+`
+
 export const Divider = styled.hr`
   display: block;
   height: 1px;
