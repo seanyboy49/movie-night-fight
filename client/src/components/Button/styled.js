@@ -2,20 +2,19 @@ import styled, { keyframes } from 'styled-components'
 
 export const ButtonContainer = styled.div`
   background-color: black;
-  width: 187px;
-  height: 76px;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  padding: 10px 30px 10px 30px;
   box-shadow: 0 10px 6px -6px #777;
+  border: none;
+  margin: 10px;
 `
 
 export const LeftCutout = styled.div`
   position: absolute;
   background-color: white;
-  left: 0px;
-  top: 30%;
+  left: 0%;
+  top: 35%;
   width: 12px;
   height: 25px;
   border-top-right-radius: 50px;
@@ -26,8 +25,8 @@ export const LeftCutout = styled.div`
 export const RightCutout = styled.div`
   position: absolute;
   background-color: white;
-  left: 95%;
-  top: 30%;
+  right: 0%;
+  top: 35%;
   width: 12px;
   height: 25px;
   border-top-left-radius: 50px;

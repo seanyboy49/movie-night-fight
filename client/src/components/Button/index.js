@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+
 import {
   ButtonContainer,
   LeftCutout,
@@ -11,7 +13,7 @@ import reel from '../../images/film-reel.svg'
 const Button = ({ text, onSubmit, isLoading, isDisabled }) => {
   return (
     <ButtonContainer>
-      <LeftCutout></LeftCutout>
+      <LeftCutout />
       {isLoading ? (
         <TicketButton padding={'5px 30px 0px 30px'}>
           <ReelImage src={reel} />
@@ -21,9 +23,16 @@ const Button = ({ text, onSubmit, isLoading, isDisabled }) => {
           {text}
         </TicketButton>
       )}
-      <RightCutout></RightCutout>
+      <RightCutout />
     </ButtonContainer>
   )
+}
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
 }
 
 export default Button
