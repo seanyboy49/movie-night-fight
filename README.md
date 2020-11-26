@@ -27,5 +27,3 @@ expect(wrapper).toMatchSnapshot()
 ```
 
 The first time you run this test, it will generate a snapshot which will be committed to git. If you change the rendered html of you Component in the future, the snapshot will fail. If you want to update this snapshot, use the `-u` flag in the testing shell.
-
-#### Targeting specific nodes
