@@ -7,7 +7,7 @@ describe('<NavigationHeader />', () => {
   it('should render', () => {
     const wrapper = shallow(<NavigationHeader />)
 
-    expect(wrapper).toHaveText('Movie Night Fight')
+    expect(wrapper).toIncludeText('Movie Night Fight')
     expect(wrapper).toMatchSnapshot()
   })
 })
