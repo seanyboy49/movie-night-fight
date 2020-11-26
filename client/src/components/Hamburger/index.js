@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { StyledBurger } from './styled'
 
@@ -10,6 +11,11 @@ const Burger = ({ onClick, isOpen }) => {
       <div />
     </StyledBurger>
   )
+}
+
+Burger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 }
 
 export default Burger
