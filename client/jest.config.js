@@ -1,13 +1,16 @@
 module.exports = {
   roots: ['<rootDir>/src'],
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
-  setupFiles: ['react-app-polyfill/jsdom'],
+  setupFiles: ['react-app-polyfill/jsdom', 'jest-enzyme'],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'enzyme',
+  testEnvironmentOptions: {
+    enzymeAdapter: 'react16',
+  },
   testRunner:
     '/Users/seanl/repos/movie-night-fight/client/node_modules/jest-circus/runner.js',
   transform: {

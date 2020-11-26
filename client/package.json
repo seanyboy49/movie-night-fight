@@ -96,7 +96,9 @@
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.3.1",
     "enzyme": "^3.11.0",
-    "enzyme-to-json": "^3.6.1"
+    "enzyme-to-json": "^3.6.1",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2"
   },
   "babel": {
     "presets": [
