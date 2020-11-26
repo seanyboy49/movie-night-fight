@@ -38,7 +38,6 @@ const Login = () => {
   }
 
   const isFormInvalid = !username || !password
-  console.log('isFormInvalid', isFormInvalid)
 
   return (
     <>
@@ -65,8 +64,6 @@ const Login = () => {
               value={password}
             />
           </div>
-
-          {/* <button onClick={onSubmit}>Login Now</button> */}
           <Button
             text={'LOG IN'}
             onSubmit={onSubmit}
