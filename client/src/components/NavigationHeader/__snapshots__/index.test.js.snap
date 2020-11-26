@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavigationHeader /> should render 1`] = `
+<Fragment>
+  <styled.div>
+    <styled.h1>
+      Movie Night Fight
+    </styled.h1>
+    <Burger
+      isOpen={false}
+      onClick={[Function]}
+    />
+    <DropdownMenu
+      isOpen={false}
+    />
+  </styled.div>
+</Fragment>
+`;
