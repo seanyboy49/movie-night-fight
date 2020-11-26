@@ -10,7 +10,7 @@ const defaultProps = {
 }
 
 describe('<Button />', () => {
-  it.only('should handle onSubmit', () => {
+  it('should handle onSubmit', () => {
     const wrapper = mount(<Button {...defaultProps} />)
     const button = wrapper.find('button')
 
@@ -19,7 +19,12 @@ describe('<Button />', () => {
     expect(onSubmit).toHaveBeenCalled()
   })
 
-  it('should show loading spinner if isLoading is true', () => {})
+  it.only('should show loading spinner if isLoading is true', () => {
+    const wrapper = mount(<Button {...defaultProps} isLoading={true} />)
+
+    const reel = wrapper.find('img')
+    expect(reel).toBeTruthy()
+  })
 
   it('should show text if isLoading is false', () => {})
   it('should disable button if isDisabled is true', () => {})
