@@ -4,11 +4,17 @@ import { useHistory } from 'react-router-dom'
 
 import { useConfiguration } from '../../providers/Configuration'
 import Button from '../Button'
-import { Form, FormContainer, Input, AccountP, PromptContainer } from './styled'
+import {
+  Form,
+  FormContainer,
+  Input,
+  PromptLink,
+  PromptContainer,
+} from './styled'
 import { H2 } from '../../styles/Text'
 import { login, logout, useAuth } from '../../auth'
 
-const AccountPrompt = ({ text, page, pageHeader, pageText }) => {
+const AccountPrompt = ({ text, page, pageHeader, pageText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -67,7 +73,7 @@ const AccountPrompt = ({ text, page, pageHeader, pageText }) => {
               isDisabled={isFormInvalid}
             />
 
-            <AccountP>{pageText}</AccountP>
+            <PromptLink to={`/${link}`}>{pageText}</PromptLink>
           </Form>
         </FormContainer>
       )}

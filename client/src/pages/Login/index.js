@@ -11,6 +11,7 @@ const Login = () => {
         page={'login'}
         pageHeader={'SIGN IN TO YOUR ACCOUNT'}
         pageText={'SIGN UP FOR AN ACCOUNT'}
+        link={'signup'}
       />
     </Background>
   )

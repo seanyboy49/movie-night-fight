@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const alignCenter = css`
   display: flex;
@@ -37,9 +38,11 @@ export const Input = styled.input`
   }
 `
 
-export const AccountP = styled.p`
+export const PromptLink = styled(Link)`
   font-family: Bebas Neue;
   font-size: 24px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 15px 0 25px 0;
+  text-decoration: none;
+  color: black;
 `
