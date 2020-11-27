@@ -7,7 +7,7 @@ const Login = () => {
   return (
     <Background>
       <AccountPrompt
-        text={'LOG IN'}
+        text={'log in'}
         page={'login'}
         pageHeader={'SIGN IN TO YOUR ACCOUNT'}
         pageText={'SIGN UP FOR AN ACCOUNT'}

@@ -32,7 +32,7 @@ const AccountPrompt = ({ text, page, pageHeader, pageText }) => {
       })
 
       const { access_token } = await response.json()
-      login(access_token)
+      await login(access_token)
       setIsLoading(false)
       history.push('/movies-list')
     } catch (error) {
