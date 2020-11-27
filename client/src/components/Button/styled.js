@@ -13,7 +13,7 @@ export const ButtonContainer = styled.div`
 export const LeftCutout = styled.div`
   position: absolute;
   background-color: white;
-  left: 0%;
+  left: -1%;
   top: 35%;
   width: 12px;
   height: 25px;
@@ -25,7 +25,7 @@ export const LeftCutout = styled.div`
 export const RightCutout = styled.div`
   position: absolute;
   background-color: white;
-  right: 0%;
+  right: -1%;
   top: 35%;
   width: 12px;
   height: 25px;

@@ -31,7 +31,7 @@ const Button = ({ text, onSubmit, isLoading, isDisabled }) => {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
   isDisabled: PropTypes.bool,
 }
 

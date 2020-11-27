@@ -3,16 +3,14 @@ import { useHistory } from 'react-router-dom'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { login, logout, useAuth } from '../../auth'
-import Button from '../../components/Button'
 import AccountPrompt from '../../components/AccountPrompt'
 import { Background } from '../../styles/Background'
+import Button from '../../components/Button'
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-
-  const [logged] = useAuth()
   const { apiUrl } = useConfiguration()
   const history = useHistory()
 
@@ -31,11 +29,11 @@ const Login = () => {
 
       const { access_token } = await response.json()
       login(access_token)
+      setIsLoading(false)
       history.push('/movies-list')
     } catch (error) {
-      console.log('error', error)
-    } finally {
       setIsLoading(false)
+      console.log('error', error)
     }
   }
 
@@ -48,39 +46,11 @@ const Login = () => {
         onSubmit={onSubmit}
         isLoading={isLoading}
         isDisabled={isFormInvalid}
-        page={'SIGN IN TO YOUR ACCOUNT'}
+        pageHeader={'SIGN IN TO YOUR ACCOUNT'}
+        pageText={'SIGN UP FOR AN ACCOUNT'}
+        setUsername={setUsername}
+        setPassword={setPassword}
       />
-      {/* <h2>Login</h2>
-      {logged ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <form>
-          <div>
-            <input
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-            />
-          </div>
-
-          <div>
-            <input
-              autoComplete="new-password"
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-          </div>
-          <Button
-            text={'LOG IN'}
-            onSubmit={onSubmit}
-            isLoading={isLoading}
-            isDisabled={isFormInvalid}
-          />
-        </form>
-      )} */}
     </Background>
   )
 }
