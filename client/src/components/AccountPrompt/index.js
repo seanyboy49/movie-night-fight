@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 
+import { useConfiguration } from '../../providers/Configuration'
 import Button from '../Button'
 import { Form, FormContainer, Input, AccountP, PromptContainer } from './styled'
 import { H2 } from '../../styles/Text'
-import { logout, useAuth } from '../../auth'
+import { login, logout, useAuth } from '../../auth'
 
-const AccountPrompt = ({
-  text,
-  onSubmit,
-  isLoading,
-  isDisabled,
-  pageHeader,
-  pageText,
-  setUsername,
-  setPassword,
-}) => {
+const AccountPrompt = ({ text, page, pageHeader, pageText }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const { apiUrl } = useConfiguration()
+  const history = useHistory()
   const [logged] = useAuth()
+
+  const isFormInvalid = !username || !password
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    setIsLoading(true)
+    const body = {
+      username,
+      password,
+    }
+    try {
+      const response = await fetch(`${apiUrl}/${page}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })
+
+      const { access_token } = await response.json()
+      login(access_token)
+      setIsLoading(false)
+      history.push('/movies-list')
+    } catch (error) {
+      setIsLoading(false)
+      console.log('error', error)
+    }
+  }
 
   return (
     <PromptContainer>
@@ -40,7 +64,7 @@ const AccountPrompt = ({
               text={text}
               onSubmit={onSubmit}
               isLoading={isLoading}
-              isDisabled={isDisabled}
+              isDisabled={isFormInvalid}
             />
 
             <AccountP>{pageText}</AccountP>
@@ -49,6 +73,13 @@ const AccountPrompt = ({
       )}
     </PromptContainer>
   )
+}
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
+  pageHeader: PropTypes.string.isRequired,
+  pageText: PropTypes.string.isRequired,
 }
 
 export default AccountPrompt
