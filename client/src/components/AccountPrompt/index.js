@@ -14,7 +14,7 @@ import {
 import { H2 } from '../../styles/Text'
 import { login, useAuth } from '../../auth'
 
-const AccountPrompt = ({ text, page, pageHeader, pageText, link }) => {
+const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -32,7 +32,7 @@ const AccountPrompt = ({ text, page, pageHeader, pageText, link }) => {
       password,
     }
     try {
-      const response = await fetch(`${apiUrl}/${page}`, {
+      const response = await fetch(`${apiUrl}/${apiEndpoint}`, {
         method: 'POST',
         body: JSON.stringify(body),
       })
@@ -74,18 +74,18 @@ const AccountPrompt = ({ text, page, pageHeader, pageText, link }) => {
             isDisabled={isFormInvalid}
           />
 
-          <PromptLink to={`/${link}`}>{pageText}</PromptLink>
+          <PromptLink to={`${link}`}>{linkText}</PromptLink>
         </Form>
       </FormContainer>
     </PromptContainer>
   )
 }
 
-Button.propTypes = {
+AccountPrompt.propTypes = {
   text: PropTypes.string.isRequired,
-  page: PropTypes.string.isRequired,
+  apiEndpoint: PropTypes.string.isRequired,
   pageHeader: PropTypes.string.isRequired,
-  pageText: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
 }
 

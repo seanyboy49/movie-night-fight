@@ -8,10 +8,10 @@ const Login = () => {
     <Background>
       <AccountPrompt
         text={'log in'}
-        page={'login'}
+        apiEndpoint={'login'}
         pageHeader={'SIGN IN TO YOUR ACCOUNT'}
-        pageText={'SIGN UP FOR AN ACCOUNT'}
-        link={'signup'}
+        linkText={'SIGN UP FOR AN ACCOUNT'}
+        link={'/signup'}
       />
     </Background>
   )
