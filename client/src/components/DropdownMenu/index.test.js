@@ -20,6 +20,7 @@ describe('<DropdownMenu />', () => {
     smallText.simulate('click')
     expect(logout).toHaveBeenCalled()
   })
+
   it('should contain log out inside <SmallText />', () => {
     const wrapper = mount(<DropdownMenu isOpen={true} />)
     const smallText = wrapper.find('p').last()
