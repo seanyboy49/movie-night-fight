@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Menu } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
@@ -11,9 +12,15 @@ const DropdownMenu = ({ isOpen }) => {
       <Divider />
       <SmallText>Switch houses</SmallText>
       <Divider />
-      <SmallText onClick={logout}>Log out</SmallText>
+      <SmallText test-attr="logout-button" onClick={logout}>
+        Log out
+      </SmallText>
     </Menu>
   )
+}
+
+DropdownMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
 }
 
 export default DropdownMenu
