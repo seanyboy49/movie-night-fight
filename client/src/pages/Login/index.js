@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import AccountPrompt from '../../components/AccountPrompt'
 import { Background } from '../../styles/Background'
+import Toast from '../../components/Toast'
 
 const Login = () => {
   return (
@@ -13,6 +14,7 @@ const Login = () => {
         linkText={'SIGN UP FOR AN ACCOUNT'}
         link={'/signup'}
       />
+      <Toast />
     </Background>
   )
 }
