@@ -7,6 +7,8 @@ export const ToastWrapper = styled.div`
   border-top-right-radius: 27px;
   width: 300px;
   padding: 0 20px;
+  position: absolute;
+  bottom: 0px;
 `
 
 export const ToastText = styled.p`
@@ -15,4 +17,5 @@ export const ToastText = styled.p`
   font-family: Bebas Neue;
   font-size: 24px;
   padding: 0 40px;
+  margin: 15px 0;
 `
