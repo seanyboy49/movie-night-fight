@@ -1,15 +1,28 @@
-import React from 'react'
-import { ToastWrapper, ToastText } from './styled'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { ToastWrapper, ToastText } from './styled'
+
 const Toast = () => {
-  const toast = useSelector((state) => state.toast)
+  const [active, setActive] = useState('')
+  const toastState = useSelector((state) => state.toast)
   const dispatch = useDispatch()
+  console.log('toastState', toastState)
+
+  const isActive = Object.keys(toastState).length > 0
+  console.log('isActive', isActive)
+
+  if (!isActive) {
+    return null
+  }
 
   return (
-    <ToastWrapper backgroundColor={'#FF0E0E'}>
-      <ToastText>Something went wrong. Please try again.</ToastText>
-      <button onClick={() => dispatch({ type: 'SUCCESS' })}>set me</button>
+    <ToastWrapper
+      onClick={() => dispatch({ type: 'REMOVE' })}
+      backgroundColor={toastState.color}
+      trigger={isActive}
+    >
+      <ToastText>{toastState.message}</ToastText>
     </ToastWrapper>
   )
 }

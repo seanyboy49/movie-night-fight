@@ -1,12 +1,14 @@
 const toastType = (state = {}, action) => {
   switch (action.type) {
     case 'SUCCESS':
-      return { color: 'green', message: 'success!' }
+      return { color: '#33DDA8', message: action.message }
     case 'FAIL':
       return {
-        color: 'red',
-        message: 'something went wrong. Please try again.',
+        color: '#FF0E0E',
+        message: action.message,
       }
+    case 'REMOVE':
+      return {}
     default:
       return state
   }

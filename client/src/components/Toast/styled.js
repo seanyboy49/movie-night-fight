@@ -1,4 +1,22 @@
-import styled from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+const slideUp = keyframes`
+  0% {
+      transform: translate(-50%, 100%);
+    }
+  100% {
+      transform: translate(-50%, 0);
+    }
+`
+
+const slideDown = keyframes`
+  0% {
+      transform: translate(-50%, 0);
+    }
+  100% {
+      transform: translate(-50%, 100%);
+    }
+`
 
 export const ToastWrapper = styled.div`
   background-color: ${(props) => props.backgroundColor};
@@ -7,8 +25,11 @@ export const ToastWrapper = styled.div`
   border-top-right-radius: 27px;
   width: 300px;
   padding: 0 20px;
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  animation: ${(p) => (p.trigger ? slideUp : slideDown)} 2s linear;
 `
 
 export const ToastText = styled.p`

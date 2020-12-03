@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { useConfiguration } from '../../providers/Configuration'
 import Button from '../Button'
@@ -21,6 +22,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const { apiUrl } = useConfiguration()
   const history = useHistory()
   const [logged] = useAuth()
+  const dispatch = useDispatch()
 
   const isFormInvalid = !username || !password
 
@@ -40,6 +42,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
       const { access_token } = await response.json()
       await login(access_token)
       setIsLoading(false)
+      dispatch({ type: 'SUCCESS', message: 'yay' })
       history.push('/movies-list')
     } catch (error) {
       setIsLoading(false)
