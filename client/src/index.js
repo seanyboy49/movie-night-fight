@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { createStore } from 'redux'
 import allReducers from './reducers'
-import { Provider } from 'react-redux'
 
 const store = createStore(
   allReducers,
