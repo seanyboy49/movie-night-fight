@@ -27,10 +27,6 @@ const App = () => {
           <Route path="/signup">
             <Signup />
           </Route>
-          {/* <Route path="/home">
-            <Home />
-          </Route> */}
-
           <MoviesProvider>
             <Route path="/movies-list">
               <MoviesList />
