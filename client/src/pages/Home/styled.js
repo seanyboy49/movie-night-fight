@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const SectionContainer = styled.div`
   width: 337px;
@@ -48,4 +49,28 @@ export const ArrowContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: 20px;
+`
+
+export const SignUpContainer = styled.div`
+  width: 337px;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
+
+export const SignUpLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+  border: 3px solid white;
+  font-size: 27px;
+  padding: 10px;
+  margin: 10px;
+`
+
+export const Space = styled.div`
+  margin: 7px;
 `

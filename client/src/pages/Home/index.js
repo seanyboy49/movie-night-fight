@@ -6,6 +6,7 @@ import Solution1 from './Solution1'
 import Solution2 from './Solution2'
 import Arrow from './Arrow'
 import NavigationHeader from '../../components/NavigationHeader'
+import Register from './Register'
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Arrow text={'that was cool!'} />
       <Solution2 />
       <Arrow text={'sign me up'} />
+      <Register />
     </Background>
   )
 }
