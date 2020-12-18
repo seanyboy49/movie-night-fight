@@ -1,2 +1,2 @@
-client: sh -c 'cd ./client && npm run build'
+client: cd client && npm run build
 web: gunicorn wsgi:app
