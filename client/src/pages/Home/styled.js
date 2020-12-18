@@ -8,7 +8,6 @@ export const SectionContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: 10%;
 `
 
 export const Text = styled.p`
@@ -34,4 +33,19 @@ export const TextContainer = styled.div`
 
 export const SmallerText = styled.span`
   font-size: 20px;
+`
+
+export const MediumText = styled.p`
+  font-size: 26px;
+  color: #ffffff;
+  opacity: 70%;
+  margin: 0;
+`
+
+export const ArrowContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 20px;
 `
