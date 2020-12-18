@@ -5,7 +5,7 @@ import movieStack from '../../images/movie-stack.svg'
 
 const Solution1 = () => {
   return (
-    <SectionContainer>
+    <SectionContainer id="solution1">
       <TextContainer>
         <Header>MOVIE NIGHT FIGHT</Header>
         <Text margin={'0 10%'}>

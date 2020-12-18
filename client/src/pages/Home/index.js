@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-scroll'
 
 import { Background } from '../../styles/Background'
 import Problem from './Problem'
@@ -13,11 +14,38 @@ const Home = () => {
     <Background>
       <NavigationHeader background="#D70808" color={'white'} />
       <Problem />
-      <Arrow text={'yeah duhh!'} />
+      <Link
+        activeClass="active"
+        to="solution1"
+        spy={true}
+        smooth={true}
+        offset={-20}
+        duration={500}
+      >
+        <Arrow text={'yeah duhh!'} />
+      </Link>
       <Solution1 />
-      <Arrow text={'that was cool!'} />
+      <Link
+        activeClass="active"
+        to="solution2"
+        spy={true}
+        smooth={true}
+        offset={-20}
+        duration={500}
+      >
+        <Arrow text={'that was cool!'} />
+      </Link>
       <Solution2 />
-      <Arrow text={'sign me up'} />
+      <Link
+        activeClass="active"
+        to="signUp"
+        spy={true}
+        smooth={true}
+        offset={-70}
+        duration={500}
+      >
+        <Arrow text={'sign me up'} />
+      </Link>
       <Register />
     </Background>
   )

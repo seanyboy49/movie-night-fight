@@ -6,7 +6,7 @@ import watching from '../../images/watching.svg'
 
 const Solution2 = () => {
   return (
-    <SectionContainer>
+    <SectionContainer id="solution2">
       <Text>
         Keep track of whose turn it is to choose and never fight{' '}
         <SmallerText>(about movies) </SmallerText>

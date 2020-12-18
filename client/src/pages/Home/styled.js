@@ -49,6 +49,7 @@ export const ArrowContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: 20px;
+  cursor: pointer;
 `
 
 export const SignUpContainer = styled.div`

@@ -55,6 +55,7 @@
     "react-redux": "^7.2.2",
     "react-refresh": "^0.8.3",
     "react-router-dom": "^5.2.0",
+    "react-scroll": "^1.8.1",
     "react-token-auth": "^1.1.7",
     "redux": "^4.0.5",
     "resolve": "1.18.1",

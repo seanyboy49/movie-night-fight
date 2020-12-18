@@ -9,7 +9,7 @@ import { SignUpLink, SignUpContainer, Space } from './styled'
 
 const Register = () => {
   return (
-    <SignUpContainer>
+    <SignUpContainer id="signUp">
       <Space />
       <ButtonContainer>
         <LeftCutout />
