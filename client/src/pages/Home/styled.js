@@ -31,3 +31,7 @@ export const Header = styled.p`
 export const TextContainer = styled.div`
   margin: 5% 0;
 `
+
+export const SmallerText = styled.span`
+  font-size: 20px;
+`
