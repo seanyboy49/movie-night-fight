@@ -5,8 +5,10 @@ import os
 from .commands import create_tables, create_first_flatmate
 from .routes.main import main
 from .routes.api import api
-from .extensions import db, guard
+from .extensions import db, guard, migrate
 from .models import FlatMate
+
+
 
 
 def create_app(config_file='settings.py'):
@@ -24,6 +26,7 @@ def create_app(config_file='settings.py'):
 
     # init the db
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # register routes
     app.register_blueprint(main)
