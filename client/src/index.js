@@ -13,6 +13,8 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
+console.log('hello world')
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
