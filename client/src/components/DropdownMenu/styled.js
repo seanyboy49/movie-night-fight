@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Menu = styled.div`
   background: ${(props) => props.background || 'white'};
@@ -16,4 +17,9 @@ export const Menu = styled.div`
   p {
     text-align: center;
   }
+`
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: white;
 `
