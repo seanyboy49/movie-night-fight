@@ -1,16 +1,16 @@
 import React from 'react'
 
 import { Background } from '../../styles/Background'
-import { Image } from './styled'
 import Problem from './Problem'
 import Solution1 from './Solution1'
 import Solution2 from './Solution2'
 import Arrow from './Arrow'
+import NavigationHeader from '../../components/NavigationHeader'
 
 const Home = () => {
   return (
     <Background>
-      <h1>Home</h1>
+      <NavigationHeader background="#D70808" color={'white'} />
       <Problem />
       <Arrow text={'yeah duhh!'} />
       <Solution1 />

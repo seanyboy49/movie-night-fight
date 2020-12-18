@@ -2,20 +2,19 @@ import React, { useState } from 'react'
 import DropdownMenu from '../DropdownMenu'
 
 import Hamburger from '../Hamburger'
-import { NavContainer, AppTitle } from './styled'
+import { NavContainer, AppTitle, Nav } from './styled'
 
-const NavigationHeader = () => {
+const NavigationHeader = ({ background, color }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <>
-      <NavContainer>
-        <AppTitle>Movie Night Fight</AppTitle>
-
-        <Hamburger onClick={setIsOpen} isOpen={isOpen} />
-        <DropdownMenu isOpen={isOpen} />
+    <Nav>
+      <NavContainer background={background}>
+        <AppTitle color={color}>Movie Night Fight</AppTitle>
+        <Hamburger color={color} onClick={setIsOpen} isOpen={isOpen} />
+        <DropdownMenu background={background} color={color} isOpen={isOpen} />
       </NavContainer>
-    </>
+    </Nav>
   )
 }
 

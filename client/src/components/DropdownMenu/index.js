@@ -5,9 +5,9 @@ import { Menu } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
 import { logout } from '../../auth'
 
-const DropdownMenu = ({ isOpen }) => {
+const DropdownMenu = ({ isOpen, background, color }) => {
   return (
-    <Menu isOpen={isOpen}>
+    <Menu background={background} color={color} isOpen={isOpen}>
       <SmallText>View past choices</SmallText>
       <Divider />
       <SmallText>Switch houses</SmallText>
