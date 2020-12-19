@@ -1,11 +1,5 @@
 from .extensions import db
 
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-
-
 class FlatMate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
