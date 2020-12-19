@@ -12,6 +12,7 @@ class FlatMate(db.Model):
     password = db.Column(db.Text)
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     @property
     def rolenames(self):

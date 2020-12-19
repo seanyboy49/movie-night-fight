@@ -14,6 +14,7 @@ click = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
 flask-praetorian = "*"
+flask-migrate = "*"
 
 [requires]
 python_version = "3.8"
