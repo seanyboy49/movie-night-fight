@@ -1,12 +1,16 @@
 from .extensions import db
 
-class FlatMate(db.Model):
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
     password = db.Column(db.Text)
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return '<user> {}'.format(self.username)
 
     @property
     def rolenames(self):
