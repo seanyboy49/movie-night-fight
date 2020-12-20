@@ -18,18 +18,15 @@ const App = () => {
     <ConfigurationProvider value={{ apiUrl }}>
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
-
           <Route path="/signup">
             <Signup />
           </Route>
-
-          <Route path="/home">
-            <Home />
-          </Route>
-
           <MoviesProvider>
             <Route path="/movies-list">
               <MoviesList />
