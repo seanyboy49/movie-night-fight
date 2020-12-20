@@ -35,3 +35,13 @@ class User(db.Model):
 
     def is_valid(self):
         return self.is_active
+
+
+class Movie(db.Model):
+    __tablename__ = "movies"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(140), index=True, unique=True)
+    omdb_id = db.Column(db.String)
+    poster_url = db.Column(db.String(256))
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
