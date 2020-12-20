@@ -7,6 +7,7 @@ import { logout, useAuth } from '../../auth'
 
 const DropdownMenu = ({ isOpen, background, color }) => {
   const [logged] = useAuth()
+
   if (!logged) {
     return (
       <Menu background={background} color={color} isOpen={isOpen}>
@@ -20,6 +21,7 @@ const DropdownMenu = ({ isOpen, background, color }) => {
       </Menu>
     )
   }
+
   return (
     <Menu isOpen={isOpen}>
       <SmallText>View past choices</SmallText>

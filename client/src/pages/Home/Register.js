@@ -18,7 +18,7 @@ const Register = () => {
         </p>
         <RightCutout />
       </ButtonContainer>
-      <PromptLink to="/login">i have an account</PromptLink>
+      <PromptLink to="/login">I have an account</PromptLink>
     </SignUpContainer>
   )
 }
