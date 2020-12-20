@@ -3,9 +3,13 @@ import PropTypes from 'prop-types'
 
 import { StyledBurger } from './styled'
 
-const Burger = ({ onClick, isOpen }) => {
+const Burger = ({ onClick, isOpen, color }) => {
   return (
-    <StyledBurger isOpen={isOpen} onClick={() => onClick(!isOpen)}>
+    <StyledBurger
+      color={color}
+      isOpen={isOpen}
+      onClick={() => onClick(!isOpen)}
+    >
       <div />
       <div />
       <div />
