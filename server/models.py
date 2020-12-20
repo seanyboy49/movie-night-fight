@@ -10,6 +10,9 @@ class User(db.Model):
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    watchlist = db.relationship('Watchlist',
+                                foreign_keys="Watchlist.user_id",
+                                backref="watcher", lazy='dynamic')
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -35,6 +38,16 @@ class User(db.Model):
 
     def is_valid(self):
         return self.is_active
+
+
+class Watchlist(db.Model):
+    __tablename__ = "watchlists"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
+    watched_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 
 class Movie(db.Model):
