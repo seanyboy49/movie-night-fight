@@ -1,29 +1,81 @@
-## Frontend Testing
+# Movie Night Fight
 
-The frontend uses [jest](https://jestjs.io/docs/en/api) as its test runner and [enzyme](https://github.com/enzymejs/enzyme) to render React components in the enzyme test environment.
+**Maintainer(s):** [@seanyboy49](https://github.com/seanyboy49), [@jinazhu](https://github.com/JinaZhu)
 
-To run all frontend tests, run 
+### Never fight about which movie to watch again!
+Movie Night Fight is a mobile-first app for groups of movie lovers who can never figure out which movie to watch when it's their turn to choose. It keeps track of whose turn it is to choose the evening's entertainment, and allows each person to keep a curated list of movies to choose from when it's their turn.
+
+### Architecture
+There are two main components of this app. A [Flask app](https://flask.palletsprojects.com/en/1.1.x/) which serves as an API, and a[ React App](https://reactjs.org/) which serves as the client. 
+
+The Flask app uses [pipenv](https://pipenv.pypa.io/en/latest/) to manage its virtual environment and python packages. So make sure that any Flask command you run (e.g, `flask run, flask shell`) are run in the context of a pipenv shell.
+The React app is created from an [ejected create-react-app](https://create-react-app.dev/docs/available-scripts/#npm-run-eject), and is served statically from the Flask app.
+
+### Auth
+We use [flask praetorian](https://flask-praetorian.readthedocs.io/en/latest/) to manage authentication and authorization. It uses JWT's to make sure that users accessing the APIs protected endpoints are provisioned with the correct roles for access.
+
+We can protect API routes using a simple decorator function from this library. For example:
+```py
+@api.route('/api/protected')
+@flask_praetorian.auth_required
+def protected():
+    """
+    A protected endpoint. The auth_required decorator will require a header
+    containing a valid JWT
+    .. example::
+    $ curl http://loclahost:5000/api/protected -X GET \
+        -H "Authorization: Bearer <your_token>"
+    """
+
+    return {"message": f'protected endpoint (allowed user {flask_praetorian.current_user().username})'}
+
 ```
-npm run test 
+This is used in conjunction with [react token auth](https://www.npmjs.com/package/react-token-auth) to manage the auth token on the frontend. 
+
+The auth setup for this app is heavily inspired by [this article](https://yasoob.me/posts/how-to-setup-and-deploy-jwt-auth-using-react-and-flask/).
+
+### Local Development
+**Create your local database**
+```
+createdb movie_night_fight
 ```
 
-To run a specific frontend test, simply append the file name to the test command. 
+**Run migrations**
+We use [flask migrate](https://flask-migrate.readthedocs.io/en/latest/) to handle database migrations. It generates migration files based on detected changes to your models that you can then run to upgrade or downgrade your database.
+When you run the app locally for the first time, make sure to run migrations in order to create the necessary tables in your local database
 ```
-npm run test -- <path/to/your/file.js>
-```
+// activate your pipenv environment
+pipenv shell
 
-In order to make writing test assertions easier and more robust, this project extends jest's built-in assertions with the [jest-enzyme](https://www.npmjs.com/package/jest-enzyme) assertion library.
-
-## Writing effective tests
-
-#### Snapshot tests
-
-Snapshot tests are a really effective way to guard against visual regressions in your React Component's rendered html.
-
-```
-const wrapper = shallow(<MyComponent {...props} />)
-
-expect(wrapper).toMatchSnapshot()
+// run migrations
+flask db migrate
 ```
 
-The first time you run this test, it will generate a snapshot which will be committed to git. If you change the rendered html of you Component in the future, the snapshot will fail. If you want to update this snapshot, use the `-u` flag in the testing shell.
+**Run the server**
+Make sure you have a `.env` file with the required values, as the flask app will use it to load environment variables.
+
+```
+// activate your pipenv environment
+pipenv shell 
+
+// start the flask server
+flask run
+```
+
+**Run the frontend**
+The client is in a subfolder so make sure to cd into the right directory.
+```
+cd client
+
+npm run start
+```
+
+### Updating Frontend Code
+[Flask will serve the React](server/routes/main.py) app by looking for static assets in the `/client/build` folder.
+
+Therefore, remember to run `npm run build` in your `client` folder and committing your changes to git before pushing changes up to GitHub.
+ 
+
+
+
+
