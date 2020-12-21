@@ -2,7 +2,7 @@ from flask import Flask
 import os
 
 
-from .commands import create_tables, create_first_user
+from .commands import create_tables, create_users_movies
 from .routes.main import main
 from .routes.api import api
 from .extensions import db, guard, migrate
@@ -32,6 +32,6 @@ def create_app(config_file='settings.py'):
 
     # add cli commands
     app.cli.add_command(create_tables)
-    app.cli.add_command(create_first_user)
+    app.cli.add_command(create_users_movies)
 
     return app
