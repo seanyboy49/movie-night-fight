@@ -10,6 +10,8 @@ class User(db.Model):
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    watchlist = db.relationship('UserMovies',
+                                backref='watchers')
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -35,3 +37,27 @@ class User(db.Model):
 
     def is_valid(self):
         return self.is_active
+
+
+class Movie(db.Model):
+    __tablename__ = "movies"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(140), index=True, unique=True)
+    omdb_id = db.Column(db.String)
+    poster_url = db.Column(db.String(256))
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+class UserMovies(db.Model):
+    __tablename__ = "user_movies"
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
+    watched_at = db.Column(db.DateTime)
+
+    def __init__(self, movie):
+        self.movie = movie
+    
+    movie = db.relationship(Movie, lazy="joined")
+
