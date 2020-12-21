@@ -1,5 +1,5 @@
 from .extensions import db, guard
-from .models import User, Movie
+from .models import User, Movie, UserMovies
 
 
 def create_users():
@@ -56,3 +56,16 @@ def create_movies():
             db.session.add(new_movie)
 
     db.session.commit()
+
+
+def create_watchlist():
+    """create watchlist"""
+
+    sean = User.query.filter_by(username='sean').first()
+    movies = Movie.query.all()
+
+    for m in movies:
+        sean.watchlist.append(UserMovies(m))
+
+    db.session.commit()
+

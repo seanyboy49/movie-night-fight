@@ -2,7 +2,7 @@ import click
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .seed import create_users, create_movies
+from .seed import create_users, create_movies, create_watchlist
 
 
 @click.command(name='create_tables')
@@ -16,3 +16,4 @@ def create_tables():
 def create_users_movies():
     create_users()
     create_movies()
+    create_watchlist()
