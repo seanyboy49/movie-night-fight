@@ -1,6 +1,13 @@
 from .extensions import db
 
 
+user_movies = db.Table('user_movies',
+                       db.Column('user_id', db.Integer,
+                                 db.ForeignKey('users.id')),
+                       db.Column('movie_id', db.Integer,
+                                 db.ForeignKey('movies.id')))
+
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -10,9 +17,9 @@ class User(db.Model):
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    watchlist = db.relationship('Watchlist',
-                                foreign_keys='Watchlist.user_id',
-                                backref='watcher', lazy='dynamic')
+    watchlist = db.relationship('Movies',
+                                secondary=user_movies,
+                                backref=db.backref('watchers', lazy='dynamic') )
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -38,13 +45,6 @@ class User(db.Model):
 
     def is_valid(self):
         return self.is_active
-
-
-user_movies = db.Table('user_movies',
-                       db.Column('user_id', db.Integer,
-                                 db.ForeignKey('users.id')),
-                       db.Column('movie_id', db.Integer,
-                                 db.ForeignKey('movies.id')))
 
 
 class Movie(db.Model):
