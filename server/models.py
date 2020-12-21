@@ -1,13 +1,6 @@
 from .extensions import db
 
 
-user_movies = db.Table('user_movies',
-                       db.Column('user_id', db.Integer,
-                                 db.ForeignKey('users.id')),
-                       db.Column('movie_id', db.Integer,
-                                 db.ForeignKey('movies.id')))
-
-
 class User(db.Model):
     __tablename__ = "users"
 
@@ -17,9 +10,8 @@ class User(db.Model):
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    watchlist = db.relationship('Movies',
-                                secondary=user_movies,
-                                backref=db.backref('watchers', lazy='dynamic') )
+    watchlist = db.relationship('UserMovies',
+                                backref='watchers')
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -55,3 +47,17 @@ class Movie(db.Model):
     omdb_id = db.Column(db.String)
     poster_url = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+class UserMovies(db.Model):
+    __tablename__ = "user_movies"
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
+    watched_at = db.Column(db.DateTime)
+
+    def __init__(self, movie):
+        self.movie = movie
+    
+    movie = db.relationship(Movie, lazy="joined")
+
