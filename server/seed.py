@@ -1,5 +1,5 @@
-from ..extensions import db, guard
-from ..models import User, Movie
+from .extensions import db, guard
+from .models import User, Movie
 
 
 def create_users():
@@ -49,10 +49,10 @@ def create_movies():
     ]
 
     for m in movie_seeds:
-        if Movie.query.filter_by(name=m).count() < 1:
-            new_movie = Movie(name=m.name,
-                              omdb_id=m.omdb_id,
-                              poster_url=m.poster_url)
+        if Movie.query.filter_by(omdb_id=m['omdb_id']).count() < 1:
+            new_movie = Movie(name=m['name'],
+                              omdb_id=m['omdb_id'],
+                              poster_url=m['poster_url'])
             db.session.add(new_movie)
 
-    db.session.commit()            
+    db.session.commit()
