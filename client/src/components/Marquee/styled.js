@@ -24,4 +24,25 @@ export const InfoContainer = styled.div`
   width: 93vw;
   background-color: white;
   border-radius: 10px;
+  ${alignCenter}
+`
+
+export const MarqueeSide = styled.div`
+  flex-grow: 1;
+  border-right: ${(props) => props.border || '2px solid #888888'};
+  height: 100%;
+  ${alignCenter}
+  flex-direction: column;
+`
+
+export const MarqueeCenter = styled.div`
+  flex-grow: 2;
+  ${alignCenter}
+  flex-direction: column;
+  height: 100%;
+  border-right: 2px solid #888888;
+`
+
+export const Text = styled.div`
+  font-size: ${(props) => props.size}px;
 `
