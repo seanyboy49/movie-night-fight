@@ -1,7 +1,14 @@
 import React from 'react'
 
+import { MovieListBackground } from '../../styles/Background'
+import Marquee from '../../components/Marquee'
+
 const MoviesList = () => {
-  return <h1></h1>
+  return (
+    <MovieListBackground>
+      <Marquee />
+    </MovieListBackground>
+  )
 }
 
 export default MoviesList
