@@ -40,14 +40,11 @@ class User(db.Model):
         return self.is_active
 
 
-class Watchlist(db.Model):
-    __tablename__ = "watchlists"
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
-    watched_at = db.Column(db.DateTime)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+user_movies = db.Table('user_movies',
+                       db.Column('user_id', db.Integer,
+                                 db.ForeignKey('users.id')),
+                       db.Column('movie_id', db.Integer,
+                                 db.ForeignKey('movies.id')))
 
 
 class Movie(db.Model):
