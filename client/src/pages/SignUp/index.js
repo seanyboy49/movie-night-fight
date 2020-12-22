@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import AccountPrompt from '../../components/AccountPrompt'
 import { Background } from '../../styles/Background'
@@ -8,7 +8,7 @@ const Signup = () => {
     <Background>
       <AccountPrompt
         text={'sign up'}
-        apiEndpoint={'signup'}
+        apiEndpoint={'auth/signup'}
         pageHeader={'create an account'}
         linkText={'I have an account'}
         link={'/login'}

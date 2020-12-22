@@ -1,23 +1,18 @@
-from flask import Blueprint, request
-from flask_cors import CORS
-import flask_praetorian
+from flask import request
 
+from server.auth import auth_bp
 from ..models import User
 from ..extensions import db, guard
 
-api = Blueprint('api', __name__)
-# Enable CORS on api routes
-CORS(api)
 
-
-@api.route('/api/login', methods=['POST'])
+@auth_bp.route('/api/auth/login', methods=['POST'])
 def login():
     """
     Logs a user in by parsing a POST request containing user credentials and
     issuing a JWT token.
     .. example::
-    $ curl http://localhost:5000/api/login -X POST \
-        -d '{"username": "Sean", "password": "strongpassword"}'
+    $ curl http://localhost:8000/api/login -X POST \
+        -d '{"username": "sean", "password": "password"}'
     """
 
     req = request.get_json(force=True)
@@ -28,8 +23,7 @@ def login():
 
     return res, 200
 
-
-@api.route('/api/signup', methods=['POST'])
+@auth_bp.route('/api/signup', methods=['POST'])
 def signup():
     """
     Signs a user up.
@@ -61,14 +55,13 @@ def signup():
         return "That user already exists", 400
 
 
-
-@api.route('/api/refresh', methods=['POST'])
+@auth_bp.route('/api/refresh', methods=['POST'])
 def refresh():
     """
     Refreshes an existing JWT by creating a new one that is a copy of the old
     except that it has a refreshed access expiration.
     .. example::
-    $ curl http://localhost:5000/api/refresh -X GET \
+    $ curl http://localhost:8000/api/refresh -X GET \
         -H "Authorization: Bearer <your_token>"
     """
     print('refresh request')
@@ -77,17 +70,3 @@ def refresh():
     res = {'access_token': new_token}
 
     return res, 200
-
-
-@api.route('/api/protected')
-@flask_praetorian.auth_required
-def protected():
-    """
-    A protected endpoint. The auth_required decorate will require a header
-    containing a valid JWT
-    .. example::
-    $ curl http://loclahost:5000/api/protected -X GET \
-        -H "Authorization: Bearer <your_token>"
-    """
-
-    return {"message": f'protected endpoint (allowed user {flask_praetorian.current_user().username})'}
