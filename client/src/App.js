@@ -9,7 +9,6 @@ import MoviesProvider from './providers/Movies'
 import config from './config'
 import Signup from './pages/SignUp'
 import Toast from './components/Toast'
-import { AppContainer } from './styles/Background'
 
 const { apiUrl } = config
 
