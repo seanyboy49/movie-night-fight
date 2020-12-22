@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const alignCenter = css`
   display: flex;
@@ -57,12 +58,13 @@ export const AddTicket = styled.div`
   transform: rotate(-15deg);
 `
 
-export const Add = styled.button`
+export const Add = styled(Link)`
   background-color: black;
   border: 2px solid white;
-  padding: 0 11px;
+  padding: 3px 11px 0px 11px;
   outline: none;
   cursor: pointer;
+  text-decorator: none;
 `
 
 export const AddImage = styled.img`

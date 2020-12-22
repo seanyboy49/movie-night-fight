@@ -13,7 +13,7 @@ const AddButton = () => {
   return (
     <AddTicket>
       <AddLeftCutout />
-      <Add>
+      <Add to="/">
         <AddImage src={add} alt="add" />
       </Add>
       <AddRightCutout />
