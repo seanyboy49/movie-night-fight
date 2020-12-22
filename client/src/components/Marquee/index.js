@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   MarqueeBackground,
   DotBorder,
@@ -7,6 +8,7 @@ import {
   MarqueeCenter,
   Text,
 } from './styled'
+import AddButton from './AddButton'
 
 const Marquee = () => {
   return (
@@ -14,7 +16,7 @@ const Marquee = () => {
       <DotBorder>
         <InfoContainer>
           <MarqueeSide>
-            <p>ticket</p>
+            <AddButton />
           </MarqueeSide>
           <MarqueeCenter>
             <Text size={'24'}>Now Showing</Text>
