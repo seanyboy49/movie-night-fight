@@ -4,7 +4,7 @@ import os
 
 from .commands import create_tables, create_users_movies
 from .routes.main import main
-from .routes.api import api
+from server.auth import auth_bp
 from .extensions import db, guard, migrate
 from .models import User
 
@@ -28,7 +28,7 @@ def create_app(config_file='settings.py'):
 
     # register routes
     app.register_blueprint(main)
-    app.register_blueprint(api)
+    app.register_blueprint(auth_bp)
 
     # add cli commands
     app.cli.add_command(create_tables)
