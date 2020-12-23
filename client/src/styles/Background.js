@@ -19,7 +19,7 @@ export const MovieListBackground = styled.div`
 `
 
 export const PosterContainer = styled.div`
-  position: fixed;
+  position: absolute;
   overflow: hidden;
   user-select: none;
   overscroll-behavior-y: contain;

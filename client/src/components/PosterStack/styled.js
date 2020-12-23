@@ -4,13 +4,12 @@ export const StackContainer = styled.div`
   background: transparent;
   width: 100%;
   height: 100%;
-  position: fixed;
   overflow: hidden;
 
   div {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     will-change: transform;
     display: flex;
     align-items: center;
