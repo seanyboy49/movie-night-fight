@@ -16,6 +16,9 @@ export const MovieListBackground = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+`
+
+export const PosterContainer = styled.div`
   position: fixed;
   overflow: hidden;
   user-select: none;

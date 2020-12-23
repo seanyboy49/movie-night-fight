@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MovieListBackground } from '../../styles/Background'
+import { MovieListBackground, PosterContainer } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
 import PosterStack from '../../components/PosterStack'
 
@@ -8,7 +8,9 @@ const MoviesList = () => {
   return (
     <MovieListBackground>
       <Marquee />
-      <PosterStack />
+      <PosterContainer>
+        <PosterStack />
+      </PosterContainer>
     </MovieListBackground>
   )
 }
