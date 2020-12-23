@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-import { useSprings, animated, interpolate } from 'react-spring'
-import { useGesture } from 'react-use-gesture'
+import { useSprings, animated, to as interpolate } from 'react-spring'
+import { useDrag } from 'react-use-gesture'
+
+import Poster from './Poster'
+import { StackContainer } from './styled'
 
 const cards = [
   'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
@@ -30,11 +33,12 @@ function PosterStack() {
     ...to(i),
     from: from(i),
   }))
-  const bind = useGesture(
+
+  const bind = useDrag(
     ({
       args: [index],
       down,
-      delta: [xDelta],
+      movement: [mx],
       distance,
       direction: [xDir],
       velocity,
@@ -42,12 +46,17 @@ function PosterStack() {
       const trigger = velocity > 0.2
       const dir = xDir < 0 ? -1 : 1
       if (!down && trigger) gone.add(index)
+
       set((i) => {
         if (index !== i) return
         const isGone = gone.has(index)
-        const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0
-        const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0)
+        const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0
+        const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = down ? 1.1 : 1
+
+        console.log('x', x)
+        console.log('rot', rot)
+        console.log('scale', scale)
         return {
           x,
           rot,
@@ -56,32 +65,29 @@ function PosterStack() {
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
         }
       })
+
       if (!down && gone.size === cards.length)
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
     }
   )
 
-  return props.map(({ x, y, rot, scale }, i) => (
-    <div>
-      <animated.div
-        key={i}
-        style={{
-          transform: interpolate(
-            [x, y],
-            (x, y) => `translate3d(${x}px,${y}px,0)`
-          ),
-        }}
-      >
-        <animated.div
-          {...bind(i)}
-          style={{
-            transform: interpolate([rot, scale], trans),
-            backgroundImage: `url(${cards[i]})`,
-          }}
+  return (
+    <StackContainer>
+      {props.map(({ x, y, rot, scale }, i) => (
+        <Poster
+          key={i}
+          i={i}
+          x={x}
+          y={y}
+          rot={rot}
+          scale={scale}
+          trans={trans}
+          cards={cards}
+          bind={bind}
         />
-      </animated.div>
-    </div>
-  ))
+      ))}
+    </StackContainer>
+  )
 }
 
 export default PosterStack
