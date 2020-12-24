@@ -75,3 +75,10 @@ export const SignUpLink = styled(Link)`
 export const Space = styled.div`
   margin: 7px;
 `
+
+export const HomePosterContainer = styled.div`
+  position: relative;
+  height: 440px;
+  width: 337px;
+  margin: 10px 0;
+`

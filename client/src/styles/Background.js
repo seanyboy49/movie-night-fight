@@ -8,3 +8,23 @@ export const Background = styled.div`
   justify-content: center;
   flex-direction: column;
 `
+
+export const MovieListBackground = styled.div`
+  background-color: #ffecb4;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+`
+
+export const PosterContainer = styled.div`
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+`

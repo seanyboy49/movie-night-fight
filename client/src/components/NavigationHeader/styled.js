@@ -4,6 +4,7 @@ export const AppTitle = styled.h1`
   font-family: bevan;
   font-size: 25px;
   color: ${(props) => props.color || 'black'};
+  margin: 0;
 `
 
 export const NavContainer = styled.div`
@@ -21,4 +22,5 @@ export const NavContainer = styled.div`
 
 export const Nav = styled.div`
   width: 100%;
+  height: 10vh;
 `

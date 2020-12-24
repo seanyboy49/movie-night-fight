@@ -7,12 +7,13 @@ export const Menu = styled.div`
   width: 100%;
   transition: transform 0.3s ease-in-out;
   color: ${(props) => props.color || 'black'};
+  z-index: 1;
 
   box-shadow: ${({ isOpen }) =>
     isOpen ? '0 8px 6px -6px black' : 'undefined'};
 
   transform: ${({ isOpen }) =>
-    isOpen ? 'translateY(70%)' : 'translateY(-100%)'};
+    isOpen ? 'translateY(67%)' : 'translateY(-100%)'};
 
   p {
     text-align: center;
