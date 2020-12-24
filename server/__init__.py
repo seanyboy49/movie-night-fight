@@ -2,9 +2,11 @@ from flask import Flask
 import os
 
 
+from server.auth import auth_bp
+from server.main import main_bp
+from server.movies import movies_bp
+
 from .commands import create_tables, create_users_movies
-from .routes.main import main
-from .routes.api import api
 from .extensions import db, guard, migrate
 from .models import User
 
@@ -27,8 +29,9 @@ def create_app(config_file='settings.py'):
     migrate.init_app(app, db)
 
     # register routes
-    app.register_blueprint(main)
-    app.register_blueprint(api)
+    app.register_blueprint(main_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(movies_bp)
 
     # add cli commands
     app.cli.add_command(create_tables)
