@@ -78,6 +78,7 @@ export const Space = styled.div`
 
 export const HomePosterContainer = styled.div`
   position: relative;
-  height: 400px;
+  height: 440px;
   width: 337px;
+  margin: 10px 0;
 `

@@ -19,7 +19,7 @@ const Home = () => {
         to="solution1"
         spy={true}
         smooth={true}
-        offset={-20}
+        offset={-15}
         duration={500}
       >
         <Arrow text={'yeah duhh!'} />

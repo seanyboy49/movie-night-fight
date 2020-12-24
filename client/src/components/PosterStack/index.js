@@ -1,17 +1,26 @@
 import React, { useState } from 'react'
-import { useSprings, animated, to as interpolate } from 'react-spring'
+import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
 import Poster from './Poster'
 import { StackContainer } from './styled'
+import coco from '../../images/movie-posters/coco.jpg'
+import callme from '../../images/movie-posters/call-me-by-your-name.jpg'
+import wonderWoman from '../../images/movie-posters/wonder-woman.jpg'
+import crazyRichAsian from '../../images/movie-posters/crazy-rich-asians.jpg'
+import endgame from '../../images/movie-posters/endgame.jpg'
+import jojo from '../../images/movie-posters/jojo-rabbit.jpg'
 
 const cards = [
-  'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/5/53/RWS_Tarot_16_Tower.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/9/9b/RWS_Tarot_07_Chariot.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/d/db/RWS_Tarot_06_Lovers.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/690px-RWS_Tarot_02_High_Priestess.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/d/de/RWS_Tarot_01_Magician.jpg',
+  {
+    pic: callme,
+    title: 'Call Me By Your Name',
+  },
+  { pic: coco, title: 'Coco' },
+  { pic: crazyRichAsian, title: 'Crazy Rich Asians' },
+  { pic: endgame, title: 'Avenger: Endgame' },
+  { pic: jojo, title: 'JoJo Rabbit' },
+  { pic: wonderWoman, title: 'Wonder Woman' },
 ]
 
 const to = (i) => ({

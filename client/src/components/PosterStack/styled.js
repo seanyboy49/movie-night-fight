@@ -24,8 +24,24 @@ export const StackContainer = styled.div`
       height: 50vh;
       will-change: transform;
       border-radius: 10px;
-      box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4),
+      box-shadow: 0 8px 30px -10px rgba(50, 50, 73, 0.4),
         0 10px 10px -10px rgba(50, 50, 73, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+
+      img {
+        width: 85%;
+        height: 80%;
+        margin: 20px 10px 5px 10px;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      p {
+        font-size: 20px;
+        margin: 0;
+      }
     }
   }
 `
