@@ -1,10 +1,10 @@
 import React from 'react'
-import { animated, interpolate } from 'react-spring'
-import poster from '../../images/movie-posters/coco.jpg'
 
-const Poster = ({ i, x, y, rot, scale, trans, bind, cards }) => {
-  const card = cards[i]['pic']
-  const image = `../../images/${card}`
+import { animated, interpolate } from 'react-spring'
+
+const Poster = ({ i, springProps, trans, bind, cards }) => {
+  const { x, y, rot, scale } = springProps
+  const image = cards[i]['pic']
   const title = cards[i]['title']
 
   return (
@@ -23,7 +23,7 @@ const Poster = ({ i, x, y, rot, scale, trans, bind, cards }) => {
           transform: interpolate([rot, scale], trans),
         }}
       >
-        <img src={card} alt="poster" />
+        <img src={image} alt="poster" />
         <p>{title}</p>
       </animated.div>
     </animated.div>

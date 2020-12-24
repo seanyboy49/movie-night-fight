@@ -14,7 +14,7 @@ const AddButton = () => {
     <AddTicket>
       <AddLeftCutout />
       <Add to="/">
-        <AddImage src={add} alt="add" />
+        <img src={add} alt="add" width="20" />
       </Add>
       <AddRightCutout />
     </AddTicket>

@@ -3,12 +3,10 @@ import React from 'react'
 import {
   SectionContainer,
   Text,
-  Image,
   Header,
   TextContainer,
   HomePosterContainer,
 } from './styled'
-import movieStack from '../../images/movie-stack.svg'
 import { PosterContainer } from '../../styles/Background'
 import PosterStack from '../../components/PosterStack'
 

@@ -67,9 +67,6 @@ export const Add = styled(Link)`
   text-decorator: none;
 `
 
-export const AddImage = styled.img`
-  width: 20px;
-`
 export const AddLeftCutout = styled.div`
   position: absolute;
   background-color: white;

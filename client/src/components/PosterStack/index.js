@@ -4,23 +4,23 @@ import { useDrag } from 'react-use-gesture'
 
 import Poster from './Poster'
 import { StackContainer } from './styled'
-import coco from '../../images/movie-posters/coco.jpg'
-import callme from '../../images/movie-posters/call-me-by-your-name.jpg'
-import wonderWoman from '../../images/movie-posters/wonder-woman.jpg'
-import crazyRichAsian from '../../images/movie-posters/crazy-rich-asians.jpg'
-import endgame from '../../images/movie-posters/endgame.jpg'
-import jojo from '../../images/movie-posters/jojo-rabbit.jpg'
+import cocoImagePath from '../../images/movie-posters/coco.jpg'
+import callmeImagePath from '../../images/movie-posters/call-me-by-your-name.jpg'
+import wonderWomanImagePath from '../../images/movie-posters/wonder-woman.jpg'
+import crazyRichAsiansImagePath from '../../images/movie-posters/crazy-rich-asians.jpg'
+import endgameImagePath from '../../images/movie-posters/endgame.jpg'
+import jojoImagePath from '../../images/movie-posters/jojo-rabbit.jpg'
 
 const cards = [
   {
-    pic: callme,
+    pic: callmeImagePath,
     title: 'Call Me By Your Name',
   },
-  { pic: coco, title: 'Coco' },
-  { pic: crazyRichAsian, title: 'Crazy Rich Asians' },
-  { pic: endgame, title: 'Avenger: Endgame' },
-  { pic: jojo, title: 'JoJo Rabbit' },
-  { pic: wonderWoman, title: 'Wonder Woman' },
+  { pic: cocoImagePath, title: 'Coco' },
+  { pic: crazyRichAsiansImagePath, title: 'Crazy Rich Asians' },
+  { pic: endgameImagePath, title: 'Avenger: Endgame' },
+  { pic: jojoImagePath, title: 'JoJo Rabbit' },
+  { pic: wonderWomanImagePath, title: 'Wonder Woman' },
 ]
 
 const to = (i) => ({
@@ -79,14 +79,11 @@ function PosterStack() {
 
   return (
     <StackContainer>
-      {props.map(({ x, y, rot, scale }, i) => (
+      {props.map((springProps, i) => (
         <Poster
           key={i}
           i={i}
-          x={x}
-          y={y}
-          rot={rot}
-          scale={scale}
+          springProps={springProps}
           trans={trans}
           cards={cards}
           bind={bind}
