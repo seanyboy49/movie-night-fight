@@ -17,9 +17,6 @@ export const StackContainer = styled.div`
 
     div {
       background-color: white;
-      background-size: auto 85%;
-      background-repeat: no-repeat;
-      background-position: center center;
       width: 30vh;
       height: 50vh;
       will-change: transform;

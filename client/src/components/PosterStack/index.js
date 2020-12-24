@@ -63,9 +63,6 @@ function PosterStack() {
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = down ? 1.1 : 1
 
-        console.log('x', x)
-        console.log('rot', rot)
-        console.log('scale', scale)
         return {
           x,
           rot,
