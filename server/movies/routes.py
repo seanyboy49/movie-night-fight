@@ -1,9 +1,7 @@
 from flask import jsonify
 from flask_praetorian import auth_required, current_user
 
-
 from server.movies import movies_bp
-
 
 @movies_bp.route('/api/movies')
 @auth_required
