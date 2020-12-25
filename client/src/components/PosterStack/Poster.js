@@ -2,10 +2,10 @@ import React from 'react'
 
 import { animated, interpolate } from 'react-spring'
 
-const Poster = ({ i, springProps, trans, bind, cards }) => {
+const Poster = ({ i, springProps, trans, bind, movies }) => {
   const { x, y, rot, scale } = springProps
-  const image = cards[i]['pic']
-  const title = cards[i]['title']
+  const image = movies[i]['poster_url']
+  const title = movies[i]['name']
 
   return (
     <animated.div

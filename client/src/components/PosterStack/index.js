@@ -4,24 +4,6 @@ import { useDrag } from 'react-use-gesture'
 
 import Poster from './Poster'
 import { StackContainer } from './styled'
-import cocoImagePath from '../../images/movie-posters/coco.jpg'
-import callmeImagePath from '../../images/movie-posters/call-me-by-your-name.jpg'
-import wonderWomanImagePath from '../../images/movie-posters/wonder-woman.jpg'
-import crazyRichAsiansImagePath from '../../images/movie-posters/crazy-rich-asians.jpg'
-import endgameImagePath from '../../images/movie-posters/endgame.jpg'
-import jojoImagePath from '../../images/movie-posters/jojo-rabbit.jpg'
-
-const cards = [
-  {
-    pic: callmeImagePath,
-    title: 'Call Me By Your Name',
-  },
-  { pic: cocoImagePath, title: 'Coco' },
-  { pic: crazyRichAsiansImagePath, title: 'Crazy Rich Asians' },
-  { pic: endgameImagePath, title: 'Avenger: Endgame' },
-  { pic: jojoImagePath, title: 'JoJo Rabbit' },
-  { pic: wonderWomanImagePath, title: 'Wonder Woman' },
-]
 
 const to = (i) => ({
   x: 0,
@@ -36,9 +18,9 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
 
-function PosterStack() {
+function PosterStack({ movies }) {
   const [gone] = useState(() => new Set())
-  const [props, set] = useSprings(cards.length, (i) => ({
+  const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
     from: from(i),
   }))
@@ -72,7 +54,7 @@ function PosterStack() {
         }
       })
 
-      if (!down && gone.size === cards.length)
+      if (!down && gone.size === movies.length)
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
     }
   )
@@ -85,7 +67,7 @@ function PosterStack() {
           i={i}
           springProps={springProps}
           trans={trans}
-          cards={cards}
+          movies={movies}
           bind={bind}
         />
       ))}

@@ -9,6 +9,24 @@ import {
 } from './styled'
 import { PosterContainer } from '../../styles/Background'
 import PosterStack from '../../components/PosterStack'
+import cocoImagePath from '../../images/movie-posters/coco.jpg'
+import callmeImagePath from '../../images/movie-posters/call-me-by-your-name.jpg'
+import wonderWomanImagePath from '../../images/movie-posters/wonder-woman.jpg'
+import crazyRichAsiansImagePath from '../../images/movie-posters/crazy-rich-asians.jpg'
+import endgameImagePath from '../../images/movie-posters/endgame.jpg'
+import jojoImagePath from '../../images/movie-posters/jojo-rabbit.jpg'
+
+const movies = [
+  {
+    poster_url: callmeImagePath,
+    name: 'Call Me By Your Name',
+  },
+  { poster_url: cocoImagePath, name: 'Coco' },
+  { poster_url: crazyRichAsiansImagePath, name: 'Crazy Rich Asians' },
+  { poster_url: endgameImagePath, name: 'Avenger: Endgame' },
+  { poster_url: jojoImagePath, name: 'JoJo Rabbit' },
+  { poster_url: wonderWomanImagePath, name: 'Wonder Woman' },
+]
 
 const Solution1 = () => {
   return (
@@ -21,7 +39,7 @@ const Solution1 = () => {
       </TextContainer>
       <HomePosterContainer>
         <PosterContainer>
-          <PosterStack />
+          <PosterStack movies={movies} />
         </PosterContainer>
       </HomePosterContainer>
     </SectionContainer>

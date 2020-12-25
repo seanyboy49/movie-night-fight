@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { MovieListBackground, PosterContainer } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
@@ -7,7 +7,7 @@ import { useConfiguration } from '../../providers/Configuration'
 
 const MoviesList = () => {
   const { apiUrl } = useConfiguration()
-  console.log(apiUrl)
+  const [movies, setMovies] = useState([])
 
   const getUserSavedMovies = useCallback(async () => {
     const token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH_KEY'))
@@ -19,7 +19,7 @@ const MoviesList = () => {
         }),
       })
       const data = await response.json()
-      console.log(data)
+      setMovies(data)
     } catch (error) {
       console.log('error', error)
     }
@@ -33,7 +33,7 @@ const MoviesList = () => {
     <MovieListBackground>
       <Marquee />
       <PosterContainer>
-        <PosterStack />
+        <PosterStack movies={movies} />
       </PosterContainer>
     </MovieListBackground>
   )
