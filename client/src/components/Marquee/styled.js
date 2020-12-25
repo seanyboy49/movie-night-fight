@@ -16,16 +16,20 @@ export const MarqueeBackground = styled.div`
 export const DotBorder = styled.div`
   border: 10px dotted #fcff72;
   height: 90px;
-  width: 96vw;
+  width: 98vw;
   ${alignCenter}
 `
 
 export const InfoContainer = styled.div`
   height: 85px;
-  width: 93vw;
+  width: 97vw;
   background-color: white;
   border-radius: 10px;
   ${alignCenter}
+
+  @media screen and (max-width: 414px) {
+    width: 93vw;
+  }
 `
 
 export const MarqueeSide = styled.div`
@@ -41,6 +45,7 @@ export const MarqueeCenter = styled.div`
   ${alignCenter}
   flex-direction: column;
   height: 100%;
+
   border-right: 2px solid #888888;
 `
 
