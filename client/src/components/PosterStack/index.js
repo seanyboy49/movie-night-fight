@@ -3,6 +3,7 @@ import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 
 import Poster from './Poster'
+import EmptyMovie from './EmptyMovie'
 import { StackContainer } from './styled'
 
 const to = (i) => ({
@@ -58,6 +59,11 @@ function PosterStack({ movies }) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
     }
   )
+
+  if (movies.length === 0) {
+    console.log(movies)
+    return <EmptyMovie />
+  }
 
   return (
     <StackContainer>
