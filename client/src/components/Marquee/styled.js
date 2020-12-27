@@ -16,16 +16,20 @@ export const MarqueeBackground = styled.div`
 export const DotBorder = styled.div`
   border: 10px dotted #fcff72;
   height: 90px;
-  width: 96vw;
+  width: 98vw;
   ${alignCenter}
 `
 
 export const InfoContainer = styled.div`
   height: 85px;
-  width: 93vw;
+  width: 97vw;
   background-color: white;
   border-radius: 10px;
   ${alignCenter}
+
+  @media screen and (max-width: 414px) {
+    width: 93vw;
+  }
 `
 
 export const MarqueeSide = styled.div`
@@ -41,6 +45,7 @@ export const MarqueeCenter = styled.div`
   ${alignCenter}
   flex-direction: column;
   height: 100%;
+
   border-right: 2px solid #888888;
 `
 
@@ -65,28 +70,4 @@ export const Add = styled(Link)`
   outline: none;
   cursor: pointer;
   text-decorator: none;
-`
-
-export const AddLeftCutout = styled.div`
-  position: absolute;
-  background-color: white;
-  left: -1%;
-  top: 30%;
-  width: 9px;
-  height: 18px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  border-left: none;
-`
-
-export const AddRightCutout = styled.div`
-  position: absolute;
-  background-color: white;
-  right: -1%;
-  top: 30%;
-  width: 9px;
-  height: 18px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border-right: none;
 `
