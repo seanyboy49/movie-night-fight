@@ -47,7 +47,7 @@ export const StackContainer = styled.div`
 export const NoMovieContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
   height: 425px;
   width: 250px;
@@ -60,7 +60,7 @@ export const NoMovieContainer = styled.div`
 export const NoMoviePoster = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
   width: 192px;
   height: 314px;
