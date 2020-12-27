@@ -19,7 +19,7 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
 
-function PosterStack({ movies }) {
+const PosterStack = ({ movies }) => {
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
