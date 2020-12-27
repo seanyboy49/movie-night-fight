@@ -58,6 +58,20 @@ class UserMovies(db.Model):
 
     def __init__(self, movie):
         self.movie = movie
-    
+
     movie = db.relationship(Movie, lazy="joined")
 
+
+user_houses = db.Table('user_houses',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('house_id', db.Integer, db.ForeignKey('houses.id'))
+)
+
+
+class House(db.Model):
+    __tablename__ = "houses"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(140), index=True, unique=True)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    users = db.relationship('User', secondary=user_houses, lazy=True, backref=db.backref('houses', lazy=True))
