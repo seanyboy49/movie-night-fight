@@ -71,27 +71,3 @@ export const Add = styled(Link)`
   cursor: pointer;
   text-decorator: none;
 `
-
-export const AddLeftCutout = styled.div`
-  position: absolute;
-  background-color: white;
-  left: -1%;
-  top: 30%;
-  width: 9px;
-  height: 18px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  border-left: none;
-`
-
-export const AddRightCutout = styled.div`
-  position: absolute;
-  background-color: white;
-  right: -1%;
-  top: 30%;
-  width: 9px;
-  height: 18px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border-right: none;
-`

@@ -12,25 +12,25 @@ export const Ticket = styled.div`
   box-shadow: 0 10px 6px -6px #777;
 `
 
-export const AddLeftCutout = styled.div`
+export const LeftCutout = styled.div`
   position: absolute;
   background-color: white;
   left: -1%;
   top: 30%;
-  width: 10px;
-  height: 22px;
+  width: ${(props) => props.width || '10'}px;
+  height: ${(props) => props.height || '22'}px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   border-left: none;
 `
 
-export const AddRightCutout = styled.div`
+export const RightCutout = styled.div`
   position: absolute;
   background-color: white;
   right: -1%;
   top: 30%;
-  width: 10px;
-  height: 22px;
+  width: ${(props) => props.width || '10'}px;
+  height: ${(props) => props.height || '22'}px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   border-right: none;

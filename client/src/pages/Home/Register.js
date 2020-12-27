@@ -1,10 +1,7 @@
 import React from 'react'
-import {
-  ButtonContainer,
-  LeftCutout,
-  RightCutout,
-} from '../../components/Button/styled'
+import { ButtonContainer } from '../../components/Button/styled'
 import { PromptLink } from '../../components/AccountPrompt/styled'
+import { LeftCutout, RightCutout } from '../../styles/Ticket'
 import { SignUpLink, SignUpContainer, Space } from './styled'
 
 const Register = () => {
@@ -12,11 +9,11 @@ const Register = () => {
     <SignUpContainer id="signUp">
       <Space />
       <ButtonContainer>
-        <LeftCutout />
+        <LeftCutout height={'28'} width={'15'} />
         <p>
           <SignUpLink to="/signup">Sign Up</SignUpLink>
         </p>
-        <RightCutout />
+        <RightCutout height={'28'} width={'15'} />
       </ButtonContainer>
       <PromptLink to="/login">I have an account</PromptLink>
     </SignUpContainer>

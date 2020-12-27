@@ -1,18 +1,13 @@
 import React from 'react'
 
-import {
-  Ticket,
-  Content,
-  AddLeftCutout,
-  AddRightCutout,
-} from '../../styles/Ticket'
+import { Ticket, Content, LeftCutout, RightCutout } from '../../styles/Ticket'
 
 const TicketLink = ({ text, toLink }) => {
   return (
     <Ticket>
-      <AddLeftCutout />
+      <LeftCutout />
       <Content to={toLink}>{text}</Content>
-      <AddRightCutout />
+      <RightCutout />
     </Ticket>
   )
 }
