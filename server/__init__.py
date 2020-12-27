@@ -6,7 +6,7 @@ from server.auth import auth_bp
 from server.main import main_bp
 from server.movies import movies_bp
 
-from .commands import create_tables, create_users_movies
+from .commands import create_tables, run_seeds
 from .extensions import db, guard, migrate
 from .models import User
 
@@ -35,6 +35,6 @@ def create_app(config_file='settings.py'):
 
     # add cli commands
     app.cli.add_command(create_tables)
-    app.cli.add_command(create_users_movies)
+    app.cli.add_command(run_seeds)
 
     return app

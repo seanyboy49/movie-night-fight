@@ -1,5 +1,5 @@
 from .extensions import db, guard
-from .models import User, Movie, UserMovies
+from .models import User, Movie, UserMovies, House
 
 
 def create_users():
@@ -65,7 +65,31 @@ def create_watchlist():
     movies = Movie.query.all()
 
     for m in movies:
-        sean.watchlist.append(UserMovies(m))
+        if len(list(filter(lambda x: x.movie.name == m.name, sean.watchlist))) < 1:
+            sean.watchlist.append(UserMovies(m))
 
+    db.session.commit()
+
+
+def create_houses():
+    house_seeds = ["Boats n' Hoes", "House of Mirrors"]
+
+    for h in house_seeds:
+        if House.query.filter_by(name=h).count() < 1:
+            new_house = House(name=h)
+            db.session.add(new_house)
+
+    db.session.commit()
+
+
+def create_user_houses():
+
+    sean = User.query.filter_by(username='sean').first()
+    houses = House.query.all()
+
+    for h in houses:
+        if len(list(filter(lambda x: x.name == h.name, sean.houses))) < 1:
+            sean.houses.append(h)
+    
     db.session.commit()
 

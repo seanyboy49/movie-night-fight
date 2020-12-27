@@ -54,7 +54,7 @@ flask db migrate
 **Populate the database**
 This app exposes custom CLI commands through [click](https://flask.palletsprojects.com/en/1.1.x/cli/). You can populate the database with a seeds file using one of these commands.
 ```
-pipenv run flask create_users_movies
+pipenv run flask run_seeds
 ```
 
 **Run the server**
