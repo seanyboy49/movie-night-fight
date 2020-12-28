@@ -89,3 +89,9 @@ Previously we had to remember to run `npm run build` before pushing changes to G
 
 - There is no need to send a `user_id`, since the server keeps track of the currently logged in user making the request.
 - Returns a list of movies filtered where `movie.watched_at` is not `Null`
+
+**Houses**
+
+`GET /joined-houses` - Get all houses that a user has joined
+
+- Returns a list of houses
