@@ -11,7 +11,6 @@ def get_watchlist():
     try:
         user = current_user()
         unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
-
         response = list(map(user_movie_to_dict, unwatched))
 
         return jsonify(response)

@@ -79,9 +79,13 @@ npm run start
 ### Updating Frontend Code
 [Flask will serve the React](server/routes/main.py) app by looking for static assets in the `/client/build` folder.
 
-Therefore, remember to run `npm run build` in your `client` folder and committing your changes to git before pushing changes up to GitHub.
- 
+Previously we had to remember to run `npm run build` before pushing changes to Github. [This commit] (https://github.com/seanyboy49/movie-night-fight/pull/29) adds a `package.json` to the root of the project with a `heroku-postbuild` script that will build the react app and generate the `build` folder in the client in Heroku's file system.
 
 
+### API
+**Movies**
 
+`GET /watchlist` - Fetch a user's watchlist
 
+- There is no need to send a `user_id`, since the server keeps track of the currently logged in user making the request.
+- Returns a list of movies filtered where `movie.watched_at` is not `Null`
