@@ -48,6 +48,13 @@ class Movie(db.Model):
     poster_url = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    def serialize(self):
+        return {
+            'name': self.name,
+            'omdb_id': self.omdb_id,
+            'poster_url': self.poster_url
+        }
+
 
 class UserMovies(db.Model):
     __tablename__ = "user_movies"
@@ -55,11 +62,13 @@ class UserMovies(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
     watched_at = db.Column(db.DateTime)
+    movie = db.relationship(Movie, lazy="joined")
 
     def __init__(self, movie):
         self.movie = movie
+    
 
-    movie = db.relationship(Movie, lazy="joined")
+
 
 
 user_houses = db.Table('user_houses',

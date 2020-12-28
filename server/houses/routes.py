@@ -9,8 +9,8 @@ from server.houses import houses_bp
 def get_joined_houses():
     try:
         user = current_user()
-        print('user.houses', user.houses)
+        joined_houses = list(h.serialize() for h in user.houses)
 
-        return jsonify(user.houses)
-    except Exception as e:
+        return jsonify(joined_houses)
+    except Exception as e:        
         return e
