@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const SmallText = styled.p`
   font-family: bevan;
@@ -16,6 +16,26 @@ export const BebasText = styled.p`
   font-size: ${(props) => props.size || '12px'};
   margin: 0;
   text-align: center;
+`
+
+export const OpacityText = styled.p`
+  font-family: bebas neue;
+  font-size: ${(props) => props.size || '12px'};
+  margin: 0;
+  text-align: center;
+  z-index: 3;
+  color: white;
+  position: absolute;
+  top: 30%;
+
+  ${(props) => {
+    return (
+      !props.isActive &&
+      css`
+        opacity: 0;
+      `
+    )
+  }}
 `
 
 export const Divider = styled.hr`
