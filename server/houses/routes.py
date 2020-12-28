@@ -7,6 +7,10 @@ from server.houses import houses_bp
 @houses_bp.route('/api/joined-houses')
 @auth_required
 def get_joined_houses():
-    print('hi')
+    try:
+        user = current_user()
+        print('user.houses', user.houses)
 
-    return '200'
+        return jsonify(user.houses)
+    except Exception as e:
+        return e

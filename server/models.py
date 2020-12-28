@@ -75,3 +75,10 @@ class House(db.Model):
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     users = db.relationship('User', secondary=user_houses, lazy=True, backref=db.backref('houses', lazy=True))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'users': list(map(lambda u: u.username, self.users))
+        }
