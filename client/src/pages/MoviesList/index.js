@@ -4,6 +4,7 @@ import { MovieListBackground, PosterContainer } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
 import PosterStack from '../../components/PosterStack'
 import { useConfiguration } from '../../providers/Configuration'
+import NoMovies from './NoMovies'
 
 const MoviesList = () => {
   const { apiUrl } = useConfiguration()
@@ -33,7 +34,7 @@ const MoviesList = () => {
     <MovieListBackground>
       <Marquee />
       <PosterContainer>
-        <PosterStack movies={movies} />
+        {movies.length !== 0 ? <PosterStack movies={movies} /> : <NoMovies />}
       </PosterContainer>
     </MovieListBackground>
   )

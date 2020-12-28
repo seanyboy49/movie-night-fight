@@ -16,15 +16,16 @@ import { login, useAuth } from '../../auth'
 
 const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [username, setUsername] = useState('')
+  const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const { apiUrl } = useConfiguration()
   const history = useHistory()
   const [logged] = useAuth()
 
-  const isFormInvalid = !username || !password
+  const isFormInvalid = !user || !password
 
   async function onSubmit(e) {
+    const username = user.trim()
     e.preventDefault()
     setIsLoading(true)
     const body = {
@@ -59,7 +60,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
           <Input
             type="text"
             placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUser(e.target.value)}
           />
           <Input
             type="password"
