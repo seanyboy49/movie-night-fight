@@ -9,6 +9,7 @@ import MoviesProvider from './providers/Movies'
 import config from './config'
 import Signup from './pages/SignUp'
 import Toast from './components/Toast'
+import Houses from './pages/Houses'
 
 const { apiUrl } = config
 
@@ -29,6 +30,9 @@ const App = () => {
           <MoviesProvider>
             <Route path="/movies-list">
               <MoviesList />
+            </Route>
+            <Route path="/houses">
+              <Houses />
             </Route>
           </MoviesProvider>
         </Switch>
