@@ -25,7 +25,7 @@ omdb_url = f"http://www.omdbapi.com/?apikey={api_key}"
 
 
 @movies_bp.route('/api/movies')
-# @auth_required
+@auth_required
 def get_movies():
     search_params = request.args.get('search')
 
