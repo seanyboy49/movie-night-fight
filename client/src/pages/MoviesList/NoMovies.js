@@ -5,7 +5,7 @@ import { BebasText } from '../../styles/Text'
 import noMovie from '../../images/no-movies.svg'
 import TicketLink from './TicketLink'
 
-const EmptyMovie = () => {
+const NoMovies = () => {
   return (
     <NoMovieContainer>
       <NoMoviePoster>
@@ -17,4 +17,4 @@ const EmptyMovie = () => {
   )
 }
 
-export default EmptyMovie
+export default NoMovies
