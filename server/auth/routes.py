@@ -11,7 +11,7 @@ def login():
     Logs a user in by parsing a POST request containing user credentials and
     issuing a JWT token.
     .. example::
-    $ curl http://localhost:8000/api/login -X POST \
+    $ curl http://localhost:8000/auth/login -X POST \
         -d '{"username": "sean", "password": "password"}'
     """
 
@@ -23,7 +23,8 @@ def login():
 
     return res, 200
 
-@auth_bp.route('/api/signup', methods=['POST'])
+
+@auth_bp.route('/api/auth/signup', methods=['POST'])
 def signup():
     """
     Signs a user up.
@@ -55,7 +56,7 @@ def signup():
         return "That user already exists", 400
 
 
-@auth_bp.route('/api/refresh', methods=['POST'])
+@auth_bp.route('/api/auth/refresh', methods=['POST'])
 def refresh():
     """
     Refreshes an existing JWT by creating a new one that is a copy of the old

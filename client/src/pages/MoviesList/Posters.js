@@ -16,7 +16,7 @@ const Posters = () => {
     const token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH_KEY'))
     setIsLoading(true)
     try {
-      const response = await fetch(`${apiUrl}/movies`, {
+      const response = await fetch(`${apiUrl}/watchlist`, {
         method: 'GET',
         headers: new Headers({
           Authorization: `Bearer ${token}`,
