@@ -24,8 +24,6 @@ export const OpacityText = styled.p`
   margin: 0;
   text-align: center;
   z-index: 3;
-  color: white;
-  position: absolute;
   top: 30%;
 
   ${(props) => {

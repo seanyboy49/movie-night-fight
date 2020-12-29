@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const NoMovieContainer = styled.div`
   display: flex;
@@ -21,22 +21,4 @@ export const NoMoviePoster = styled.div`
   width: 192px;
   height: 314px;
   border: 1px solid black;
-`
-
-export const Loading = styled.div`
-  height: 80vh;
-  width: 100%;
-  position: absolute;
-  background-color: #676767;
-  z-index: 2;
-  opacity: 75%;
-
-  ${(props) => {
-    return (
-      !props.isActive &&
-      css`
-        opacity: 0;
-      `
-    )
-  }}
 `

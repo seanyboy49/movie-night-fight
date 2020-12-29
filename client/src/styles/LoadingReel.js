@@ -12,9 +12,6 @@ const spin = keyframes`
 export const ReelImage = styled.img`
   animation: ${spin} 3s linear infinite;
   width: 92px;
-  position: absolute;
-  top: 50%;
-  z-index: 3;
 
   ${(props) => {
     return (
