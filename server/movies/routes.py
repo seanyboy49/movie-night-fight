@@ -1,9 +1,8 @@
-from flask import jsonify, request
+from flask import jsonify, request, current_app
 import requests
 from flask_praetorian import auth_required, current_user
 
 from server.movies import movies_bp
-
 
 
 @movies_bp.route('/api/watchlist')
@@ -20,13 +19,11 @@ def get_watchlist():
         return e
 
 
-api_key = "40b0cafa"
-omdb_url = f"http://www.omdbapi.com/?apikey={api_key}"
-
-
 @movies_bp.route('/api/movies')
-@auth_required
+# @auth_required
 def get_movies():
+    api_key = current_app.config['OMDB_API_KEY']
+    omdb_url = f"http://www.omdbapi.com/?apikey={api_key}"
     search_params = request.args.get('search')
 
     try:
