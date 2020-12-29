@@ -34,6 +34,6 @@ def get_movies():
 
         return response
 
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print('e', e)
         return "Unable to query movie"
