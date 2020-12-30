@@ -18,43 +18,47 @@ def invalid_api_usage(e):
 def watchlist():
     user = current_user()
 
-    if request.method == 'POST':
-        request_body = request.get_json()
+    if request.method == 'GET':
+        unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
+        response = list(m.movie.serialize() for m in unwatched)
 
-        if not request_body:
-            raise CustomError("No movie provided in request body")        
+        return jsonify(response)
 
-        try:
-            # Only add the movie to db if it isn't already saved
-            request_omdb_id = request_body.get('omdb_id')
-            if Movie.query.filter_by(omdb_id=request_omdb_id).count() < 1:
-                new_movie = Movie(
-                    name=request_body.get('name'),
-                    omdb_id=request_body.get('omdb_id'),
-                    poster_url=request_body.get('poster_url'),
-                )
-                print('add movie')
-                db.session.add(new_movie)
+    # else, the request.method is POST
+    request_body = request.get_json()
 
-            # Only add the movie to user watchlist if it doesn't already exist
-            movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
-            filtered = list(filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist))            
-            if len(filtered) < 1:
-                print('add movie to watchlist', movie.omdb_id)
-                user.watchlist.append(UserMovies(movie))
+    if not request_body:
+        raise CustomError("No movie provided in request body")        
 
-            db.session.commit()
-            data = {'message': 'Movie added to watchlist'}
+    try:
+        # Only add the movie to db if it isn't already saved
+        request_omdb_id = request_body.get('omdb_id')
+        if Movie.query.filter_by(omdb_id=request_omdb_id).count() < 1:
+            new_movie = Movie(
+                name=request_body.get('name'),
+                omdb_id=request_body.get('omdb_id'),
+                poster_url=request_body.get('poster_url'),
+            )
+            print('add movie')
+            db.session.add(new_movie)
 
-            return make_response(jsonify(data), 201)
-        except Exception as e:
-            payload = {'meta': str(e)}
-            raise CustomError("Unable to add movie to watchlist", 500, payload)
+        # Only add the movie to user watchlist if it doesn't already exist
+        movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
+        filtered = list(filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist))            
+        if len(filtered) < 1:
+            print('add movie to watchlist', movie.omdb_id)
+            user.watchlist.append(UserMovies(movie))
 
-    unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
-    response = list(m.movie.serialize() for m in unwatched)
+        db.session.commit()
+        data = {'message': 'Movie added to watchlist'}
 
-    return jsonify(response)
+        return make_response(jsonify(data), 201)
+    # Catch all errors
+    except Exception as e:
+        payload = {'meta': str(e)}
+        raise CustomError("Unable to add movie to watchlist", 500, payload)
+
+    
 
 
 @movies_bp.route('/api/movies')
