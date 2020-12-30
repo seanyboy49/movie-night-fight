@@ -12,5 +12,6 @@ def get_joined_houses():
         joined_houses = list(h.serialize() for h in user.houses)
 
         return jsonify(joined_houses)
-    except Exception as e:        
+    except Exception as e: 
+        print('****************', e)       
         return e
