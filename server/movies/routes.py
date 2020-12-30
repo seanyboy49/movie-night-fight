@@ -1,9 +1,11 @@
-from flask import jsonify, request, current_app
+from flask import jsonify, request, current_app, make_response
 import requests
 from flask_praetorian import auth_required, current_user
 
 from server.movies import movies_bp
 from server.error import CustomError
+from server.models import Movie, UserMovies
+from server.extensions import db
 
 
 @movies_bp.app_errorhandler(CustomError)
@@ -11,10 +13,44 @@ def invalid_api_usage(e):
     return jsonify(e.serialize()), e.status_code
 
 
-@movies_bp.route('/api/watchlist')
+@movies_bp.route('/api/watchlist', methods=["GET", "POST"])
 @auth_required
-def get_watchlist():
+def watchlist():
     user = current_user()
+
+    if request.method == 'POST':
+        request_body = request.get_json()
+
+        if not request_body:
+            raise CustomError("No movie provided in request body")        
+
+        try:
+            # Only add the movie to db if it isn't already saved
+            request_omdb_id = request_body.get('omdb_id')
+            if Movie.query.filter_by(omdb_id=request_omdb_id).count() < 1:
+                new_movie = Movie(
+                    name=request_body.get('name'),
+                    omdb_id=request_body.get('omdb_id'),
+                    poster_url=request_body.get('poster_url'),
+                )
+                print('add movie')
+                db.session.add(new_movie)
+
+            # Only add the movie to user watchlist if it doesn't already exist
+            movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
+            filtered = list(filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist))            
+            if len(filtered) < 1:
+                print('add movie to watchlist', movie.omdb_id)
+                user.watchlist.append(UserMovies(movie))
+
+            db.session.commit()
+            data = {'message': 'Movie added to watchlist'}
+
+            return make_response(jsonify(data), 201)
+        except Exception as e:
+            payload = {'meta': str(e)}
+            raise CustomError("Unable to add movie to watchlist", 500, payload)
+
     unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
     response = list(m.movie.serialize() for m in unwatched)
 

@@ -66,9 +66,6 @@ class UserMovies(db.Model):
 
     def __init__(self, movie):
         self.movie = movie
-    
-
-
 
 
 user_houses = db.Table('user_houses',
