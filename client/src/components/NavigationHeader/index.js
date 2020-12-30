@@ -12,7 +12,12 @@ const NavigationHeader = ({ background, color }) => {
       <NavContainer background={background}>
         <AppTitle color={color}>Movie Night Fight</AppTitle>
         <Hamburger color={color} onClick={setIsOpen} isOpen={isOpen} />
-        <DropdownMenu background={background} color={color} isOpen={isOpen} />
+        <DropdownMenu
+          background={background}
+          color={color}
+          isOpen={isOpen}
+          onClick={setIsOpen}
+        />
       </NavContainer>
     </Nav>
   )

@@ -5,7 +5,7 @@ import { Menu, NavLink } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
 import { logout, useAuth } from '../../auth'
 
-const DropdownMenu = ({ isOpen, background, color }) => {
+const DropdownMenu = ({ isOpen, background, color, onClick }) => {
   const [logged] = useAuth()
 
   if (!logged) {
@@ -23,10 +23,14 @@ const DropdownMenu = ({ isOpen, background, color }) => {
   }
 
   return (
-    <Menu isOpen={isOpen}>
+    <Menu isOpen={isOpen} onClick={() => onClick(!isOpen)}>
       <SmallText>View past choices</SmallText>
       <Divider />
-      <SmallText>Switch houses</SmallText>
+      <SmallText>
+        <NavLink color={'black'} to="/houses">
+          Switch houses
+        </NavLink>
+      </SmallText>
       <Divider />
       <SmallText test-attr="logout-button" onClick={logout}>
         Log out

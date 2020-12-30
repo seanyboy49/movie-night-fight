@@ -23,7 +23,6 @@ export const LoadingText = styled.p`
   font-size: ${(props) => props.size || '12px'};
   margin: 0;
   text-align: center;
-  z-index: 3;
   top: 30%;
 
   ${(props) => {
