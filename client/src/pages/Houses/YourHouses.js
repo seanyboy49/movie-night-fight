@@ -6,7 +6,7 @@ import House from './House'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 
-const YourHouse = () => {
+const YourHouse = ({ houses, setHouses }) => {
   const { apiUrl } = useConfiguration()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -16,7 +16,7 @@ const YourHouse = () => {
       console.log('joined houses')
       const response = await authFetch(`${apiUrl}/joined-houses`)
       const data = await response.json()
-      console.log(data)
+      setHouses(data)
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -28,11 +28,12 @@ const YourHouse = () => {
     getUserHouses()
   }, [getUserHouses])
 
+  console.log('houses', houses)
   return (
     <HousesComponentContainer>
       <BebasText size={'30px'}>Your Houses</BebasText>
       <div>
-        <House />
+        <House houses={houses} />
       </div>
     </HousesComponentContainer>
   )

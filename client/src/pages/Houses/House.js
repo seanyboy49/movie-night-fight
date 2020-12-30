@@ -1,9 +1,11 @@
 import React from 'react'
 
-const House = () => {
+const House = ({ houses }) => {
+  //   const houseMembers = houses[0].users
+  //   console.log(houseMembers)
   return (
     <div>
-      <p>House Name</p>
+      <p>{houses.name}</p>
       <p>blank housemates have already joined</p>
     </div>
   )
