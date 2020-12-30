@@ -131,7 +131,9 @@ A string sent by the client that specifies a movie title to search for.
 curl http://0.0.0.0:8000/api/movies?search=batman
 ```
 
-[200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
+The server will return the OMDB api response with no modification. Therefore, clients should check if the server response `Response` property is `"True"`.
+
+Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
 
 ```json
 {
@@ -161,6 +163,17 @@ curl http://0.0.0.0:8000/api/movies?search=batman
   ],
   "totalResults": "399"
 }
+```
+
+
+
+Movie not found response
+```json
+{
+  "Error": "Movie not found!",
+  "Response": "False"
+}
+
 ```
 
 ### Houses
