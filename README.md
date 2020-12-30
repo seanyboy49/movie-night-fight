@@ -115,6 +115,25 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 ]
 ```
 
+#### POST /watchlist 
+Add to a user's watchlist. Expects `content-type: application/json`.
+
+**Request Body**
+```json
+    {
+      "poster_url": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+      "name": "The Social Network",
+      "omdb_id": "tt1285016"
+    }
+```
+
+[201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+```json
+{
+  "message": "Movie added to watchlist"
+}
+```
+
 
 #### GET /movies?search=<search_string> 
 Search for movies by name
