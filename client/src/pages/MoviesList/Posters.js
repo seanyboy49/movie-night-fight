@@ -14,8 +14,8 @@ const Posters = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const getUserSavedMovies = useCallback(async () => {
-    const token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH_KEY'))
     setIsLoading(true)
+    const token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH_KEY'))
     try {
       const response = await fetch(`${apiUrl}/watchlist`, {
         method: 'GET',
