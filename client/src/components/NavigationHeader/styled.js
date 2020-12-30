@@ -13,7 +13,7 @@ export const NavContainer = styled.div`
   padding: 1rem;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid ${(props) => props.background || 'white'};
+  border-bottom: 2px solid ${(props) => props.background || '#e5e5e5'};
 
   > * {
     margin-left: auto;

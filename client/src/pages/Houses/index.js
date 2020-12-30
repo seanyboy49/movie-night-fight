@@ -1,10 +1,14 @@
 import React from 'react'
 
+import { HousesContainer } from './styled'
+
+import NoHouses from './ NoHouses'
+
 const Houses = () => {
   return (
-    <div>
-      <p>I am the house route</p>
-    </div>
+    <HousesContainer>
+      <NoHouses />
+    </HousesContainer>
   )
 }
 
