@@ -1,13 +1,33 @@
 import React from 'react'
 
-const House = ({ houses }) => {
-  //   const houseMembers = houses[0].users
-  //   console.log(houseMembers)
+import { BebasText } from '../../styles/Text'
+import { HouseContainer } from './styled'
+
+const House = ({ name, members }) => {
+  const member_count = members.length
   return (
-    <div>
-      <p>{houses.name}</p>
-      <p>blank housemates have already joined</p>
-    </div>
+    <HouseContainer>
+      <BebasText align={'left'} size={'30px'}>
+        {name}
+      </BebasText>
+      <BebasText size={'18px'}>
+        {member_count} housemate(s) have already joined
+      </BebasText>
+      <div>
+        {members.map((member) => {
+          return (
+            <BebasText
+              margin={'5px 0'}
+              size={'24px'}
+              align={'left'}
+              key={member}
+            >
+              {member}
+            </BebasText>
+          )
+        })}
+      </div>
+    </HouseContainer>
   )
 }
 
