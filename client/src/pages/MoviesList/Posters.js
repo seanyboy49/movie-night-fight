@@ -4,7 +4,7 @@ import { PosterContainer } from '../../styles/Background'
 import { useConfiguration } from '../../providers/Configuration'
 import PosterStack from '../../components/PosterStack'
 import NoMovies from './NoMovies'
-import { OpacityText } from '../../styles/Text'
+import { LoadingText } from '../../styles/Text'
 import reel from '../../images/film-reel.svg'
 import { ReelImage } from '../../styles/LoadingReel'
 
@@ -39,9 +39,9 @@ const Posters = () => {
   if (isLoading) {
     return (
       <PosterContainer>
-        <OpacityText isActive={isLoading} size={'60px'}>
+        <LoadingText isActive={isLoading} size={'60px'}>
           Loading Movies...
-        </OpacityText>
+        </LoadingText>
         <ReelImage src={reel} alt="reel" isActive={isLoading} />
       </PosterContainer>
     )

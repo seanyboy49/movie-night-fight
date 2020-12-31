@@ -14,16 +14,15 @@ export const H2 = styled.h2`
 export const BebasText = styled.p`
   font-family: bebas neue;
   font-size: ${(props) => props.size || '12px'};
-  margin: 0;
-  text-align: center;
+  margin: ${(props) => props.margin || '0px'};
+  text-align: ${(props) => props.align || 'center'};
 `
 
-export const OpacityText = styled.p`
+export const LoadingText = styled.p`
   font-family: bebas neue;
   font-size: ${(props) => props.size || '12px'};
   margin: 0;
   text-align: center;
-  z-index: 3;
   top: 30%;
 
   ${(props) => {

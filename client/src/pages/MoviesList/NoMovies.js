@@ -2,7 +2,7 @@ import React from 'react'
 
 import { NoMovieContainer, NoMoviePoster } from './styled'
 import { BebasText } from '../../styles/Text'
-import noMovie from '../../images/no-movies.svg'
+import confused from '../../images/confused.svg'
 import TicketLink from './TicketLink'
 
 const NoMovies = () => {
@@ -10,7 +10,7 @@ const NoMovies = () => {
     <NoMovieContainer>
       <NoMoviePoster>
         <BebasText size={'36px'}>You haven't added any movies yet</BebasText>
-        <img src={noMovie} alt="rain" width="65" />
+        <img src={confused} alt="rain" width="65" />
       </NoMoviePoster>
       <TicketLink text={'Add a movie'} toLink={'/'} />
     </NoMovieContainer>

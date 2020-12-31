@@ -22,5 +22,5 @@ export const Menu = styled.div`
 
 export const NavLink = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: ${(props) => props.color || 'white'};
 `

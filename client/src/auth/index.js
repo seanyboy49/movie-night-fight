@@ -5,7 +5,6 @@ import config from '../config'
 const { apiUrl } = config
 
 export const [useAuth, authFetch, login, logout] = createAuthProvider({
-  accessTokenKey: 'access_token',
   onUpdateToken: (token) => {
     fetch(`${apiUrl}/auth/refresh`, {
       method: 'POST',
