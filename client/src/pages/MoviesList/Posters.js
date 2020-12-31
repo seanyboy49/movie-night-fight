@@ -7,6 +7,7 @@ import NoMovies from './NoMovies'
 import { LoadingText } from '../../styles/Text'
 import reel from '../../images/film-reel.svg'
 import { ReelImage } from '../../styles/LoadingReel'
+import { authFetch } from '../../auth'
 
 const Posters = () => {
   const { apiUrl } = useConfiguration()
@@ -15,14 +16,9 @@ const Posters = () => {
 
   const getUserSavedMovies = useCallback(async () => {
     setIsLoading(true)
-    const token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH_KEY'))
+
     try {
-      const response = await fetch(`${apiUrl}/watchlist`, {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: `Bearer ${token}`,
-        }),
-      })
+      const response = await authFetch(`${apiUrl}/watchlist`)
       const data = await response.json()
       setMovies(data)
       setIsLoading(false)
