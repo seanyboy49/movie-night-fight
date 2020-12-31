@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import confusedPath from '../../images/confused.svg'
+
 const alignCenter = css`
   display: flex;
   align-items: center;
@@ -15,15 +17,18 @@ export const HousesContainer = styled.div`
 
 export const HousesComponentContainer = styled.div`
   margin-top: 20px;
-  ${alignCenter}
+  ${alignCenter};
 `
 
-export const Img = styled.img`
+export const ConfusedPersonImg = styled.img.attrs({
+  src: `${confusedPath}`,
+  alt: "doesn't exist",
+})`
   margin-top: 20px;
 `
 
 export const SearchBar = styled.div`
-  ${alignCenter}
+  ${alignCenter};
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 15px;
