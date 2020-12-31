@@ -1,4 +1,6 @@
 from flask import request
+from datetime import timedelta
+
 
 from server.auth import auth_bp
 from ..models import User
@@ -19,7 +21,8 @@ def login():
     username = req.get('username')
     password = req.get('password')
     user = guard.authenticate(username, password)
-    res = {'access_token': guard.encode_jwt_token(user)}
+    # res = {'access_token': guard.encode_jwt_token(user)}
+    res = {'access_token': guard.encode_jwt_token(user, override_access_lifespan=timedelta(hours=24))}
 
     return res, 200
 
@@ -48,7 +51,7 @@ def signup():
             return "There was a problem signing up", 400
 
         user = guard.authenticate(username, password)
-        res = {'access_token': guard.encode_jwt_token(user)}
+        res = {'access_token': guard.encode_jwt_token(user, override_access_lifespan=timedelta(hours=24))}
 
         return res, 200
 
@@ -65,9 +68,9 @@ def refresh():
     $ curl http://localhost:8000/api/refresh -X GET \
         -H "Authorization: Bearer <your_token>"
     """
-    print('refresh request')
+
     old_token = request.get_data()
-    new_token = guard.refresh_jwt_token(old_token)
+    new_token = guard.refresh_jwt_token(old_token, override_access_lifespan=timedelta(hours=24))
     res = {'access_token': new_token}
 
     return res, 200
