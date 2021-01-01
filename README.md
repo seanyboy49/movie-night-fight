@@ -134,6 +134,13 @@ Add to a user's watchlist. Expects `content-type: application/json`.
 }
 ```
 
+#### DELETE /watchlist/<movie_id>
+
+Remove a movie from a user's watchlist.
+[Deleting a resource is idempotent](https://stackoverflow.com/questions/6439416/deleting-a-resource-using-http-delete), which means that subsequent requests to this endpoint with the same arguments should not change behavior. Deleting the resource the first time will yield [204 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204), as will subsequent requests.
+
+Failure to supply a `movie_id` in the url will result in [405 Method Not Allowed Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405).
+
 
 #### GET /movies?search=<search_string> 
 Search for movies by name
