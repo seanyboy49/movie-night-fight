@@ -134,6 +134,15 @@ Add to a user's watchlist. Expects `content-type: application/json`.
 }
 ```
 
+If the user's watchlist already contains the movie, the endpoint will return 200.
+
+[200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
+```json
+{
+  "message": "Movie already added to watchlist"
+}
+```
+
 #### DELETE /watchlist/<movie_id>
 
 Remove a movie from a user's watchlist.
