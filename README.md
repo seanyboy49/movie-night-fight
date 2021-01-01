@@ -144,8 +144,6 @@ Failure to supply a `movie_id` in the url will result in [405 Method Not Allowed
 #### PATCH /watchlist/<movie_id>
 Marks a movie in a watchlist as watched by updating the `watched_at` field with the current time.
 
-
-
 Returns [204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)
 
 #### GET /movies?search=<search_string> 

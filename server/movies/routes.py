@@ -46,8 +46,10 @@ def add_to_watchlist():
 
         # Check before adding movie to user's watchlist
         movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
-        filtered = list(filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist))
-        if len(filtered) < 1:
+        filtered = filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist)
+        movie_to_add = next(filtered, None)
+        # If watchlist does not contain movie, add to watchlist
+        if movie_to_add is None:
             user.watchlist.append(UserMovies(movie))
 
             db.session.commit()
@@ -55,6 +57,15 @@ def add_to_watchlist():
 
             return make_response(jsonify(data), 201)
 
+        # If it IS in watchlist, but marked as watched, then nullify watched_at
+        elif movie_to_add.watched_at is not None:
+            movie_to_add.watched_at = None
+            db.session.commit()
+            data = {'message': 'Movie added to watchlist'}
+
+            return make_response(jsonify(data), 201)
+
+        # Otherwise, movie is already in watchlist
         data = {'message': 'Movie already added to watchlist'}
         return make_response(jsonify(data), 200)
 
