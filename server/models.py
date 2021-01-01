@@ -11,7 +11,8 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     watchlist = db.relationship('UserMovies',
-                                backref='watchers')
+                                backref='watchers',
+                                cascade="all, delete-orphan")
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -62,7 +63,7 @@ class UserMovies(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
     watched_at = db.Column(db.DateTime)
-    movie = db.relationship(Movie, lazy="joined")
+    movie = db.relationship(Movie, lazy="joined", )
 
     def __init__(self, movie):
         self.movie = movie
