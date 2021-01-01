@@ -16,5 +16,5 @@ def get_joined_houses():
     except Exception as e:
         u = user.username or 'unknown user'
         payload = {'meta': str(e)}
-        
+
         raise CustomError(f"Failed to return houses for {u}", 500, payload)

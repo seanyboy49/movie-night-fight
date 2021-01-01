@@ -13,18 +13,21 @@ def invalid_api_usage(e):
     return jsonify(e.serialize()), e.status_code
 
 
-@movies_bp.route('/api/watchlist', methods=["GET", "POST"])
+@movies_bp.route('/api/watchlist')
 @auth_required
-def watchlist():
+def get_watchlist():
     user = current_user()
 
-    if request.method == 'GET':
-        unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
-        response = list(m.movie.serialize() for m in unwatched)
+    unwatched = list(filter(lambda m: m.watched_at == None, user.watchlist))
+    response = list(m.movie.serialize() for m in unwatched)
 
-        return jsonify(response)
+    return jsonify(response)
 
-    # else, the request.method is POST
+
+@movies_bp.route('/api/watchlist', methods=["POST"])
+@auth_required
+def add_to_watchlist():
+    user = current_user()
     request_body = request.get_json()
 
     if not request_body:
@@ -47,14 +50,37 @@ def watchlist():
         if len(filtered) < 1:
             user.watchlist.append(UserMovies(movie))
 
-        db.session.commit()
-        data = {'message': 'Movie added to watchlist'}
+            db.session.commit()
+            data = {'message': 'Movie added to watchlist'}
 
-        return make_response(jsonify(data), 201)
+            return make_response(jsonify(data), 201)
+
+        data = {'message': 'Movie already added to watchlist'}
+        return make_response(jsonify(data), 200)
+
     # Generic error handler
     except Exception as e:
         payload = {'meta': str(e)}
         raise CustomError("Unable to add movie to watchlist", 500, payload)
+
+
+@movies_bp.route('/api/watchlist/<movie_id>', methods=["DELETE"])
+@auth_required
+def delete_from_watchlist(movie_id):
+    user = current_user()
+    movie_to_delete = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+
+    if movie_to_delete is None:
+        return '', 204
+
+    try:
+        user.watchlist.remove(movie_to_delete)
+        db.session.commit()
+
+        return '', 204
+    except Exception as e:
+        payload = {'meta': str(e)}
+        raise CustomError("Unable to remove movie from watchlist", 500, payload)
 
 
 @movies_bp.route('/api/movies')
