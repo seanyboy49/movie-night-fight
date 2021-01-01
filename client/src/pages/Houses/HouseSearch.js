@@ -1,15 +1,15 @@
 import React from 'react'
 
 import { BebasText } from '../../styles/Text'
-import { HousesComponentContainer, SearchBar, SearchInput } from './styled'
-import search from '../../images/search.svg'
+import { HousesComponentContainer } from './styled'
+import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
 
 const HouseSearch = () => {
   return (
     <HousesComponentContainer>
       <BebasText size={'30px'}>Search for Houses or create one</BebasText>
       <SearchBar>
-        <img src={search} alt="search" />
+        <SearchImg />
         <SearchInput />
       </SearchBar>
     </HousesComponentContainer>
