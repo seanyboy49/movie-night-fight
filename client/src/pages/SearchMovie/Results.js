@@ -4,7 +4,7 @@ import { MovieLi, MovieUl, MovieRevealButton } from './styled'
 import openArrow from '../../images/arrow-down.svg'
 import { BebasText } from '../../styles/Text'
 
-const Result = ({ movies }) => {
+const Results = ({ movies }) => {
   return (
     <MovieUl>
       {movies.map((movie) => {
@@ -23,4 +23,4 @@ const Result = ({ movies }) => {
   )
 }
 
-export default Result
+export default Results
