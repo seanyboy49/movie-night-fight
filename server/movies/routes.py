@@ -71,18 +71,16 @@ def delete_from_watchlist(movie_id):
     movie_to_delete = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
 
     if movie_to_delete is None:
-        data = {'message': 'Movie has already been removed from watchlist'}
-        return make_response(jsonify(data), 200)
+        return '', 204
 
     try:
         user.watchlist.remove(movie_to_delete)
         db.session.commit()
-        data = {'message': 'Movie removed from watchlist'}
 
-        return make_response(jsonify(data), 200)
+        return '', 204
     except Exception as e:
         payload = {'meta': str(e)}
-        raise CustomError("Unable to add movie to watchlist", 500, payload)
+        raise CustomError("Unable to remove movie from watchlist", 500, payload)
 
 
 @movies_bp.route('/api/movies')
