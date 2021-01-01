@@ -6,6 +6,7 @@ import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import debounce from 'lodash.debounce'
+import Result from './Results'
 
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
@@ -18,6 +19,7 @@ const SearchMovie = () => {
 
   async function searchMovies(currentValue) {
     if (!currentValue) {
+      setMovieResult([])
       return
     }
     try {
@@ -25,7 +27,9 @@ const SearchMovie = () => {
         `${apiUrl}/movies?search=${currentValue}`
       )
       const data = await response.json()
-      setMovieResult(data)
+      if (data.Search) {
+        setMovieResult(data.Search)
+      }
     } catch (error) {
       console.log('error', error)
     }
@@ -45,6 +49,7 @@ const SearchMovie = () => {
         <SearchImg />
         <SearchInput type="text" onChange={(e) => handleChange(e)} />
       </SearchBar>
+      <Result movies={movieResults} />
     </SearchMovieContainer>
   )
 }

@@ -7,3 +7,8 @@ export const SearchMovieContainer = styled.div`
   flex-direction: column;
   height: 80vh;
 `
+
+export const MovieLi = styled.li`
+  list-style: none;
+  font-size: 24px;
+`
