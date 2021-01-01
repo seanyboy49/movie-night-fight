@@ -1,14 +1,25 @@
 import React from 'react'
 
-import { MovieLi } from './styled'
+import { MovieLi, MovieUl, MovieRevealButton } from './styled'
+import openArrow from '../../images/arrow-down.svg'
+import { BebasText } from '../../styles/Text'
 
 const Result = ({ movies }) => {
   return (
-    <ul>
+    <MovieUl>
       {movies.map((movie) => {
-        return <MovieLi key={movie.imdbID}>{movie.Title}</MovieLi>
+        return (
+          <MovieLi key={movie.imdbID}>
+            <BebasText size={'24px'} align={'left'}>
+              {movie.Title}
+            </BebasText>
+            <MovieRevealButton>
+              <img src={openArrow} alt="open arrow" />
+            </MovieRevealButton>
+          </MovieLi>
+        )
       })}
-    </ul>
+    </MovieUl>
   )
 }
 

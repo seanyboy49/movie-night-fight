@@ -10,5 +10,20 @@ export const SearchMovieContainer = styled.div`
 
 export const MovieLi = styled.li`
   list-style: none;
-  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  width: 325px;
+  margin: 10px 0;
+`
+
+export const MovieUl = styled.ul`
+  margin: 0;
+  padding: 0;
+`
+
+export const MovieRevealButton = styled.button`
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
 `
