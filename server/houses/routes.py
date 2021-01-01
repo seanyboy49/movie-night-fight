@@ -25,8 +25,13 @@ def get_joined_houses():
 @auth_required
 def search_houses():
     search_params = request.args.get('search')
-    search_results = House.query.filter(House.name.ilike(f'%{search_params}%')).all()
-    houses = list(h.serialize() for h in search_results)
 
-    return jsonify(houses)
+    try:
+        search_results = House.query.filter(House.name.ilike(f'%{search_params}%')).all()
+        houses = list(h.serialize() for h in search_results)
 
+        return jsonify(houses)
+    except Exception as e:
+        payload = {'meta': str(e)}
+
+        raise CustomError("Failed to search houses", 500, payload)
