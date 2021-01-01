@@ -9,26 +9,31 @@ import debounce from 'lodash.debounce'
 
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
+  const [movieResults, setMovieResult] = useState([])
 
-  const debouncedSave = useCallback(
-    debounce(
-      () =>
-        async function searchMovies() {
-          try {
-            const response = await authFetch(`${apiUrl}/movies`)
-            const data = await response.json()
-            console.log(data)
-          } catch (error) {
-            console.log('error', error)
-          }
-        },
-      1000
-    ),
-    [apiUrl]
+  const debouncedSave = debounce(
+    (currentValue) => searchMovies(currentValue),
+    1000
   )
 
+  async function searchMovies(currentValue) {
+    if (!currentValue) {
+      return
+    }
+    try {
+      const response = await authFetch(
+        `${apiUrl}/movies?search=${currentValue}`
+      )
+      const data = await response.json()
+      setMovieResult(data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
   const handleChange = (e) => {
-    debouncedSave()
+    const { value: currentValue } = e.target
+    debouncedSave(currentValue)
   }
 
   return (
