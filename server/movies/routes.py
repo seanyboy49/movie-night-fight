@@ -26,7 +26,7 @@ def get_watchlist():
 
 @movies_bp.route('/api/watchlist', methods=["POST"])
 @auth_required
-def post_watchlist():
+def add_to_watchlist():
     user = current_user()
     request_body = request.get_json()
 
@@ -59,6 +59,27 @@ def post_watchlist():
         return make_response(jsonify(data), 200)
 
     # Generic error handler
+    except Exception as e:
+        payload = {'meta': str(e)}
+        raise CustomError("Unable to add movie to watchlist", 500, payload)
+
+
+@movies_bp.route('/api/watchlist/<movie_id>', methods=["DELETE"])
+@auth_required
+def delete_from_watchlist(movie_id):
+    user = current_user()
+    movie_to_delete = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+
+    if movie_to_delete is None:
+        data = {'message': 'Movie has already been removed from watchlist'}
+        return make_response(jsonify(data), 200)
+
+    try:
+        user.watchlist.remove(movie_to_delete)
+        db.session.commit()
+        data = {'message': 'Movie removed from watchlist'}
+
+        return make_response(jsonify(data), 200)
     except Exception as e:
         payload = {'meta': str(e)}
         raise CustomError("Unable to add movie to watchlist", 500, payload)
