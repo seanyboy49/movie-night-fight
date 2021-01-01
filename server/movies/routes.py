@@ -83,6 +83,28 @@ def delete_from_watchlist(movie_id):
         raise CustomError("Unable to remove movie from watchlist", 500, payload)
 
 
+@movies_bp.route('/api/watchlist/<movie_id>', methods=["PATCH"])
+@auth_required
+def mark_as_watched(movie_id):
+    user = current_user()
+    movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+
+    if movie_to_patch is None:
+        raise CustomError("Movie could not be found", 404)
+
+    try:
+        movie_to_patch.watched_at = db.func.current_timestamp()
+        db.session.commit()
+        data = {'message': 'Movie marked as watched'}
+
+        return make_response(jsonify(data), 201)
+    except Exception as e:
+        payload = {'meta': str(e)}
+        raise CustomError("Unable to update movie as watched", 500, payload)
+
+
+
+
 @movies_bp.route('/api/movies')
 @auth_required
 def get_movies():
