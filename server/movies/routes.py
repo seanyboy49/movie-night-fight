@@ -46,8 +46,10 @@ def add_to_watchlist():
 
         # Check before adding movie to user's watchlist
         movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
-        filtered = list(filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist))
-        if len(filtered) < 1:
+        filtered = filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist)
+        movie_to_add = next(filtered, None)
+        # If watchlist does not contain movie, add to watchlist
+        if movie_to_add is None:
             user.watchlist.append(UserMovies(movie))
 
             db.session.commit()
@@ -55,6 +57,15 @@ def add_to_watchlist():
 
             return make_response(jsonify(data), 201)
 
+        # If it IS in watchlist, but marked as watched, then nullify watched_at
+        elif movie_to_add.watched_at is not None:
+            movie_to_add.watched_at = None
+            db.session.commit()
+            data = {'message': 'Movie added to watchlist'}
+
+            return make_response(jsonify(data), 201)
+
+        # Otherwise, movie is already in watchlist
         data = {'message': 'Movie already added to watchlist'}
         return make_response(jsonify(data), 200)
 
@@ -81,6 +92,28 @@ def delete_from_watchlist(movie_id):
     except Exception as e:
         payload = {'meta': str(e)}
         raise CustomError("Unable to remove movie from watchlist", 500, payload)
+
+
+@movies_bp.route('/api/watchlist/<movie_id>', methods=["PATCH"])
+@auth_required
+def mark_as_watched(movie_id):
+    user = current_user()
+    movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+
+    if movie_to_patch is None:
+        raise CustomError("Movie could not be found", 404)
+
+    try:
+        movie_to_patch.watched_at = db.func.current_timestamp()
+        db.session.commit()
+        data = {'message': 'Movie marked as watched'}
+
+        return make_response(jsonify(data), 201)
+    except Exception as e:
+        payload = {'meta': str(e)}
+        raise CustomError("Unable to update movie as watched", 500, payload)
+
+
 
 
 @movies_bp.route('/api/movies')
