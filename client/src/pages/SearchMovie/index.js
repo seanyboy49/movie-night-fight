@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 
 import { SearchMovieContainer } from './styled'
 import { BebasText } from '../../styles/Text'
 import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
+import { useConfiguration } from '../../providers/Configuration'
+import { authFetch } from '../../auth'
+import debounce from 'lodash.debounce'
 
 const SearchMovie = () => {
+  const { apiUrl } = useConfiguration()
+  const [value, setValue] = useState('')
+
+  const debouncedSave = useCallback(
+    debounce(() => searchMovies(), 1000),
+    []
+  )
+
+  const handleChange = (e) => {
+    debouncedSave()
+  }
+
+  async function searchMovies() {
+    try {
+      const response = await authFetch(`${apiUrl}/movies`)
+      const data = await response.json()
+      console.log(data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
   return (
     <SearchMovieContainer>
       <BebasText size={'30px'} margin={'20px 0 0 0'}>
@@ -12,7 +37,7 @@ const SearchMovie = () => {
       </BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput />
+        <SearchInput type="text" onChange={(e) => handleChange(e)} />
       </SearchBar>
     </SearchMovieContainer>
   )
