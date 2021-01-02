@@ -242,3 +242,29 @@ Returns a list of houses
   }
 ]
 ```
+
+#### GET /houses?search=<search_string>
+Search for a house by name.
+
+**Query Parameters**
+- search (required)
+A string sent by the client that specifies a house name to search for.
+
+**Example request**
+```js
+curl http://0.0.0.0:8000/api/houses?search=mirrors
+```
+
+Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
+
+```json
+[
+    {
+        "id": 1,
+        "name": "Boats n' Hoes",
+        "users": [
+            "sean"
+        ]
+    }
+]
+```
