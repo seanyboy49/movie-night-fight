@@ -19,14 +19,6 @@ const Results = ({ movies }) => {
     setIsOpen(!isOpen)
   }
 
-  function revealDetail(title) {
-    if (title === revealSelected && isOpen) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   return (
     <MovieUl>
       {movies.map((movie) => {
@@ -36,14 +28,15 @@ const Results = ({ movies }) => {
               <BebasText size={'24px'} align={'left'}>
                 {movie.Title}
               </BebasText>
-              <MovieRevealButton
-                isActive={revealDetail(movie.Title)}
-                onClick={() => selectReveal(movie.Title)}
-              >
+              <MovieRevealButton onClick={() => selectReveal(movie.Title)}>
                 <img src={openArrow} alt="open arrow" />
               </MovieRevealButton>
             </MovieTitleContainer>
-            <MovieDetails poster={movie.Poster} />
+            <MovieDetails
+              movie={movie}
+              revealSelected={revealSelected}
+              isOpen={isOpen}
+            />
           </MovieLi>
         )
       })}
