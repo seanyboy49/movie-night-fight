@@ -1,6 +1,6 @@
 from server import create_app
 from server.extensions import db
-from server.models import User, Movie, UserMovies, House, user_houses
+from server.models import User, Movie, UserMovies, House, UserHouses
 
 app = create_app()
 
@@ -13,5 +13,5 @@ def make_shell_context():
             'User': User,
             'Movie': Movie,
             'House': House,
-            'user_houses': user_houses
+            'UserHouses': UserHouses
     }

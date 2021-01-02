@@ -69,11 +69,6 @@ class UserMovies(db.Model):
         self.movie = movie
 
 
-# user_houses = db.Table('user_houses',
-#     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-#     db.Column('house_id', db.Integer, db.ForeignKey('houses.id'))
-# )
-
 class House(db.Model):
     __tablename__ = "houses"
 
