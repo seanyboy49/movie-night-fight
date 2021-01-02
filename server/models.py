@@ -11,8 +11,10 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     watchlist = db.relationship('UserMovies',
-                                backref='watchers',
+                                backref='watcher',
                                 cascade="all, delete-orphan")
+    houses = db.relationship('UserHouses',
+                             backref='housemate')
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -76,7 +78,7 @@ class House(db.Model):
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     users = db.relationship('UserHouses',
-                            backref='house_mates')
+                            backref='house')
 
     def serialize(self):
         return {
