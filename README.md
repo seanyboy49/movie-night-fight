@@ -220,7 +220,7 @@ Movie not found response
 #### GET /joined-houses 
 Get all houses that a user has joined
 
-Returns a list of houses
+Returns a list of houses and its users.
 
 [200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
 
@@ -230,14 +230,24 @@ Returns a list of houses
     "id": 1,
     "name": "Winterfell",
     "users": [
-      "sean"
+        {
+            "role": "admin",
+            "user": "sean"
+        },
+        {
+            "role": "house_mate",
+            "user": "jina"
+        }
     ]
   },
   {
     "id": 2,
     "name": "House of Mirrors",
     "users": [
-      "sean"
+        {
+            "role": "admin",
+            "user": "sean"
+        },
     ]
   }
 ]
@@ -259,12 +269,15 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
 
 ```json
 [
-    {
-        "id": 2,
-        "name": "House of Mirrors",
-        "users": [
-            "sean"
-        ]
-    }
+  {
+    "id": 2,
+    "name": "House of Mirrors",
+    "users": [
+        {
+            "role": "admin",
+            "user": "sean"
+        },
+    ]
+  }
 ]
 ```
