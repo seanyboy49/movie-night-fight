@@ -90,6 +90,5 @@ def create_user_houses():
     for h in houses:
         if len(list(filter(lambda x: x.name == h.name, sean.houses))) < 1:
             sean.houses.append(h)
-    
-    db.session.commit()
 
+    db.session.commit()

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 
 import { HousesContainer } from './styled'
-import NoHouses from './ NoHouses'
+import NoHouses from './NoHouses'
 import HouseSearch from './HouseSearch'
 import YourHouses from './YourHouses'
 import { LoadingText } from '../../styles/Text'
