@@ -69,11 +69,10 @@ class UserMovies(db.Model):
         self.movie = movie
 
 
-user_houses = db.Table('user_houses',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('house_id', db.Integer, db.ForeignKey('houses.id'))
-)
-
+# user_houses = db.Table('user_houses',
+#     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+#     db.Column('house_id', db.Integer, db.ForeignKey('houses.id'))
+# )
 
 class House(db.Model):
     __tablename__ = "houses"
@@ -81,7 +80,8 @@ class House(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    users = db.relationship('User', secondary=user_houses, lazy=True, backref=db.backref('houses', lazy=True))
+    users = db.relationship('UserHouses',
+                            backref='house_mates')
 
     def serialize(self):
         return {
@@ -89,3 +89,15 @@ class House(db.Model):
             'name': self.name,
             'users': list(map(lambda u: u.username, self.users))
         }
+
+
+class UserHouses(db.Model):
+    __tablename__ = 'user_houses'
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
+    user_role = db.Column(db.String(30), default="house_mate")
+    user = db.relationship(User, lazy="joined")
+
+    def __init__(self, house):
+        self.house = house
