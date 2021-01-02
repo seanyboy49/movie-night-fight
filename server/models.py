@@ -85,11 +85,20 @@ class House(db.Model):
                             backref='house',
                             lazy="joined")
 
+    @staticmethod
+    def getUser(user_house):
+        return {
+            'user': user_house.user.username,
+            'role': user_house.user_role
+        }
+
     def serialize(self):
+        users = list(map(lambda u: self.getUser(u), self.users))
+
         return {
             'id': self.id,
             'name': self.name,
-            'users': list(map(lambda u: {'user': u.user.username, 'role': u.user_role}, self.users))
+            'users': users
         }
 
 
