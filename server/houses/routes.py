@@ -11,7 +11,9 @@ from server.models import House
 def get_joined_houses():
     try:
         user = current_user()
-        joined_houses = list(h.serialize() for h in user.houses)
+        print('hello', user.houses[0].house.users)
+        joined_houses = list(h.house.serialize() for h in user.houses)
+        print('')
 
         return jsonify(joined_houses)
     except Exception as e:

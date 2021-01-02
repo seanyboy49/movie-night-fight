@@ -3,6 +3,7 @@ from .extensions import db
 
 class User(db.Model):
     __tablename__ = "users"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
@@ -44,6 +45,7 @@ class User(db.Model):
 
 class Movie(db.Model):
     __tablename__ = "movies"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), index=True, unique=True)
@@ -61,6 +63,7 @@ class Movie(db.Model):
 
 class UserMovies(db.Model):
     __tablename__ = "user_movies"
+    __table_args__ = {'extend_existing': True}
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
@@ -73,23 +76,26 @@ class UserMovies(db.Model):
 
 class House(db.Model):
     __tablename__ = "houses"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     users = db.relationship('UserHouses',
-                            backref='house')
+                            backref='house',
+                            lazy="joined")
 
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
-            'users': list(map(lambda u: u.username, self.users))
+            'users': list(map(lambda u: {'user': u.user.username, 'role': u.user_role}, self.users))
         }
 
 
 class UserHouses(db.Model):
     __tablename__ = 'user_houses'
+    __table_args__ = {'extend_existing': True}
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
