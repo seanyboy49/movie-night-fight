@@ -260,8 +260,8 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
 ```json
 [
     {
-        "id": 1,
-        "name": "Boats n' Hoes",
+        "id": 2,
+        "name": "House of Mirrors",
         "users": [
             "sean"
         ]
