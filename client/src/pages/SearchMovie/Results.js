@@ -15,9 +15,15 @@ const Results = ({ movies }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   function selectReveal(title) {
+    if (title === revealSelected && isOpen) {
+      setIsOpen(false)
+      return
+    }
     setRevealSelected(title)
-    setIsOpen(!isOpen)
+    setIsOpen(true)
   }
+
+  console.log(movies)
 
   return (
     <MovieUl>

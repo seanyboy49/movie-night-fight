@@ -35,18 +35,20 @@ export const MovieRevealButton = styled.button`
 `
 
 export const MovieDetailContainer = styled.div`
-  display: none;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease-in-out;
+  height: 0;
+  overflow: hidden;
   ${(props) => {
     return (
       props.isActive &&
       css`
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        height: 190px;
       `
     )
-  }}
+  }};
 `
 
 export const AddButton = styled.div`
