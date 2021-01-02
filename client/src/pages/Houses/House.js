@@ -4,14 +4,14 @@ import { BebasText } from '../../styles/Text'
 import { HouseContainer } from './styled'
 
 const House = ({ name, members }) => {
-  const member_count = members.length
+  const memberCount = members.length
   return (
     <HouseContainer>
       <BebasText align={'left'} size={'30px'}>
         {name}
       </BebasText>
       <BebasText size={'18px'}>
-        {member_count} housemate(s) have already joined
+        {memberCount} housemate(s) have already joined
       </BebasText>
       <div>
         {members.map((member) => {
