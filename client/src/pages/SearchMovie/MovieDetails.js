@@ -36,7 +36,7 @@ const MovieDetails = ({ movie, revealSelected, isOpen }) => {
     }
   }
   return (
-    <MovieDetailContainer isActive={revealDetail(movie.Title)}>
+    <MovieDetailContainer isActive={revealDetail(movie.imdbID)}>
       <img src={movie.Poster} alt="movie poster" width="130px" />
       <AddMovieButton addMovie={addMovie} movie={movie} />
     </MovieDetailContainer>

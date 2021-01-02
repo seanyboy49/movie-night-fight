@@ -9,8 +9,9 @@ import {
 import openArrow from '../../images/arrow-down.svg'
 import { BebasText } from '../../styles/Text'
 import MovieDetails from './MovieDetails'
+import { ReelImage } from '../../styles/LoadingReel'
 
-const Results = ({ movies }) => {
+const Results = ({ movies, loadSearchMovies }) => {
   const [revealSelected, setRevealSelected] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
@@ -23,7 +24,13 @@ const Results = ({ movies }) => {
     setIsOpen(true)
   }
 
-  console.log(movies)
+  if (loadSearchMovies) {
+    return (
+      <div>
+        <ReelImage width="50" isActive={loadSearchMovies} />
+      </div>
+    )
+  }
 
   return (
     <MovieUl>
@@ -34,7 +41,7 @@ const Results = ({ movies }) => {
               <BebasText size={'24px'} align={'left'}>
                 {movie.Title}
               </BebasText>
-              <MovieRevealButton onClick={() => selectReveal(movie.Title)}>
+              <MovieRevealButton onClick={() => selectReveal(movie.imdbID)}>
                 <img src={openArrow} alt="open arrow" />
               </MovieRevealButton>
             </MovieTitleContainer>

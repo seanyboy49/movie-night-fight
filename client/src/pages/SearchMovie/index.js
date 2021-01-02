@@ -11,6 +11,7 @@ import Results from './Results'
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
   const [movieResults, setMovieResult] = useState([])
+  const [loadSearchMovies, setLoadSearchMovie] = useState(false)
 
   const debouncedSearch = debounce(
     (currentValue) => searchMovies(currentValue),
@@ -18,8 +19,10 @@ const SearchMovie = () => {
   )
 
   async function searchMovies(currentValue) {
+    setLoadSearchMovie(true)
     if (!currentValue) {
       setMovieResult([])
+      setLoadSearchMovie(false)
       return
     }
     try {
@@ -30,7 +33,9 @@ const SearchMovie = () => {
       if (data.Search) {
         setMovieResult(data.Search)
       }
+      setLoadSearchMovie(false)
     } catch (error) {
+      setLoadSearchMovie(false)
       console.log('error', error)
     }
   }
@@ -48,7 +53,7 @@ const SearchMovie = () => {
         <SearchImg />
         <SearchInput type="text" onChange={handleChange} />
       </SearchBar>
-      <Results movies={movieResults} />
+      <Results movies={movieResults} loadSearchMovies={loadSearchMovies} />
     </SearchMovieContainer>
   )
 }
