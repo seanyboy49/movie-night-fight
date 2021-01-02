@@ -20,9 +20,9 @@ const House = ({ name, members }) => {
               margin={'5px 0'}
               size={'24px'}
               align={'left'}
-              key={member}
+              key={member.user}
             >
-              {member}
+              {member.user}
             </BebasText>
           )
         })}
