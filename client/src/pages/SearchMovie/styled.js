@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import clear from '../../images/delete.svg'
 
 export const SearchMovieContainer = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ export const MovieUl = styled.ul`
   padding: 0;
 `
 
-export const MovieRevealButton = styled.button`
+export const Button = styled.button`
   background-color: white;
   border: none;
   outline: none;
@@ -60,3 +61,8 @@ export const AddButton = styled.div`
   padding: 5px 30px;
   cursor: pointer;
 `
+
+export const ClearImg = styled.img.attrs({
+  src: `${clear}`,
+  alt: 'clear input',
+})``

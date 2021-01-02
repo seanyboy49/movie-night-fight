@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import debounce from 'lodash.debounce'
 
-import { SearchMovieContainer } from './styled'
+import { SearchMovieContainer, ClearImg, Button } from './styled'
 import { BebasText } from '../../styles/Text'
 import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
@@ -10,6 +10,7 @@ import Results from './Results'
 
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
+  const [inputValue, setInputValue] = useState('')
   const [movieResults, setMovieResult] = useState([])
   const [loadSearchMovies, setLoadSearchMovie] = useState(false)
 
@@ -41,7 +42,13 @@ const SearchMovie = () => {
   }
 
   const handleChange = (e) => {
-    debouncedSearch(e.target.value)
+    setInputValue(e.target.value)
+    debouncedSearch(inputValue)
+  }
+
+  function clearInput() {
+    setInputValue('')
+    setMovieResult([])
   }
 
   return (
@@ -51,7 +58,10 @@ const SearchMovie = () => {
       </BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput type="text" onChange={handleChange} />
+        <SearchInput type="text" value={inputValue} onChange={handleChange} />
+        <Button onClick={clearInput}>
+          <ClearImg />
+        </Button>
       </SearchBar>
       <Results movies={movieResults} loadSearchMovies={loadSearchMovies} />
     </SearchMovieContainer>
