@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 
 import { SearchMovieContainer, ClearImg, Button } from './styled'
@@ -16,12 +16,13 @@ const SearchMovie = () => {
   const [movieResults, setMovieResult] = useState([])
   const [loadSearchMovies, setLoadSearchMovie] = useState(false)
 
-  const debouncedSearch = debounce(
-    (currentValue) => searchMovies(currentValue),
-    1000
+  const debouncedSearch = useCallback(
+    debounce((currentValue) => searchMovies(currentValue), 1000),
+    []
   )
 
   async function searchMovies(currentValue) {
+    console.log('calling function')
     setLoadSearchMovie(true)
     if (!currentValue) {
       setMovieResult([])
@@ -29,6 +30,7 @@ const SearchMovie = () => {
       return
     }
     try {
+      console.log(currentValue)
       const response = await authFetch(
         `${apiUrl}/movies?search=${currentValue}`
       )
@@ -54,7 +56,7 @@ const SearchMovie = () => {
 
   const handleChange = (e) => {
     setInputValue(e.target.value)
-    debouncedSearch(inputValue)
+    debouncedSearch(e.target.value)
   }
 
   function clearInput(e) {
