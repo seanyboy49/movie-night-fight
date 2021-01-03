@@ -8,17 +8,7 @@ import { useMovies } from '../../providers/Movies'
 
 const AddMovieButton = ({ movie }) => {
   const { apiUrl } = useConfiguration()
-  const { movies } = useMovies()
-
-  function checkAddedMovies(title) {
-    for (const movie of movies) {
-      const movieTitle = movie.name
-      if (movieTitle === title) {
-        return true
-      }
-    }
-    return false
-  }
+  const { getUserSavedMovies } = useMovies()
 
   async function addMovie(movie) {
     const body = {
@@ -36,6 +26,8 @@ const AddMovieButton = ({ movie }) => {
       })
       const data = await response.json()
       console.log(data)
+      getUserSavedMovies()
+      movie.isAdded = true
     } catch (error) {
       console.log('error', error)
     }
@@ -44,7 +36,7 @@ const AddMovieButton = ({ movie }) => {
   return (
     <Ticket width={'150'}>
       <LeftCutout />
-      {checkAddedMovies(movie.Title) ? (
+      {movie.isAdded ? (
         <AddButton onClick={(e) => addMovie(movie)}>Remove</AddButton>
       ) : (
         <AddButton onClick={(e) => addMovie(movie)}>Add</AddButton>

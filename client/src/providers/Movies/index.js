@@ -41,7 +41,7 @@ const MoviesProvider = ({ children }) => {
   }
 
   return (
-    <MoviesContext.Provider value={{ movies, isLoading }}>
+    <MoviesContext.Provider value={{ movies, isLoading, getUserSavedMovies }}>
       <NavigationHeader />
 
       {children}

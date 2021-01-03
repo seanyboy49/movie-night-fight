@@ -7,9 +7,11 @@ import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import Results from './Results'
+import { useMovies } from '../../providers/Movies'
 
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
+  const { movies } = useMovies()
   const [inputValue, setInputValue] = useState('')
   const [movieResults, setMovieResult] = useState([])
   const [loadSearchMovies, setLoadSearchMovie] = useState(false)
@@ -32,6 +34,15 @@ const SearchMovie = () => {
       )
       const data = await response.json()
       if (data.Search) {
+        const movieId = []
+        for (const movie of movies) {
+          movieId.push(movie.omdb_id)
+        }
+        for (const movieData of data.Search) {
+          if (movieId.includes(movieData.imdbID)) {
+            movieData['isAdded'] = true
+          }
+        }
         setMovieResult(data.Search)
       }
       setLoadSearchMovie(false)
@@ -49,7 +60,6 @@ const SearchMovie = () => {
   function clearInput(e) {
     setInputValue('')
     setMovieResult([])
-    console.log(e.target.value)
   }
 
   return (
