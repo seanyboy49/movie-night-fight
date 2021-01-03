@@ -7,6 +7,11 @@ from server.models import House, UserHouses
 from server.extensions import db
 
 
+@houses_bp.app_errorhandler(CustomError)
+def invalid_api_usage(e):
+    return jsonify(e.serialize()), e.status_code
+
+
 @houses_bp.route('/api/joined-houses')
 @auth_required
 def get_joined_houses():
@@ -66,3 +71,28 @@ def create_house():
         payload = {'meta': str(e)}
 
         raise CustomError("Failed to search houses", 500, payload)
+
+
+@houses_bp.route('/api/houses/<house_id>/memberships', methods=["POST"])
+@auth_required
+def join_house(house_id):
+    user = current_user()
+
+    try:
+        house_to_join = House.query.get(house_id)
+
+        filtered = filter(lambda u: u.user.id == user.id, house_to_join.users)
+        user_in_house = next(filtered, None)
+
+        if user_in_house:
+            raise Exception("User has already joined house")
+
+        house_to_join.users.append(UserHouses(user=user))
+        db.session.commit()
+
+        return make_response(house_to_join.serialize()), 201
+
+    except Exception as e:
+        payload = {'meta': str(e)}
+
+        raise CustomError("Failed to join house", 500, payload)
