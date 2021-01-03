@@ -58,7 +58,7 @@ export const AddButton = styled.div`
   color: white;
   font-family: Bebas Neue;
   font-size: 27px;
-  padding: 5px 30px;
+  padding: 5px 20px;
   cursor: pointer;
 `
 
