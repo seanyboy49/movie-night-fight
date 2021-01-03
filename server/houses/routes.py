@@ -56,7 +56,7 @@ def create_house():
             user.houses.append(UserHouses(house=new_house, user_role="admin"))
             db.session.commit()
 
-            return '', 201
+            return make_response(new_house.serialize()), 201
 
         else:
             data = {'message': 'House has already been created'}

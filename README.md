@@ -118,7 +118,7 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 #### POST /watchlist 
 Add to a user's watchlist. Expects `content-type: application/json`.
 
-**Request Body**
+**Example Request Body**
 ```json
     {
       "poster_url": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
@@ -280,4 +280,34 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
     ]
   }
 ]
+```
+
+#### POST /houses
+Create a house.
+
+A user who creates a house will automatically join the house as `admin`.
+
+**Example request body**
+```json
+{
+  "name": "Rich Mohagany"
+}
+```
+
+Returns the newly created house.
+
+[201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
+```json
+{
+    "id": 11,
+    "name": "The Batcave",
+    "users": [
+        {
+            "role": "admin",
+            "user": "sean"
+        }
+    ]
+}
+
 ```
