@@ -83,7 +83,8 @@ class House(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     users = db.relationship('UserHouses',
                             backref='house',
-                            lazy="joined")
+                            lazy="joined",
+                            cascade="all, delete-orphan")
 
     @staticmethod
     def getUser(user_house):
@@ -110,3 +111,6 @@ class UserHouses(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
     user_role = db.Column(db.String(30), default="house_mate")
     user = db.relationship(User, lazy="joined")
+
+    def set_role(self, user_role):
+        self.user_role = user_role
