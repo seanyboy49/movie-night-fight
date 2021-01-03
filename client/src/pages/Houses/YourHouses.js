@@ -4,7 +4,7 @@ import { BebasText } from '../../styles/Text'
 import { HousesComponentContainer } from './styled'
 import House from './House'
 
-const YourHouse = ({ houses }) => {
+const YourHouses = ({ houses }) => {
   return (
     <HousesComponentContainer>
       <BebasText size={'30px'}>Your Houses</BebasText>
@@ -19,4 +19,4 @@ const YourHouse = ({ houses }) => {
   )
 }
 
-export default YourHouse
+export default YourHouses

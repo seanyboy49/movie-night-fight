@@ -114,8 +114,6 @@ def mark_as_watched(movie_id):
         raise CustomError("Unable to update movie as watched", 500, payload)
 
 
-
-
 @movies_bp.route('/api/movies')
 @auth_required
 def get_movies():

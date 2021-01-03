@@ -3,6 +3,7 @@ from .extensions import db
 
 class User(db.Model):
     __tablename__ = "users"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
@@ -11,8 +12,10 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True, server_default='true')
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     watchlist = db.relationship('UserMovies',
-                                backref='watchers',
+                                backref='watcher',
                                 cascade="all, delete-orphan")
+    houses = db.relationship('UserHouses',
+                             backref='housemate')
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -42,6 +45,7 @@ class User(db.Model):
 
 class Movie(db.Model):
     __tablename__ = "movies"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), index=True, unique=True)
@@ -51,6 +55,7 @@ class Movie(db.Model):
 
     def serialize(self):
         return {
+            'id': self.id,
             'name': self.name,
             'omdb_id': self.omdb_id,
             'poster_url': self.poster_url
@@ -59,6 +64,7 @@ class Movie(db.Model):
 
 class UserMovies(db.Model):
     __tablename__ = "user_movies"
+    __table_args__ = {'extend_existing': True}
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
@@ -69,23 +75,43 @@ class UserMovies(db.Model):
         self.movie = movie
 
 
-user_houses = db.Table('user_houses',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('house_id', db.Integer, db.ForeignKey('houses.id'))
-)
-
-
 class House(db.Model):
     __tablename__ = "houses"
+    __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    users = db.relationship('User', secondary=user_houses, lazy=True, backref=db.backref('houses', lazy=True))
+    users = db.relationship('UserHouses',
+                            backref='house',
+                            lazy="joined",
+                            cascade="all, delete-orphan")
+
+    @staticmethod
+    def getUser(user_house):
+        return {
+            'user': user_house.user.username,
+            'role': user_house.user_role
+        }
 
     def serialize(self):
+        users = list(map(lambda u: self.getUser(u), self.users))
+
         return {
             'id': self.id,
             'name': self.name,
-            'users': list(map(lambda u: u.username, self.users))
+            'users': users
         }
+
+
+class UserHouses(db.Model):
+    __tablename__ = 'user_houses'
+    __table_args__ = {'extend_existing': True}
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
+    user_role = db.Column(db.String(30), default="house_mate")
+    user = db.relationship(User, lazy="joined")
+
+    def set_role(self, user_role):
+        self.user_role = user_role
