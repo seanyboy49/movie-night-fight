@@ -12,6 +12,10 @@ const DropdownMenu = ({ isOpen, background, color, onClick }) => {
     return (
       <Menu background={background} color={color} isOpen={isOpen}>
         <SmallText>
+          <NavLink to="/">Home</NavLink>
+        </SmallText>
+        <Divider />
+        <SmallText>
           <NavLink to="/login">Log In</NavLink>
         </SmallText>
         <Divider />
@@ -24,11 +28,23 @@ const DropdownMenu = ({ isOpen, background, color, onClick }) => {
 
   return (
     <Menu isOpen={isOpen} onClick={() => onClick(!isOpen)}>
+      <SmallText>
+        <NavLink color={'black'} to="/movies-list">
+          Movie List
+        </NavLink>
+      </SmallText>
+      <Divider />
       <SmallText>View past choices</SmallText>
       <Divider />
       <SmallText>
         <NavLink color={'black'} to="/houses">
           Switch houses
+        </NavLink>
+      </SmallText>
+      <Divider />
+      <SmallText>
+        <NavLink color={'black'} to="/search-movies">
+          Search Movies
         </NavLink>
       </SmallText>
       <Divider />

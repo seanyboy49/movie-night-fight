@@ -33,6 +33,29 @@ const AddMovieButton = ({ movie }) => {
     }
   }
 
+  // async function removeMovie(movie) {
+  //   const movie = {
+  //     poster_url: movie.Poster,
+  //     name: movie.Title,
+  //     omdb_id: movie.imdbID,
+  //   }
+  //   try {
+  //     const response = await authFetch(`${apiUrl}/watchlist`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(body),
+  //     })
+  //     const data = await response.json()
+  //     console.log(data)
+  //     getUserSavedMovies()
+  //     movie.isAdded = true
+  //   } catch (error) {
+  //     console.log('error', error)
+  //   }
+  // }
+
   return (
     <Ticket width={'150'}>
       <LeftCutout />

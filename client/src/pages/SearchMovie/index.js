@@ -22,7 +22,6 @@ const SearchMovie = () => {
   )
 
   async function searchMovies(currentValue) {
-    console.log('calling function')
     setLoadSearchMovie(true)
     if (!currentValue) {
       setMovieResult([])
