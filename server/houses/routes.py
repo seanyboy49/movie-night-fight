@@ -66,6 +66,3 @@ def create_house():
         payload = {'meta': str(e)}
 
         raise CustomError("Failed to search houses", 500, payload)
-
-
-    return jsonify(request_body)
