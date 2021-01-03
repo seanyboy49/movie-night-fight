@@ -129,7 +129,7 @@ def leave_house(house_id):
         # Otherwise, just leave the house
         else:
             house_to_leave.users.remove(user_with_role)
-            data['message'] = 'Successfully left house'
+            data['message'] = f'Successfully left {house_to_leave.name}'
 
         db.session.commit()
         return make_response(jsonify(data), 200)

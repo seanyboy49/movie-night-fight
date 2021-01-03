@@ -324,10 +324,11 @@ The route will add the current_user to the house's `users` list.
 
 **Example request**
 ```js
-curl http://0.0.0.0:8000/api/houses/7/memberships
+curl -X POST http://0.0.0.0:8000/api/houses/7/memberships -X 
 ```
 
 Returns the house with the new user.
+[201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
 
 ```json
 {
@@ -345,3 +346,40 @@ Returns the house with the new user.
     ]
 }
 ```
+
+#### DELETE /houses/<house_id>/memberships
+Leave a house.
+
+**Example request**
+```js
+curl -X DELETE http://0.0.0.0:8000/api/houses/7/memberships
+```
+
+There are three possible outcomes to this. All are [200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
+1. The user is the last person left in the house. Therefore, house gets deleted when the last user leaves.
+
+
+```json
+{
+    "message": "Successfully left and deleted House of Mirrors"
+}
+```
+
+2. The user has an `admin` role. The user leaves, and we automatically assign admin role to another person in the house.
+
+```json
+{
+    "message": "Successfully left House of Mirrors. Jina is now admin."
+}
+```
+
+3. The user is just a `house_mate`. The user leaves the house.
+
+
+```json
+{
+    "message": "Successfully left House of Mirrors."
+}
+```
+
