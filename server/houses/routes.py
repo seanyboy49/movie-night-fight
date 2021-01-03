@@ -1,9 +1,10 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 from flask_praetorian import auth_required, current_user
 
 from server.houses import houses_bp
 from server.error import CustomError
-from server.models import House
+from server.models import House, UserHouses
+from server.extensions import db
 
 
 @houses_bp.route('/api/joined-houses')
@@ -35,3 +36,36 @@ def search_houses():
         payload = {'meta': str(e)}
 
         raise CustomError("Failed to search houses", 500, payload)
+
+
+@houses_bp.route('/api/houses', methods=["POST"])
+@auth_required
+def create_house():
+    request_body = request.get_json()
+
+    if request_body is None:
+        raise CustomError("No house name provided in body")
+
+    user = current_user()
+
+    try:
+        # Only create house if one of that name doesn't already exist
+        if House.query.filter_by(name=request_body.get('name')).count() < 1:
+            new_house = House(name=request_body.get('name'))
+            db.session.add(new_house)
+            user.houses.append(UserHouses(house=new_house, user_role="admin"))
+            db.session.commit()
+
+            return '', 201
+
+        else:
+            data = {'message': 'House has already been created'}
+            return make_response(jsonify(data), 200)
+
+    except Exception as e:
+        payload = {'meta': str(e)}
+
+        raise CustomError("Failed to search houses", 500, payload)
+
+
+    return jsonify(request_body)

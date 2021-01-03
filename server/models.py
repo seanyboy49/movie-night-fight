@@ -110,6 +110,3 @@ class UserHouses(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
     user_role = db.Column(db.String(30), default="house_mate")
     user = db.relationship(User, lazy="joined")
-
-    def __init__(self, house):
-        self.house = house
