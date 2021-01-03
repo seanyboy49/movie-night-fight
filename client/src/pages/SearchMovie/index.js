@@ -46,9 +46,10 @@ const SearchMovie = () => {
     debouncedSearch(inputValue)
   }
 
-  function clearInput() {
+  function clearInput(e) {
     setInputValue('')
     setMovieResult([])
+    console.log(e.target.value)
   }
 
   return (
