@@ -97,17 +97,20 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 
 ```json
 [
-  {
+  { 
+    "id": 1,
     "name": "Star Wars: Episode V - The Empire Strikes Back",
     "omdb_id": "tt0080684",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   {
+    "id": 3,
     "name": "Aladdin",
     "omdb_id": "tt6139732",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BMjQ2ODIyMjY4MF5BMl5BanBnXkFtZTgwNzY4ODI2NzM@._V1_SX300.jpg"
   },
   {
+    "id": 4,
     "name": "Love Actually",
     "omdb_id": "tt0314331",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg"
