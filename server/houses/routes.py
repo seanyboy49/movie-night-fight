@@ -113,15 +113,13 @@ def leave_house(house_id):
         data = {}
 
         # If the user is the last person, delete the house
-        if len(house_to_leave.users) <= 1:
-            print('last person, delete house')
+        if len(house_to_leave.users) <= 1:            
             house_to_leave.users.remove(user_with_role)
             db.session.delete(house_to_leave)
             data['message'] = f'Successfully left and deleted {house_to_leave.name}'
 
         # If the user is an admin, make someone else admin
         elif user_with_role.user_role == 'admin':
-            print('person is admin')
             house_to_leave.users.remove(user_with_role)
             filtered = filter(lambda u: u.user.id != user.id, house_to_leave.users)
             next_user = next(filtered, None)
@@ -133,18 +131,9 @@ def leave_house(house_id):
             house_to_leave.users.remove(user_with_role)
             data['message'] = 'Successfully left house'
 
-        print('commit changes')
         db.session.commit()
         return make_response(jsonify(data), 200)
 
     except Exception as e:
         payload = {'meta': str(e)}
-        print('e', e)
-
         raise CustomError("Failed to leave house", 500, payload)
-
-
-
-
-
-    # if current_user is last person, then delete house as well
