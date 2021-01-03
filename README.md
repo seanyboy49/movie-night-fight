@@ -97,17 +97,20 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 
 ```json
 [
-  {
+  { 
+    "id": 1,
     "name": "Star Wars: Episode V - The Empire Strikes Back",
     "omdb_id": "tt0080684",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   {
+    "id": 3,
     "name": "Aladdin",
     "omdb_id": "tt6139732",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BMjQ2ODIyMjY4MF5BMl5BanBnXkFtZTgwNzY4ODI2NzM@._V1_SX300.jpg"
   },
   {
+    "id": 4,
     "name": "Love Actually",
     "omdb_id": "tt0314331",
     "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY4NjQ5NDc0Nl5BMl5BanBnXkFtZTYwNjk5NDM3._V1_SX300.jpg"
@@ -118,7 +121,7 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 #### POST /watchlist 
 Add to a user's watchlist. Expects `content-type: application/json`.
 
-**Request Body**
+**Example Request Body**
 ```json
     {
       "poster_url": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
@@ -281,3 +284,102 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
   }
 ]
 ```
+
+#### POST /houses
+Create a house.
+
+A user who creates a house will automatically join the house as `admin`.
+
+**Example request body**
+```json
+{
+  "name": "Rich Mohagany"
+}
+```
+
+Returns the newly created house.
+
+[201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
+```json
+{
+    "id": 11,
+    "name": "The Batcave",
+    "users": [
+        {
+            "role": "admin",
+            "user": "sean"
+        }
+    ]
+}
+
+```
+
+#### POST /houses/<house_id>/memberships
+Join a house.
+
+A user who joins a house will automatically join the house as a `house_mate` role.
+
+The route will add the current_user to the house's `users` list.
+
+**Example request**
+```js
+curl -X POST http://0.0.0.0:8000/api/houses/7/memberships -X 
+```
+
+Returns the house with the new user.
+[201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
+```json
+{
+    "id": 11,
+    "name": "The Batcave",
+    "users": [
+        {
+            "role": "admin",
+            "user": "sean"
+        },
+        {
+            "role": "house_mate",
+            "user": "seb"
+        }
+    ]
+}
+```
+
+#### DELETE /houses/<house_id>/memberships
+Leave a house.
+
+**Example request**
+```js
+curl -X DELETE http://0.0.0.0:8000/api/houses/7/memberships
+```
+
+There are three possible outcomes to this. All are [200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
+1. The user is the last person left in the house. Therefore, house gets deleted when the last user leaves.
+
+
+```json
+{
+    "message": "Successfully left and deleted House of Mirrors"
+}
+```
+
+2. The user has an `admin` role. The user leaves, and we automatically assign admin role to another person in the house.
+
+```json
+{
+    "message": "Successfully left House of Mirrors. Jina is now admin."
+}
+```
+
+3. The user is just a `house_mate`. The user leaves the house.
+
+
+```json
+{
+    "message": "Successfully left House of Mirrors."
+}
+```
+
