@@ -311,3 +311,34 @@ Returns the newly created house.
 }
 
 ```
+
+#### POST /houses/<house_id>/memberships
+Join a house.
+
+A user who joins a house will automatically join the house as a `house_mate` role.
+
+The route will add the current_user to the house's `users` list.
+
+**Example request**
+```js
+curl http://0.0.0.0:8000/api/houses/7/memberships
+```
+
+Returns the house with the new user.
+
+```json
+{
+    "id": 11,
+    "name": "The Batcave",
+    "users": [
+        {
+            "role": "admin",
+            "user": "sean"
+        },
+        {
+            "role": "house_mate",
+            "user": "seb"
+        }
+    ]
+}
+```
