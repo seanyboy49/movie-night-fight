@@ -55,6 +55,7 @@ class Movie(db.Model):
 
     def serialize(self):
         return {
+            'id': self.id,
             'name': self.name,
             'omdb_id': self.omdb_id,
             'poster_url': self.poster_url
