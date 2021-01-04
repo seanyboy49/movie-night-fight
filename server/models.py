@@ -139,4 +139,4 @@ class HouseTurns(db.Model):
 
     user = db.relationship(User, lazy="joined")
     house = db.relationship(House, lazy="joined")
-    movie = db.relationship(House, lazy="joined")
+    movie = db.relationship(Movie, lazy="joined")

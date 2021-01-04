@@ -4,7 +4,7 @@ from flask_praetorian import auth_required, current_user
 
 from server.movies import movies_bp
 from server.error import CustomError
-from server.models import Movie, UserMovies
+from server.models import Movie, UserMovies, HouseTurns, House
 from server.extensions import db
 
 
@@ -24,11 +24,12 @@ def get_watchlist():
     return jsonify(response)
 
 
-@movies_bp.route('/api/watchlist', methods=["POST"])
+@movies_bp.route('/api/watchlist/<house_id>', methods=["POST"])
 @auth_required
-def add_to_watchlist():
+def add_to_watchlist(house_id):
     user = current_user()
     request_body = request.get_json()
+    house = House.query.get(house_id)
 
     if not request_body:
         raise CustomError("No movie provided in request body")
@@ -48,18 +49,20 @@ def add_to_watchlist():
         movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
         filtered = filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist)
         movie_to_add = next(filtered, None)
-        # If watchlist does not contain movie, add to watchlist
+
+        # If watchlist does not contain movie, add to watchlist, create HouseTurn
         if movie_to_add is None:
             user.watchlist.append(UserMovies(movie))
-
+            db.session.add(HouseTurns(user=user, movie=movie, house=house))
             db.session.commit()
             data = {'message': 'Movie added to watchlist'}
 
             return make_response(jsonify(data), 201)
 
-        # If it IS in watchlist, but marked as watched, then nullify watched_at
+        # If it IS in watchlist, but marked as watched, then nullify watched_at, create HouseTurn
         elif movie_to_add.watched_at is not None:
             movie_to_add.watched_at = None
+            db.session.add(HouseTurns(user=user, movie=movie, house=house))
             db.session.commit()
             data = {'message': 'Movie added to watchlist'}
 

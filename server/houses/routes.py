@@ -149,7 +149,8 @@ def get_house_turns(house_id):
     if last_house_turn is None:        
         data = {
             'current_turn': house.users[0].user.serialize(),
-            'next_turn': house.users[1].user.serialize()
+            'next_turn': house.users[1].user.serialize(),
+            'history': []
         }
         return make_response(jsonify(data), 200)
 
