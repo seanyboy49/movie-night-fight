@@ -112,6 +112,7 @@ class UserHouses(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
     user_role = db.Column(db.String(30), default="house_mate")
     user = db.relationship(User, lazy="joined")
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     def set_role(self, user_role):
         self.user_role = user_role
