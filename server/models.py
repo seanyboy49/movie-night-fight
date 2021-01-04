@@ -116,3 +116,19 @@ class UserHouses(db.Model):
 
     def set_role(self, user_role):
         self.user_role = user_role
+
+
+class HouseTurns(db.Model):
+    __tablename__ = 'house_turns'
+    __table_args__ = {'extend_existing': True}
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    user = db.relationship(User, lazy="joined")
+    house = db.relationship(House, lazy="joined")
+    movie = db.relationship(House, lazy="joined")
+
+
