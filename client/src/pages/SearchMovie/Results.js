@@ -6,7 +6,7 @@ import { BebasText } from '../../styles/Text'
 import MovieDetails from './MovieDetails'
 import { ReelImage } from '../../styles/LoadingReel'
 
-const Results = ({ movies, loadSearchMovies }) => {
+const Results = ({ movies, isSearchResultsLoading }) => {
   const [revealSelected, setRevealSelected] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
@@ -19,10 +19,10 @@ const Results = ({ movies, loadSearchMovies }) => {
     setIsOpen(true)
   }
 
-  if (loadSearchMovies) {
+  if (isSearchResultsLoading) {
     return (
       <div>
-        <ReelImage width="50" isActive={loadSearchMovies} />
+        <ReelImage width="50" isActive={isSearchResultsLoading} />
       </div>
     )
   }

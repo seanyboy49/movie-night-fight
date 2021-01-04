@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+
 import clear from '../../images/delete.svg'
 
 export const SearchMovieContainer = styled.div`

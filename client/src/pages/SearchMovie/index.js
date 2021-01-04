@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 
 import { SearchMovieContainer, ClearImg, Button } from './styled'
@@ -9,20 +9,27 @@ import { authFetch } from '../../auth'
 import Results from './Results'
 import { useMovies } from '../../providers/Movies'
 
+function checkAddedMovies(movieIds, movieData) {
+  movieData.forEach((movie) => {
+    if (movieIds.includes(movie.imdbID)) {
+      movie['isAdded'] = true
+    }
+  })
+  return movieData
+}
+
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
   const { movies } = useMovies()
   const [inputValue, setInputValue] = useState('')
-  const [movieResults, setMovieResult] = useState([])
-  const [loadSearchMovies, setLoadSearchMovie] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+  const [isSearchResultsLoading, setIsSearchResultsLoading] = useState(false)
 
   const searchMovies = async (currentValue, movieIds) => {
-    console.log('callback')
-
-    setLoadSearchMovie(true)
+    setIsSearchResultsLoading(true)
     if (!currentValue) {
-      setMovieResult([])
-      setLoadSearchMovie(false)
+      setSearchResults([])
+      setIsSearchResultsLoading(false)
       return
     }
 
@@ -33,18 +40,13 @@ const SearchMovie = () => {
       )
       const data = await response.json()
 
-      console.log('hello')
       if (data.Search) {
-        for (const movieData of data.Search) {
-          if (movieIds.includes(movieData.imdbID)) {
-            movieData['isAdded'] = true
-          }
-        }
-        setMovieResult(data.Search)
+        const updatedMovieData = checkAddedMovies(movieIds, data.Search)
+        setSearchResults(updatedMovieData)
       }
-      setLoadSearchMovie(false)
+      setIsSearchResultsLoading(false)
     } catch (error) {
-      setLoadSearchMovie(false)
+      setIsSearchResultsLoading(false)
       console.log('error', error)
     }
   }
@@ -67,7 +69,7 @@ const SearchMovie = () => {
 
   function clearInput(e) {
     setInputValue('')
-    setMovieResult([])
+    setSearchResults([])
   }
 
   return (
@@ -82,7 +84,10 @@ const SearchMovie = () => {
           <ClearImg />
         </Button>
       </SearchBar>
-      <Results movies={movieResults} loadSearchMovies={loadSearchMovies} />
+      <Results
+        movies={searchResults}
+        isSearchResultsLoading={isSearchResultsLoading}
+      />
     </SearchMovieContainer>
   )
 }

@@ -6,12 +6,8 @@ import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useMovies } from '../../providers/Movies'
 
-function findMovieId(movies, movieOmdbId) {
-  for (const movie of movies) {
-    if (movie.omdb_id === movieOmdbId) {
-      return movie.id
-    }
-  }
+function findMovieById(movies, movieOmdbId) {
+  return movies.find((m) => m.omdb_id === movieOmdbId)
 }
 
 const AddMovieButton = ({ movie }) => {
@@ -32,8 +28,7 @@ const AddMovieButton = ({ movie }) => {
         },
         body: JSON.stringify(body),
       })
-      const data = await response.json()
-      console.log(data)
+      await response.json()
       getUserSavedMovies()
       movie.isAdded = true
     } catch (error) {
@@ -42,14 +37,12 @@ const AddMovieButton = ({ movie }) => {
   }
 
   async function removeMovie(movieOmdbId) {
-    const movieId = findMovieId(movies, movieOmdbId).toString()
-    console.log('movieId', typeof movieId)
+    const movieId = findMovieById(movies, movieOmdbId).id
     try {
       const response = await authFetch(`${apiUrl}/watchlist/${movieId}`, {
         method: 'DELETE',
       })
       if (response.ok) {
-        console.log('everything is okay')
         getUserSavedMovies()
         movie.isAdded = false
       }
