@@ -1,36 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React from 'react'
 
 import { PosterContainer } from '../../styles/Background'
-import { useConfiguration } from '../../providers/Configuration'
+import { useMovies } from '../../providers/Movies'
 import PosterStack from '../../components/PosterStack'
 import NoMovies from './NoMovies'
 import { LoadingText } from '../../styles/Text'
 import reel from '../../images/film-reel.svg'
 import { ReelImage } from '../../styles/LoadingReel'
-import { authFetch } from '../../auth'
 
 const Posters = () => {
-  const { apiUrl } = useConfiguration()
-  const [movies, setMovies] = useState(undefined)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const getUserSavedMovies = useCallback(async () => {
-    setIsLoading(true)
-
-    try {
-      const response = await authFetch(`${apiUrl}/watchlist`)
-      const data = await response.json()
-      setMovies(data)
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log('error', error)
-    }
-  }, [apiUrl])
-
-  useEffect(() => {
-    getUserSavedMovies()
-  }, [getUserSavedMovies])
+  const { movies, isLoading } = useMovies()
 
   if (isLoading) {
     return (

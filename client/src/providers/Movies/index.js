@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useCallback, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import NavigationHeader from '../../components/NavigationHeader'
+import { useConfiguration } from '../Configuration'
 
-import { useAuth } from '../../auth'
+import { useAuth, authFetch } from '../../auth'
 
 const MoviesContext = React.createContext()
 
@@ -12,15 +13,35 @@ export const useMovies = () => {
   return useContext(MoviesContext) || {}
 }
 
-const MoviesProvider = ({ children, value }) => {
+const MoviesProvider = ({ children }) => {
   const [logged] = useAuth()
+  const { apiUrl } = useConfiguration()
+  const [movies, setMovies] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getUserSavedMovies = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await authFetch(`${apiUrl}/watchlist`)
+      const data = await response.json()
+      setMovies(data)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      console.log('error', error)
+    }
+  }, [apiUrl])
+
+  useEffect(() => {
+    getUserSavedMovies()
+  }, [getUserSavedMovies])
 
   if (!logged) {
     return <Redirect to="/login" />
   }
 
   return (
-    <MoviesContext.Provider value={value}>
+    <MoviesContext.Provider value={{ movies, isLoading, getUserSavedMovies }}>
       <NavigationHeader />
 
       {children}

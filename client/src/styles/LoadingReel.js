@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components'
+import reel from '../images/film-reel.svg'
 
 const spin = keyframes`
     0% {
@@ -9,7 +10,10 @@ const spin = keyframes`
     }
 `
 
-export const ReelImage = styled.img`
+export const ReelImage = styled.img.attrs({
+  src: `${reel}`,
+  alt: 'reel',
+})`
   animation: ${spin} 3s linear infinite;
   width: 92px;
 
