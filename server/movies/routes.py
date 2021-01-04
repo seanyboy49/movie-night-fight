@@ -103,14 +103,15 @@ def mark_as_watched():
     user_movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
     movie = Movie.query.get(movie_id)
     house = House.query.get(house_id)
+    print('user', user)
 
     if user_movie_to_patch is None:
         raise CustomError("Movie could not be found", 404)
 
     try:
         user_movie_to_patch.watched_at = db.func.current_timestamp()
-        db.session.add(HouseTurns(user=user, movie=movie, house=house))
-        db.session.commit()
+        # db.session.add(HouseTurns(user=user, movie=movie, house=house))
+        # db.session.commit()
         data = {'message': 'Movie marked as watched'}
 
         return make_response(jsonify(data), 201)

@@ -145,8 +145,8 @@ def get_house_turns(house_id):
     house = House.query.get(house_id)
     last_house_turn = house.turns and house.turns[-1] or None
 
-    # No turns yet, so set current/next turns to be first and second users
-    if last_house_turn is None:        
+    # No turns yet, so set current and next turns from house.users
+    if last_house_turn is None:
         data = {
             'current_turn': house.users[0].user.serialize(),
             'next_turn': house.users[1].user.serialize(),
@@ -165,6 +165,7 @@ def get_house_turns(house_id):
             'next_turn': house.users[next_turn_index].user.serialize(),
             'history': [turn.serialize() for turn in house.turns]
         }
+        
         return make_response(jsonify(data), 200)
 
 
