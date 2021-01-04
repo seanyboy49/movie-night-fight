@@ -1,42 +1,78 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 
-import { SearchMovieContainer } from './styled'
+import { SearchMovieContainer, ClearImg, Button } from './styled'
 import { BebasText } from '../../styles/Text'
 import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import Results from './Results'
+import { useMovies } from '../../providers/Movies'
+
+function checkAddedMovies(movieIds, movieData) {
+  const transformed = movieData.map((movie) => {
+    const isAdded = movieIds.includes(movie.imdbID)
+
+    return {
+      ...movie,
+      isAdded,
+    }
+  })
+  return transformed
+}
 
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
-  const [movieResults, setMovieResult] = useState([])
+  const { movies } = useMovies()
+  const [inputValue, setInputValue] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [isSearchResultsLoading, setIsSearchResultsLoading] = useState(false)
 
-  const debouncedSearch = debounce(
-    (currentValue) => searchMovies(currentValue),
-    1000
-  )
-
-  async function searchMovies(currentValue) {
+  const searchMovies = async (currentValue, movieIds) => {
+    setIsSearchResultsLoading(true)
     if (!currentValue) {
-      setMovieResult([])
+      setSearchResults([])
+      setIsSearchResultsLoading(false)
       return
     }
+
     try {
+      console.log(currentValue)
       const response = await authFetch(
         `${apiUrl}/movies?search=${currentValue}`
       )
       const data = await response.json()
+
       if (data.Search) {
-        setMovieResult(data.Search)
+        const updatedMovieData = checkAddedMovies(movieIds, data.Search)
+        setSearchResults(updatedMovieData)
       }
+      setIsSearchResultsLoading(false)
     } catch (error) {
+      setIsSearchResultsLoading(false)
       console.log('error', error)
     }
   }
 
+  const debouncedSearch = useCallback(
+    debounce(
+      (currentValue, movieIds) => searchMovies(currentValue, movieIds),
+      1000
+    ),
+    []
+  )
+
   const handleChange = (e) => {
-    debouncedSearch(e.target.value)
+    // todo: rethink this logic
+    const movieIds = movies.map((m) => m.omdb_id)
+
+    setInputValue(e.target.value)
+    debouncedSearch(e.target.value, movieIds)
+  }
+
+  function clearInput(e) {
+    setInputValue('')
+    setSearchResults([])
   }
 
   return (
@@ -46,9 +82,15 @@ const SearchMovie = () => {
       </BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput type="text" onChange={handleChange} />
+        <SearchInput type="text" value={inputValue} onChange={handleChange} />
+        <Button onClick={clearInput}>
+          <ClearImg />
+        </Button>
       </SearchBar>
-      <Results movies={movieResults} />
+      <Results
+        movies={searchResults}
+        isSearchResultsLoading={isSearchResultsLoading}
+      />
     </SearchMovieContainer>
   )
 }
