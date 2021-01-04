@@ -156,13 +156,18 @@ def get_house_turns(house_id):
 
     else:
         last_turn_index = next(index for index, user in enumerate(house.users) if user.user_id == last_house_turn.user_id)
+        users_length = len(house.users)
+        current_turn_index = (last_turn_index + 1) % users_length
+        next_turn_index = (current_turn_index + 1) % users_length
 
-        print('last_turn_index', last_turn_index)
+        data = {
+            'current_turn': house.users[current_turn_index].user.serialize(),
+            'next_turn': house.users[next_turn_index].user.serialize(),
+            'history': [turn.serialize() for turn in house.turns]
+        }
+        return make_response(jsonify(data), 200)
 
-    if len(house.turns) == 0:
-        print('no turns yet')
 
-    return 'house turns'
 
 
 # First check HouseTurns table

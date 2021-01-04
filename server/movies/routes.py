@@ -24,12 +24,11 @@ def get_watchlist():
     return jsonify(response)
 
 
-@movies_bp.route('/api/watchlist/<house_id>', methods=["POST"])
+@movies_bp.route('/api/watchlist', methods=["POST"])
 @auth_required
-def add_to_watchlist(house_id):
+def add_to_watchlist():
     user = current_user()
     request_body = request.get_json()
-    house = House.query.get(house_id)
 
     if not request_body:
         raise CustomError("No movie provided in request body")
@@ -50,19 +49,17 @@ def add_to_watchlist(house_id):
         filtered = filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist)
         movie_to_add = next(filtered, None)
 
-        # If watchlist does not contain movie, add to watchlist, create HouseTurn
+        # If watchlist does not contain movie, add to watchlist
         if movie_to_add is None:
             user.watchlist.append(UserMovies(movie))
-            db.session.add(HouseTurns(user=user, movie=movie, house=house))
             db.session.commit()
             data = {'message': 'Movie added to watchlist'}
 
             return make_response(jsonify(data), 201)
 
-        # If it IS in watchlist, but marked as watched, then nullify watched_at, create HouseTurn
+        # If it IS in watchlist, but marked as watched, then nullify watched_at
         elif movie_to_add.watched_at is not None:
             movie_to_add.watched_at = None
-            db.session.add(HouseTurns(user=user, movie=movie, house=house))
             db.session.commit()
             data = {'message': 'Movie added to watchlist'}
 
@@ -97,17 +94,22 @@ def delete_from_watchlist(movie_id):
         raise CustomError("Unable to remove movie from watchlist", 500, payload)
 
 
-@movies_bp.route('/api/watchlist/<movie_id>', methods=["PATCH"])
+@movies_bp.route('/api/watchlist', methods=["PATCH"])
 @auth_required
-def mark_as_watched(movie_id):
+def mark_as_watched():
+    movie_id = request.args.get('movieId')
+    house_id = request.args.get('houseId')
     user = current_user()
-    movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+    user_movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+    movie = Movie.query.get(movie_id)
+    house = House.query.get(house_id)
 
-    if movie_to_patch is None:
+    if user_movie_to_patch is None:
         raise CustomError("Movie could not be found", 404)
 
     try:
-        movie_to_patch.watched_at = db.func.current_timestamp()
+        user_movie_to_patch.watched_at = db.func.current_timestamp()
+        db.session.add(HouseTurns(user=user, movie=movie, house=house))
         db.session.commit()
         data = {'message': 'Movie marked as watched'}
 

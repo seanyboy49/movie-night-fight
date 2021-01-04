@@ -97,6 +97,12 @@ class House(db.Model):
                             order_by="asc(HouseTurns.created_at)",
                             lazy="joined")
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
     @staticmethod
     def getUser(user_house):
         return {
@@ -140,3 +146,9 @@ class HouseTurns(db.Model):
     user = db.relationship(User, lazy="joined")
     house = db.relationship(House, lazy="joined")
     movie = db.relationship(Movie, lazy="joined")
+
+    def serialize(self):
+        return {
+            'user': self.user.username,            
+            'movie': self.movie.name
+        }
