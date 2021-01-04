@@ -3,7 +3,7 @@ from flask_praetorian import auth_required, current_user
 
 from server.houses import houses_bp
 from server.error import CustomError
-from server.models import House, UserHouses
+from server.models import House, UserHouses, HouseTurns
 from server.extensions import db
 
 
@@ -142,6 +142,24 @@ def leave_house(house_id):
 @houses_bp.route('/api/houses/<house_id>/turns')
 @auth_required
 def get_house_turns(house_id):
+    house = House.query.get(house_id)
+    last_house_turn = house.turns and house.turns[-1] or None
+
+    # No turns yet, so set current/next turns to be first and second users
+    if last_house_turn is None:        
+        data = {
+            'current_turn': house.users[0].user.serialize(),
+            'next_turn': house.users[1].user.serialize()
+        }
+        return make_response(jsonify(data), 200)
+
+    else:
+        last_turn_index = next(index for index, user in enumerate(house.users) if user.user_id == last_house_turn.user_id)
+
+        print('last_turn_index', last_turn_index)
+
+    if len(house.turns) == 0:
+        print('no turns yet')
 
     return 'house turns'
 

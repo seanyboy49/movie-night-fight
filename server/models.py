@@ -16,6 +16,12 @@ class User(db.Model):
                                 cascade="all, delete-orphan")
     houses = db.relationship('UserHouses',
                              backref='housemate')
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'username': self.username
+        }
 
     def __repr__(self):
         return '<user> {}'.format(self.username)
@@ -85,7 +91,11 @@ class House(db.Model):
     users = db.relationship('UserHouses',
                             backref='house',
                             lazy="joined",
+                            order_by="asc(UserHouses.created_at)",
                             cascade="all, delete-orphan")
+    turns = db.relationship('HouseTurns',
+                            order_by="asc(HouseTurns.created_at)",
+                            lazy="joined")
 
     @staticmethod
     def getUser(user_house):
@@ -130,5 +140,3 @@ class HouseTurns(db.Model):
     user = db.relationship(User, lazy="joined")
     house = db.relationship(House, lazy="joined")
     movie = db.relationship(House, lazy="joined")
-
-
