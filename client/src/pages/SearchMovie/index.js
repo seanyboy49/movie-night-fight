@@ -35,11 +35,6 @@ const SearchMovie = () => {
 
       console.log('hello')
       if (data.Search) {
-        // const movieId = []
-        // for (const movie of movies) {
-        //   movieId.push(movie.omdb_id)
-        // }
-        // console.log('movieIds inside', movieIds)
         for (const movieData of data.Search) {
           if (movieIds.includes(movieData.imdbID)) {
             movieData['isAdded'] = true
