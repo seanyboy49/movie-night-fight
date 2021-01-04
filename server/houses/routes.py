@@ -137,3 +137,49 @@ def leave_house(house_id):
     except Exception as e:
         payload = {'meta': str(e)}
         raise CustomError("Failed to leave house", 500, payload)
+
+
+@houses_bp.route('/api/houses/<house_id>/turns')
+@auth_required
+def get_house_turns(house_id):
+
+    return 'house turns'
+
+
+# First check HouseTurns table
+# If HouseTurns has not completed one cycle,
+
+# generate an array of house users, ordered by creation date
+# Get the last person who had a turn in HouseTurns
+# Find that person in the array of house users
+# Use that position to find the current and next
+# [sean, jina, seb]
+# return {
+#   current_turn: sean
+#   next_turn: jina
+# }
+
+# If last_person is None,
+# then start from the beginning
+
+
+
+
+# response = {
+#     'current_turn': 'seb',
+#     'next_turn': 'jina',
+#     'history': [
+#         {
+#             'user': 'sean',
+#             'movie': 'The Social Network'
+#         },
+#         {
+#             'user': 'jina',
+#             'movie': 'Aladdin'
+#         },
+#         {
+#             'user': 'seb',
+#             'movie': 'OSS 117'
+#         },        
+#     ]
+# }
