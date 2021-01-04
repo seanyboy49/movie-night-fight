@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import debounce from 'lodash.debounce'
 
 import { SearchMovieContainer, ClearImg, Button } from './styled'
@@ -16,31 +16,32 @@ const SearchMovie = () => {
   const [movieResults, setMovieResult] = useState([])
   const [loadSearchMovies, setLoadSearchMovie] = useState(false)
 
-  const debouncedSearch = useCallback(
-    debounce((currentValue) => searchMovies(currentValue), 1000),
-    []
-  )
+  const searchMovies = async (currentValue, movieIds) => {
+    console.log('callback')
 
-  async function searchMovies(currentValue) {
     setLoadSearchMovie(true)
     if (!currentValue) {
       setMovieResult([])
       setLoadSearchMovie(false)
       return
     }
+
     try {
       console.log(currentValue)
       const response = await authFetch(
         `${apiUrl}/movies?search=${currentValue}`
       )
       const data = await response.json()
+
+      console.log('hello')
       if (data.Search) {
-        const movieId = []
-        for (const movie of movies) {
-          movieId.push(movie.omdb_id)
-        }
+        // const movieId = []
+        // for (const movie of movies) {
+        //   movieId.push(movie.omdb_id)
+        // }
+        // console.log('movieIds inside', movieIds)
         for (const movieData of data.Search) {
-          if (movieId.includes(movieData.imdbID)) {
+          if (movieIds.includes(movieData.imdbID)) {
             movieData['isAdded'] = true
           }
         }
@@ -53,9 +54,20 @@ const SearchMovie = () => {
     }
   }
 
+  const debouncedSearch = useCallback(
+    debounce(
+      (currentValue, movieIds) => searchMovies(currentValue, movieIds),
+      1000
+    ),
+    []
+  )
+
   const handleChange = (e) => {
+    // todo: rethink this logic
+    const movieIds = movies.map((m) => m.omdb_id)
+
     setInputValue(e.target.value)
-    debouncedSearch(e.target.value)
+    debouncedSearch(e.target.value, movieIds)
   }
 
   function clearInput(e) {
