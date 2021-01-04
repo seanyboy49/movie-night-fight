@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import clear from '../../images/delete.svg'
+import clearImagePath from '../../images/delete.svg'
 
 export const SearchMovieContainer = styled.div`
   display: flex;
@@ -64,6 +64,6 @@ export const AddButton = styled.div`
 `
 
 export const ClearImg = styled.img.attrs({
-  src: `${clear}`,
+  src: `${clearImagePath}`,
   alt: 'clear input',
 })``

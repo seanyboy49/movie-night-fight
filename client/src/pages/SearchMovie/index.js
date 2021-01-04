@@ -10,12 +10,15 @@ import Results from './Results'
 import { useMovies } from '../../providers/Movies'
 
 function checkAddedMovies(movieIds, movieData) {
-  movieData.forEach((movie) => {
-    if (movieIds.includes(movie.imdbID)) {
-      movie['isAdded'] = true
+  const transformed = movieData.map((movie) => {
+    const isAdded = movieIds.includes(movie.imdbID)
+
+    return {
+      ...movie,
+      isAdded,
     }
   })
-  return movieData
+  return transformed
 }
 
 const SearchMovie = () => {

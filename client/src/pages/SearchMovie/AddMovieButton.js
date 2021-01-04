@@ -21,14 +21,13 @@ const AddMovieButton = ({ movie }) => {
       omdb_id: movie.imdbID,
     }
     try {
-      const response = await authFetch(`${apiUrl}/watchlist`, {
+      await authFetch(`${apiUrl}/watchlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
       })
-      await response.json()
       getUserSavedMovies()
       movie.isAdded = true
     } catch (error) {

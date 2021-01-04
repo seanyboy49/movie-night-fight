@@ -3,9 +3,9 @@ import React from 'react'
 import AddMovieButton from './AddMovieButton'
 import { MovieDetailContainer } from './styled'
 
-const MovieDetails = ({ movie, revealSelected, isOpen }) => {
+const MovieDetails = ({ movie, selectedMovie, isOpen }) => {
   function revealDetail(title) {
-    if (title === revealSelected && isOpen) {
+    if (title === selectedMovie && isOpen) {
       return true
     } else {
       return false

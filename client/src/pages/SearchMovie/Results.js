@@ -7,15 +7,15 @@ import MovieDetails from './MovieDetails'
 import { ReelImage } from '../../styles/LoadingReel'
 
 const Results = ({ movies, isSearchResultsLoading }) => {
-  const [revealSelected, setRevealSelected] = useState('')
+  const [selectedMovie, setSelectedMovie] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
   function selectReveal(title) {
-    if (title === revealSelected && isOpen) {
+    if (title === selectedMovie && isOpen) {
       setIsOpen(false)
       return
     }
-    setRevealSelected(title)
+    setSelectedMovie(title)
     setIsOpen(true)
   }
 
@@ -42,7 +42,7 @@ const Results = ({ movies, isSearchResultsLoading }) => {
             </MovieTitleContainer>
             <MovieDetails
               movie={movie}
-              revealSelected={revealSelected}
+              selectedMovie={selectedMovie}
               isOpen={isOpen}
             />
           </MovieLi>
