@@ -3,7 +3,7 @@ from flask_praetorian import auth_required, current_user
 
 from server.houses import houses_bp
 from server.error import CustomError
-from server.models import House, UserHouses, HouseTurns
+from server.models import House, UserHouses
 from server.extensions import db
 
 
