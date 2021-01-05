@@ -108,7 +108,7 @@ class House(db.Model):
             return {
                 'current_turn': self.users[0].user.serialize(),
                 'next_turn': next_turn,
-                'history': []
+                'history': [turn.serialize() for turn in self.turns]
             }
 
         else:

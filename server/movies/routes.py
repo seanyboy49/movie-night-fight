@@ -107,8 +107,11 @@ def mark_as_watched():
     user_movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
     movie = Movie.query.get(movie_id)
     house = House.query.get(house_id)
+    turns = house.get_current_and_next_turns()
 
-    print('user', user)
+    # Check if it's actually the current user's turn
+    if turns['current_turn']['id'] != user.id:
+        raise CustomError(f"It is not {user.username}'s turn to choose")
 
     if user_movie_to_patch is None:
         raise CustomError("Movie could not be found", 404)
