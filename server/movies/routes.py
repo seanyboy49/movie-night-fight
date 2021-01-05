@@ -99,10 +99,15 @@ def delete_from_watchlist(movie_id):
 def mark_as_watched():
     movie_id = request.args.get('movieId')
     house_id = request.args.get('houseId')
+
+    if not movie_id or not house_id:
+        raise CustomError("Movie ID or House ID not provided")
+
     user = current_user()
     user_movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
     movie = Movie.query.get(movie_id)
     house = House.query.get(house_id)
+
     print('user', user)
 
     if user_movie_to_patch is None:
@@ -110,8 +115,8 @@ def mark_as_watched():
 
     try:
         user_movie_to_patch.watched_at = db.func.current_timestamp()
-        # db.session.add(HouseTurns(user=user, movie=movie, house=house))
-        # db.session.commit()
+        db.session.add(HouseTurns(user=user, movie=movie, house=house))
+        db.session.commit()
         data = {'message': 'Movie marked as watched'}
 
         return make_response(jsonify(data), 201)
