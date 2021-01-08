@@ -8,23 +8,10 @@ export const SearchMovieContainer = styled.div`
   height: 80vh;
 `
 
-export const MovieLi = styled.li`
-  list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 325px;
-  margin: 10px 0;
-`
 export const MovieTitleContainer = styled.div`
   list-style: none;
   display: flex;
   justify-content: space-between;
-`
-
-export const MovieUl = styled.ul`
-  margin: 0;
-  padding: 0;
 `
 
 export const Button = styled.button`

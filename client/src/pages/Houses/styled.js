@@ -10,7 +10,7 @@ const alignCenter = css`
 `
 
 export const HousesContainer = styled.div`
-  height: 90vh;
+  min-height: 90vh;
   ${alignCenter};
   justify-content: flex-start;
 `

@@ -12,6 +12,7 @@ import {
 } from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
+import HouseResults from './HouseResults'
 
 const HouseSearch = () => {
   const { apiUrl } = useConfiguration()
@@ -41,6 +42,7 @@ const HouseSearch = () => {
   )
 
   const handleChange = (e) => {
+    setInputValue(e.target.value)
     debouncedSearch(e.target.value)
   }
 
@@ -48,8 +50,6 @@ const HouseSearch = () => {
     setInputValue('')
     setSearchHouseResult([])
   }
-
-  console.log(searchHouseResult)
 
   return (
     <HousesComponentContainer>
@@ -61,6 +61,7 @@ const HouseSearch = () => {
           <ClearImg />
         </Button>
       </SearchBar>
+      <HouseResults searchHouseResult={searchHouseResult} />
     </HousesComponentContainer>
   )
 }

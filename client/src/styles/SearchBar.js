@@ -41,3 +41,23 @@ export const ClearImg = styled.img.attrs({
   src: `${clearImagePath}`,
   alt: 'clear input',
 })``
+
+export const ResultUl = styled.ul`
+  margin: 0;
+  padding: 0;
+`
+
+export const ResultLi = styled.li`
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 335px;
+  margin: 10px 0;
+  font-size: 24px;
+  padding: 10px;
+
+  &:hover {
+    background-color: #e5e5e5;
+  }
+`
