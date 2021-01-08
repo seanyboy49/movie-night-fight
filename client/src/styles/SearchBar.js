@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import search from '../images/search.svg'
+import clearImagePath from '../images/delete.svg'
 
 export const SearchBar = styled.div`
   display: flex;
@@ -27,4 +28,16 @@ export const SearchInput = styled.input`
 export const SearchImg = styled.img.attrs({
   src: `${search}`,
   alt: 'search',
+})``
+
+export const Button = styled.button`
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+`
+
+export const ClearImg = styled.img.attrs({
+  src: `${clearImagePath}`,
+  alt: 'clear input',
 })``

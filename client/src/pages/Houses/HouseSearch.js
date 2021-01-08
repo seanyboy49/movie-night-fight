@@ -1,16 +1,65 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import debounce from 'lodash.debounce'
 
 import { BebasText } from '../../styles/Text'
 import { HousesComponentContainer } from './styled'
-import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
+import {
+  SearchBar,
+  SearchInput,
+  SearchImg,
+  ClearImg,
+  Button,
+} from '../../styles/SearchBar'
+import { useConfiguration } from '../../providers/Configuration'
+import { authFetch } from '../../auth'
 
 const HouseSearch = () => {
+  const { apiUrl } = useConfiguration()
+  const [searchHouseResult, setSearchHouseResult] = useState([])
+  const [inputValue, setInputValue] = useState('')
+
+  const searchHouses = async (currentValue) => {
+    if (!currentValue) {
+      setSearchHouseResult([])
+      return
+    }
+
+    try {
+      const response = await authFetch(
+        `${apiUrl}/houses?search=${currentValue}`
+      )
+      const data = await response.json()
+      setSearchHouseResult(data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  const debouncedSearch = useCallback(
+    debounce((currentValue) => searchHouses(currentValue), 1000),
+    []
+  )
+
+  const handleChange = (e) => {
+    debouncedSearch(e.target.value)
+  }
+
+  function clearInput() {
+    setInputValue('')
+    setSearchHouseResult([])
+  }
+
+  console.log(searchHouseResult)
+
   return (
     <HousesComponentContainer>
       <BebasText size={'30px'}>Search for Houses or create one</BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput />
+        <SearchInput type="text" value={inputValue} onChange={handleChange} />
+        <Button onClick={clearInput}>
+          <ClearImg />
+        </Button>
       </SearchBar>
     </HousesComponentContainer>
   )

@@ -1,9 +1,15 @@
 import React, { useState, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 
-import { SearchMovieContainer, ClearImg, Button } from './styled'
+import { SearchMovieContainer } from './styled'
 import { BebasText } from '../../styles/Text'
-import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
+import {
+  SearchBar,
+  SearchInput,
+  SearchImg,
+  ClearImg,
+  Button,
+} from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import Results from './Results'
@@ -37,7 +43,6 @@ const SearchMovie = () => {
     }
 
     try {
-      console.log(currentValue)
       const response = await authFetch(
         `${apiUrl}/movies?search=${currentValue}`
       )
