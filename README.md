@@ -153,8 +153,18 @@ Remove a movie from a user's watchlist.
 
 Failure to supply a `movie_id` in the url will result in [405 Method Not Allowed Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405).
 
-#### PATCH /watchlist/<movie_id>
+#### PATCH /watchlist
 Marks a movie in a watchlist as watched by updating the `watched_at` field with the current time.
+
+**Query Parameters**
+- `houseId` (required)
+Specifies which house the user is choosing a movie for. This is to generate a history of turns for each house.
+
+- `movieId` (required)
+Specify which movie to mark as watched in the user's watchlist.
+
+
+This endpoint first verifies if the user making the request is indeed allowed to to make the request, since the app should keep track of whose turn it is.
 
 Returns [204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)
 
@@ -383,3 +393,36 @@ There are three possible outcomes to this. All are [200 Response](https://develo
 }
 ```
 
+
+#### GET /houses<house_id>/turns
+
+Get current and next turns for a house, as well as a history of turns.
+
+A house with only one user will simply return `null` for the `next_turn`.
+
+[200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
+
+```json
+{
+    "current_turn": {
+        "id": 3,
+        "username": "seb"
+    },
+    "next_turn": {
+        "id": 1,
+        "username": "sean"
+    }
+    "history": [
+        {
+            "created_at": "Sun, 03 Jan 2021 23:21:32 GMT",
+            "movie": "Aladdin",
+            "user": "sean"
+        },
+        {
+            "created_at": "Sun, 03 Jan 2021 23:45:53 GMT",
+            "movie": "Aladdin",
+            "user": "jina"
+        }
+    ],    
+}
+```

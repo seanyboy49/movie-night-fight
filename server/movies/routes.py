@@ -4,7 +4,7 @@ from flask_praetorian import auth_required, current_user
 
 from server.movies import movies_bp
 from server.error import CustomError
-from server.models import Movie, UserMovies
+from server.models import Movie, UserMovies, HouseTurns, House
 from server.extensions import db
 
 
@@ -48,10 +48,10 @@ def add_to_watchlist():
         movie = Movie.query.filter_by(omdb_id=request_omdb_id).first()
         filtered = filter(lambda x: x.movie.omdb_id == movie.omdb_id, user.watchlist)
         movie_to_add = next(filtered, None)
+
         # If watchlist does not contain movie, add to watchlist
         if movie_to_add is None:
             user.watchlist.append(UserMovies(movie))
-
             db.session.commit()
             data = {'message': 'Movie added to watchlist'}
 
@@ -94,17 +94,31 @@ def delete_from_watchlist(movie_id):
         raise CustomError("Unable to remove movie from watchlist", 500, payload)
 
 
-@movies_bp.route('/api/watchlist/<movie_id>', methods=["PATCH"])
+@movies_bp.route('/api/watchlist', methods=["PATCH"])
 @auth_required
-def mark_as_watched(movie_id):
-    user = current_user()
-    movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+def mark_as_watched():
+    movie_id = request.args.get('movieId')
+    house_id = request.args.get('houseId')
 
-    if movie_to_patch is None:
+    if not movie_id or not house_id:
+        raise CustomError("Movie ID or House ID not provided")
+
+    user = current_user()
+    user_movie_to_patch = next(filter(lambda m: m.movie_id == int(movie_id), user.watchlist), None)
+    movie = Movie.query.get(movie_id)
+    house = House.query.get(house_id)
+    turns = house.get_current_and_next_turns()
+
+    # Check if it's actually the current user's turn
+    if turns['current_turn']['id'] != user.id:
+        raise CustomError(f"It is not {user.username}'s turn to choose")
+
+    if user_movie_to_patch is None:
         raise CustomError("Movie could not be found", 404)
 
     try:
-        movie_to_patch.watched_at = db.func.current_timestamp()
+        user_movie_to_patch.watched_at = db.func.current_timestamp()
+        db.session.add(HouseTurns(user=user, movie=movie, house=house))
         db.session.commit()
         data = {'message': 'Movie marked as watched'}
 
