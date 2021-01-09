@@ -11,6 +11,7 @@ import Signup from './pages/SignUp'
 import Toast from './components/Toast'
 import Houses from './pages/Houses'
 import SearchMovie from './pages/SearchMovie'
+import HouseProvider from './providers/Houses'
 
 const { apiUrl } = config
 
@@ -32,9 +33,11 @@ const App = () => {
             <Route path="/movies-list">
               <MoviesList />
             </Route>
-            <Route path="/houses">
-              <Houses />
-            </Route>
+            <HouseProvider>
+              <Route path="/houses">
+                <Houses />
+              </Route>
+            </HouseProvider>
             <Route path="/search-movies">
               <SearchMovie />
             </Route>

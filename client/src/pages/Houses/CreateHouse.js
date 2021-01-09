@@ -12,7 +12,6 @@ import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 
 const CreateHouse = ({ inputValue }) => {
-  const toastState = useSelector((state) => state.toast)
   const dispatch = useDispatch()
   const { apiUrl } = useConfiguration()
 
@@ -43,8 +42,6 @@ const CreateHouse = ({ inputValue }) => {
       console.log('error', error)
     }
   }
-
-  console.log('toastState', toastState)
 
   return (
     <CreateHouseContainer>
