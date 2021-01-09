@@ -13,11 +13,22 @@ import {
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import HouseResults from './HouseResults'
+import CreateHouse from './CreateHouse'
+
+function CheckExactHouseNameMatch(searchInput, searchResults) {
+  for (let house of searchResults) {
+    if (house.name.toLowerCase() === searchInput.toLowerCase()) {
+      return false
+    }
+  }
+  return true
+}
 
 const HouseSearch = () => {
   const { apiUrl } = useConfiguration()
   const [searchHouseResult, setSearchHouseResult] = useState([])
   const [inputValue, setInputValue] = useState('')
+  const [isHouseNameAvailable, setisHouseNameAvailable] = useState(false)
 
   const searchHouses = async (currentValue) => {
     if (!currentValue) {
@@ -30,6 +41,8 @@ const HouseSearch = () => {
         `${apiUrl}/houses?search=${currentValue}`
       )
       const data = await response.json()
+      const houseNameAvailable = CheckExactHouseNameMatch(currentValue, data)
+      setisHouseNameAvailable(houseNameAvailable)
       setSearchHouseResult(data)
     } catch (error) {
       console.log('error', error)
@@ -49,6 +62,7 @@ const HouseSearch = () => {
   function clearInput() {
     setInputValue('')
     setSearchHouseResult([])
+    setisHouseNameAvailable(false)
   }
 
   return (
@@ -62,6 +76,7 @@ const HouseSearch = () => {
         </Button>
       </SearchBar>
       <HouseResults searchHouseResult={searchHouseResult} />
+      {isHouseNameAvailable && <CreateHouse inputValue={inputValue} />}
     </HousesComponentContainer>
   )
 }

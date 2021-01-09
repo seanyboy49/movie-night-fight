@@ -34,3 +34,13 @@ export const HouseContainer = styled.div`
   padding: 20px;
   margin: 20px 0;
 `
+
+export const CreateHouseContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-text: left;
+  flex-direction: column;
+  font-size: 30px;
+  width: 335px;
+`
