@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
   Ticket,
@@ -11,6 +12,8 @@ import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 
 const CreateHouse = ({ inputValue }) => {
+  const toastState = useSelector((state) => state.toast)
+  const dispatch = useDispatch()
   const { apiUrl } = useConfiguration()
 
   const createNewHouse = async () => {
@@ -27,11 +30,21 @@ const CreateHouse = ({ inputValue }) => {
         body: JSON.stringify(body),
       })
       const data = await response.json()
+      dispatch({
+        type: 'SUCCESS',
+        message: `success! you have created ${inputValue}`,
+      })
       console.log(data)
     } catch (error) {
+      dispatch({
+        type: 'FAIL',
+        message: 'something went wrong. please try again.',
+      })
       console.log('error', error)
     }
   }
+
+  console.log('toastState', toastState)
 
   return (
     <CreateHouseContainer>
