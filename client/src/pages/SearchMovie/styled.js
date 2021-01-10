@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components'
 
-import clearImagePath from '../../images/delete.svg'
-
 export const SearchMovieContainer = styled.div`
   display: flex;
   align-items: center;
@@ -10,23 +8,10 @@ export const SearchMovieContainer = styled.div`
   height: 80vh;
 `
 
-export const MovieLi = styled.li`
-  list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 325px;
-  margin: 10px 0;
-`
 export const MovieTitleContainer = styled.div`
   list-style: none;
   display: flex;
   justify-content: space-between;
-`
-
-export const MovieUl = styled.ul`
-  margin: 0;
-  padding: 0;
 `
 
 export const Button = styled.button`
@@ -62,8 +47,3 @@ export const AddButton = styled.div`
   padding: 5px 20px;
   cursor: pointer;
 `
-
-export const ClearImg = styled.img.attrs({
-  src: `${clearImagePath}`,
-  alt: 'clear input',
-})``

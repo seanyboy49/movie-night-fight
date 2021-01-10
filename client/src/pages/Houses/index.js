@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { HousesContainer } from './styled'
 import NoHouses from './NoHouses'
@@ -7,34 +7,11 @@ import YourHouses from './YourHouses'
 import { LoadingText } from '../../styles/Text'
 import reel from '../../images/film-reel.svg'
 import { ReelImage } from '../../styles/LoadingReel'
-import { useConfiguration } from '../../providers/Configuration'
-import { authFetch } from '../../auth'
+import { useHouses } from '../../providers/Houses'
 
 const Houses = () => {
-  const { apiUrl } = useConfiguration()
-  const [isHouses, setIsHouses] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [houses, setHouses] = useState([])
-
-  const getUserHouses = useCallback(async () => {
-    setIsLoading(true)
-    try {
-      const response = await authFetch(`${apiUrl}/joined-houses`)
-      const data = await response.json()
-      setHouses(data)
-      if (data.length === 0) {
-        setIsHouses(true)
-      }
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log('error', error)
-    }
-  }, [apiUrl, setHouses, setIsHouses, setIsLoading])
-
-  useEffect(() => {
-    getUserHouses()
-  }, [getUserHouses])
+  const { allUsersHouses, isLoading } = useHouses()
+  const [isHouses] = useState(allUsersHouses === 0)
 
   if (isLoading) {
     return (
@@ -49,7 +26,7 @@ const Houses = () => {
 
   return (
     <HousesContainer>
-      {isHouses ? <NoHouses /> : <YourHouses houses={houses} />}
+      {isHouses ? <NoHouses /> : <YourHouses houses={allUsersHouses} />}
       <HouseSearch />
     </HousesContainer>
   )

@@ -3,63 +3,80 @@ import debounce from 'lodash.debounce'
 
 import { BebasText } from '../../styles/Text'
 import { HousesComponentContainer } from './styled'
-import { SearchBar, SearchInput, SearchImg } from '../../styles/SearchBar'
-import { authFetch } from '../../auth'
+import {
+  SearchBar,
+  SearchInput,
+  SearchImg,
+  ClearImg,
+  Button,
+} from '../../styles/SearchBar'
 import { useConfiguration } from '../../providers/Configuration'
+import { authFetch } from '../../auth'
+import HouseResults from './HouseResults'
+import CreateHouse from './CreateHouse'
+
+function CheckExactHouseNameMatch(searchInput, searchResults) {
+  for (let house of searchResults) {
+    if (house.name.toLowerCase() === searchInput.toLowerCase()) {
+      return false
+    }
+  }
+  return true
+}
 
 const HouseSearch = () => {
   const { apiUrl } = useConfiguration()
-  const [houseSearchValue, setHouseSearchValue] = useState('')
-  const [houseResults, setHouseResults] = useState([])
-  const [isHouseSearchLoading, setIsHouseSearchLoading] = useState(false)
+  const [searchHouseResult, setSearchHouseResult] = useState([])
+  const [inputValue, setInputValue] = useState('')
+  const [isHouseNameAvailable, setisHouseNameAvailable] = useState(false)
 
   const searchHouses = async (currentValue) => {
-    setIsHouseSearchLoading(true)
-
     if (!currentValue) {
-      setHouseSearchValue([])
-      setIsHouseSearchLoading(false)
+      setSearchHouseResult([])
       return
     }
 
     try {
       const response = await authFetch(
-        `${apiUrl}/houses?search=${houseSearchValue}`
+        `${apiUrl}/houses?search=${currentValue}`
       )
       const data = await response.json()
-      console.log('data', data)
-      if (data.name) {
-        setHouseResults(data)
-      }
-      setIsHouseSearchLoading(false)
+      const houseNameAvailable = CheckExactHouseNameMatch(currentValue, data)
+      setisHouseNameAvailable(houseNameAvailable)
+      setSearchHouseResult(data)
     } catch (error) {
-      setIsHouseSearchLoading(false)
       console.log('error', error)
     }
   }
 
-  const debouncedSearchHouses = useCallback(
-    debounce((currentHouseValue) => searchHouses(currentHouseValue), 1000),
+  const debouncedSearch = useCallback(
+    debounce((currentValue) => searchHouses(currentValue), 1000),
     []
   )
 
   const handleChange = (e) => {
-    setHouseSearchValue(e.target.value)
-    debouncedSearchHouses(e.target.value)
+    setInputValue(e.target.value)
+    debouncedSearch(e.target.value)
   }
 
-  console.log(houseResults)
+  function clearInput() {
+    setInputValue('')
+    setSearchHouseResult([])
+    setisHouseNameAvailable(false)
+  }
+
   return (
     <HousesComponentContainer>
       <BebasText size={'30px'}>Search for Houses or create one</BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput
-          type="text"
-          value={houseSearchValue}
-          onChange={handleChange}
-        />
+        <SearchInput type="text" value={inputValue} onChange={handleChange} />
+        <Button onClick={clearInput}>
+          <ClearImg />
+        </Button>
       </SearchBar>
+      <HouseResults searchHouseResult={searchHouseResult} />
+      {isHouseNameAvailable && <CreateHouse inputValue={inputValue} />}
     </HousesComponentContainer>
   )
 }

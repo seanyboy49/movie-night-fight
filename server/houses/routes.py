@@ -132,8 +132,21 @@ def leave_house(house_id):
             data['message'] = f'Successfully left {house_to_leave.name}'
 
         db.session.commit()
+        house_to_join = House.query.get(house_id)
+        if house_to_join:
+            data['houseDetail'] = house_to_join.serialize()
+
         return make_response(jsonify(data), 200)
 
     except Exception as e:
         payload = {'meta': str(e)}
         raise CustomError("Failed to leave house", 500, payload)
+
+
+@houses_bp.route('/api/houses/<house_id>/turns')
+@auth_required
+def get_house_turns(house_id):
+    house = House.query.get(house_id)
+    turns = house.get_current_and_next_turns()
+
+    return make_response(jsonify(turns), 200)

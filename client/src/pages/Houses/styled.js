@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 import confusedPath from '../../images/confused.svg'
 
@@ -10,7 +11,7 @@ const alignCenter = css`
 `
 
 export const HousesContainer = styled.div`
-  height: 90vh;
+  min-height: 90vh;
   ${alignCenter};
   justify-content: flex-start;
 `
@@ -33,4 +34,28 @@ export const HouseContainer = styled.div`
   border-radius: 40px;
   padding: 20px;
   margin: 20px 0;
+
+  &:hover {
+    background-color: black;
+  }
+`
+
+export const CreateHouseContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-text: left;
+  flex-direction: column;
+  font-size: 30px;
+  width: 335px;
+`
+
+export const HouseRedirectLink = styled(Link)`
+  text-decoration: none;
+  outline: none;
+  color: black;
+
+  &:hover {
+    color: ${(props) => props.color || 'white'};
+  }
 `

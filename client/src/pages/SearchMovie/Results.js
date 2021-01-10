@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-import { MovieLi, MovieUl, Button, MovieTitleContainer } from './styled'
+import { Button, MovieTitleContainer } from './styled'
+import { ResultLi, ResultUl } from '../../styles/SearchBar'
 import openArrow from '../../images/arrow-down.svg'
 import { BebasText } from '../../styles/Text'
 import MovieDetails from './MovieDetails'
@@ -28,10 +29,10 @@ const Results = ({ movies, isSearchResultsLoading }) => {
   }
 
   return (
-    <MovieUl>
+    <ResultUl>
       {movies.map((movie) => {
         return (
-          <MovieLi key={movie.imdbID}>
+          <ResultLi key={movie.imdbID}>
             <MovieTitleContainer>
               <BebasText size={'24px'} align={'left'}>
                 {movie.Title}
@@ -45,10 +46,10 @@ const Results = ({ movies, isSearchResultsLoading }) => {
               selectedMovie={selectedMovie}
               isOpen={isOpen}
             />
-          </MovieLi>
+          </ResultLi>
         )
       })}
-    </MovieUl>
+    </ResultUl>
   )
 }
 
