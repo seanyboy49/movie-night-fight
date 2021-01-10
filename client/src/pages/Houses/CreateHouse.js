@@ -33,6 +33,7 @@ const CreateHouse = ({ inputValue }) => {
         type: 'SUCCESS',
         message: `success! you have created ${inputValue}`,
       })
+      localStorage.setItem('currentHouse', JSON.stringify(data))
       console.log(data)
     } catch (error) {
       dispatch({

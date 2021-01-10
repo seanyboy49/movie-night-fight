@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { BebasText } from '../../styles/Text'
 import { HousesComponentContainer } from './styled'
@@ -10,8 +11,16 @@ const YourHouses = ({ houses }) => {
       <BebasText size={'30px'}>Your Houses</BebasText>
       <div>
         {houses.map((house) => {
+          const housePath = `/houses/${house.name}`.replace(/\s+/g, '')
+          const location = {
+            pathname: housePath,
+            state: house,
+          }
+          console.log(house)
           return (
-            <House key={house.id} name={house.name} members={house.users} />
+            <Link key={house.id} to={location}>
+              <House name={house.name} members={house.users} />
+            </Link>
           )
         })}
       </div>

@@ -53,4 +53,5 @@ export const TicketButton = styled.button`
   font-family: Bebas Neue;
   font-size: 27px;
   padding: 5px 10px;
+  cursor: pointer;
 `
