@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from 'react'
+import React, { useContext, useState, useCallback, useEffect } from 'react'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
@@ -27,6 +27,10 @@ const HouseProviders = ({ children }) => {
       console.log('error', error)
     }
   }, [apiUrl, setAllUserHouses, setIsLoading])
+
+  useEffect(() => {
+    getUserHouses()
+  }, [getUserHouses])
 
   return (
     <HouseContext.Provider

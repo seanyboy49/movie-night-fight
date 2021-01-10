@@ -10,12 +10,8 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { useHouses } from '../../providers/Houses'
 
 const Houses = () => {
-  const { allUsersHouses, isLoading, getUserHouses } = useHouses()
+  const { allUsersHouses, isLoading } = useHouses()
   const [isHouses] = useState(allUsersHouses === 0)
-
-  useEffect(() => {
-    getUserHouses()
-  }, [getUserHouses])
 
   if (isLoading) {
     return (
