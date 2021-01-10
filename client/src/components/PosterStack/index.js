@@ -14,7 +14,6 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
     ...to(i),
     from: from(i),
   }))
-  const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
 
   const { applyNUX, updateStorage } = useNuxSwipe()
 
@@ -33,22 +32,20 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
 
       // Hanlde NUX interactions if they user should experience NUX
       applyNUX({
-        xMovement: mx,
         onClick,
         isDown,
+        nuxStates,
+        xMovement: mx,
         xDir: dir,
-        isSwipeLeftComplete,
-        isSwipeRightComplete,
       })
 
       // For updating local storage when user completes a NUX interaction
       updateStorage({
+        onRelease,
+        nuxStates,
         swipedCards: gone,
         cardIndex: index,
         xDir: dir,
-        isSwipeLeftComplete,
-        isSwipeRightComplete,
-        onRelease,
       })
 
       set((i) => {

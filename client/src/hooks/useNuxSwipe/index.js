@@ -1,4 +1,4 @@
-import { categories as lightBoxCategories } from '../../../components/LightBox'
+import { categories as lightBoxCategories } from '../../components/LightBox'
 
 /**
  * A hook that returns two functions for managing NUX
@@ -13,20 +13,16 @@ const useNuxSwipe = () => {
    * @param {Number} xMovment - the amount of xOffset from the center
    * @param {Boolean} isDown - is the user pressing down
    * @param {Number} xDir - the direction the user is gesturing. 1 is right, -1 is left
-   * @param {Boolean} isSwipeLeftComplete
-   * @param {Boolean} isSwipeRightComplete
+   * @param {Object} nuxStates - an object with Boolean properties indicating which NUX states have been completed
    *
    */
-  function applyNUX({
-    onClick,
-    xMovement,
-    isDown,
-    xDir,
-    isSwipeLeftComplete,
-    isSwipeRightComplete,
-  }) {
-    if (!onClick && !Math.abs(xMovement) >= 20) return
+  function applyNUX({ onClick, xMovement, isDown, xDir, nuxStates }) {
+    if (!nuxStates) return
+    if (!onClick) return
+    if (Math.abs(xMovement) <= 20) return
     if (!isDown) return onClick(undefined)
+
+    const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
 
     if (!isSwipeRightComplete && xDir === 1) {
       onClick(lightBoxCategories.nuxSwipeRight)
@@ -41,8 +37,7 @@ const useNuxSwipe = () => {
    * @param {Number} cardIndex - The current card's index
    * @param {Number} cardIndex - The current card's index
    * @param {Number} xDir - the direction the user is gesturing. 1 is right, -1 is left
-   * @param {Boolean} isSwipeLeftComplete
-   * @param {Boolean} isSwipeRightComplete
+   * @param {Object} nuxStates - an object with Boolean properties indicating which NUX states have been completed
    *
    */
 
@@ -50,11 +45,13 @@ const useNuxSwipe = () => {
     swipedCards,
     cardIndex,
     xDir,
-    isSwipeLeftComplete,
-    isSwipeRightComplete,
+    nuxStates,
     onRelease,
   }) {
+    if (!nuxStates) return
     if (!swipedCards.has(cardIndex)) return
+
+    const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
 
     // The if above checks if the user hasn't swiped the card away.
     // If they have, then we can update local storage
