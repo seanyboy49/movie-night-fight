@@ -38,14 +38,15 @@ const PosterStack = ({ movies, includeNUX, onClickNux }) => {
       const trigger = velocity > 0.2
       const dir = xDir < 0 ? -1 : 1
       if (!down && trigger) gone.add(index)
-      console.log('direction', xDir)
 
-      if (includeNUX) {
-        if (down && dir === 1) {
-          onClickNux('right')
-        } else if (down && dir === -1) {
-          onClickNux('left')
-        } else if (!down) {
+      if (includeNUX && Math.abs(mx) >= 20) {
+        if (down) {
+          if (dir === 1) {
+            onClickNux('right')
+          } else if (dir === -1) {
+            onClickNux('left')
+          }
+        } else {
           onClickNux(undefined)
         }
       }
