@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import SwipeRightImg from '../../images/SwipeRightImg'
 import SwipeLeftImg from '../../images/SwipeLeftImg'
-import { NUXLayer, Text } from './styled'
+import { Layer, Text } from './styled'
 
 const categoryMap = {
   nuxSwipeLeft: {
@@ -35,12 +35,12 @@ const LightBox = ({ category }) => {
   const components = categoryMap[category]
 
   return (
-    <NUXLayer>
+    <Layer>
       {components.texts.map((text) => (
-        <Text>{text}</Text>
+        <Text key={text}>{text}</Text>
       ))}
       {components.img}
-    </NUXLayer>
+    </Layer>
   )
 }
 

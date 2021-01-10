@@ -3,11 +3,15 @@ const useLocalStorage = () => {
     return localStorage.getItem(item) || undefined
   }
 
-  function set(item) {
-    localStorage.setItem(item)
+  function set(item, value) {
+    localStorage.setItem(item, value)
   }
 
-  return { get, set }
+  function remove(item) {
+    localStorage.removeItem(item)
+  }
+
+  return { get, set, remove }
 }
 
 export default useLocalStorage

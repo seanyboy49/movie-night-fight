@@ -4,28 +4,22 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
+import { to, from, trans } from './utility'
 import { StackContainer } from './styled'
 import { categories as lightBoxCategories } from '../LightBox'
 
-const to = (i) => ({
-  x: 0,
-  y: i * -4,
-  scale: 1,
-  rot: -10 + Math.random() * 20,
-  delay: i * 100,
-})
-const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
-const trans = (r, s) =>
-  `perspective(1500px) rotateX(30deg) rotateY(${
-    r / 10
-  }deg) rotateZ(${r}deg) scale(${s})`
-
-const PosterStack = ({ movies, onLightBoxClick }) => {
+const PosterStack = ({
+  movies,
+  onLightBoxClick,
+  onLightBoxClickComplete,
+  nuxStates,
+}) => {
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
     from: from(i),
   }))
+  const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
 
   const bind = useDrag(
     ({
@@ -42,13 +36,30 @@ const PosterStack = ({ movies, onLightBoxClick }) => {
 
       if (onLightBoxClick && Math.abs(mx) >= 20) {
         if (down) {
-          if (dir === 1) {
+          if (!isSwipeRightComplete && dir === 1) {
             onLightBoxClick(lightBoxCategories.nuxSwipeRight)
-          } else if (dir === -1) {
+            if (gone.has(index)) {
+              console.log('gone left!')
+            }
+          } else if (!isSwipeLeftComplete && dir === -1) {
             onLightBoxClick(lightBoxCategories.nuxSwipeLeft)
           }
         } else {
           onLightBoxClick(undefined)
+        }
+      }
+
+      if (gone.has(index)) {
+        if (dir === 1) {
+          console.log('gone right!')
+          if (!isSwipeRightComplete) {
+            onLightBoxClickComplete('isSwipeRightComplete', true)
+          }
+        } else if (dir === -1) {
+          console.log('gone left!')
+          if (!isSwipeLeftComplete) {
+            onLightBoxClickComplete('isSwipeLeftComplete', true)
+          }
         }
       }
 
@@ -92,6 +103,7 @@ const PosterStack = ({ movies, onLightBoxClick }) => {
 }
 
 PosterStack.propTypes = {
+  nuxStates: PropTypes.object,
   onLightBoxClick: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

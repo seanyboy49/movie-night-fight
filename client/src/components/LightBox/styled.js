@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const NUXLayer = styled.div`
+export const Layer = styled.div`
   position: absolute;
   z-index: 100;
   background: black;
