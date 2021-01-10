@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import Poster from './Poster'
 import { to, from, trans } from './utility'
 import { StackContainer } from './styled'
-import useNuxSwipe from '../../hooks/useLocalStorage/useNuxSwipe'
+import useNuxSwipe from '../../hooks/useNuxSwipe'
 
 const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
   const [gone] = useState(() => new Set())
