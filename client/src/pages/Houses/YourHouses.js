@@ -16,7 +16,6 @@ const YourHouses = ({ houses }) => {
             pathname: housePath,
             state: house,
           }
-          console.log(house)
           return (
             <Link key={house.id} to={location}>
               <House name={house.name} members={house.users} />

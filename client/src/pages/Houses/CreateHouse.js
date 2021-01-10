@@ -1,5 +1,6 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import {
   Ticket,
@@ -10,8 +11,11 @@ import {
 import { CreateHouseContainer } from './styled'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
+import { useHouses } from '../../providers/Houses'
 
 const CreateHouse = ({ inputValue }) => {
+  const { getUserHouses } = useHouses()
+  const history = useHistory()
   const dispatch = useDispatch()
   const { apiUrl } = useConfiguration()
 
@@ -34,7 +38,14 @@ const CreateHouse = ({ inputValue }) => {
         message: `success! you have created ${inputValue}`,
       })
       localStorage.setItem('currentHouse', JSON.stringify(data))
-      console.log(data)
+      getUserHouses()
+      const housePath = `/houses/${data.name}`.replace(/\s+/g, '')
+      const location = {
+        pathname: housePath,
+        state: data,
+      }
+      console.log(location)
+      return history.push(location)
     } catch (error) {
       dispatch({
         type: 'FAIL',
