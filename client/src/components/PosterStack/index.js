@@ -8,12 +8,7 @@ import { to, from, trans } from './utility'
 import { StackContainer } from './styled'
 import { categories as lightBoxCategories } from '../LightBox'
 
-const PosterStack = ({
-  movies,
-  onLightBoxClick,
-  onLightBoxClickComplete,
-  nuxStates,
-}) => {
+const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -34,31 +29,31 @@ const PosterStack = ({
       const dir = xDir < 0 ? -1 : 1
       if (!down && trigger) gone.add(index)
 
-      if (onLightBoxClick && Math.abs(mx) >= 20) {
+      // Custom click handling for NUX interactions
+      if (onClick && Math.abs(mx) >= 20) {
         if (down) {
           if (!isSwipeRightComplete && dir === 1) {
-            onLightBoxClick(lightBoxCategories.nuxSwipeRight)
+            onClick(lightBoxCategories.nuxSwipeRight)
             if (gone.has(index)) {
               console.log('gone left!')
             }
           } else if (!isSwipeLeftComplete && dir === -1) {
-            onLightBoxClick(lightBoxCategories.nuxSwipeLeft)
+            onClick(lightBoxCategories.nuxSwipeLeft)
           }
         } else {
-          onLightBoxClick(undefined)
+          onClick(undefined)
         }
       }
 
+      // For updating local storage when user completes a NUX interaction
       if (gone.has(index)) {
         if (dir === 1) {
-          console.log('gone right!')
           if (!isSwipeRightComplete) {
-            onLightBoxClickComplete('isSwipeRightComplete', true)
+            onRelease('isSwipeRightComplete', true)
           }
         } else if (dir === -1) {
-          console.log('gone left!')
           if (!isSwipeLeftComplete) {
-            onLightBoxClickComplete('isSwipeLeftComplete', true)
+            onRelease('isSwipeLeftComplete', true)
           }
         }
       }

@@ -17,19 +17,13 @@ const Posters = () => {
   const [lightBox, setLightBox] = useState(undefined)
   const { movies, isLoading } = useMovies()
 
-  const { get, remove, set } = useLocalStorage()
+  const { get, set } = useLocalStorage()
 
   const isSwipeLeftComplete = get('isSwipeLeftComplete')
   const isSwipeRightComplete = get('isSwipeRightComplete')
   const nuxStates = {
     isSwipeLeftComplete,
     isSwipeRightComplete,
-  }
-
-  function clearAllNux() {
-    console.log('hi')
-    remove('isSwipeLeftComplete')
-    remove('isSwipeRightComplete')
   }
 
   if (isLoading) {
@@ -45,15 +39,14 @@ const Posters = () => {
 
   return (
     <>
-      <button onClick={clearAllNux}>clearAllNux</button>
       <PosterContainer>
         {movies && movies.length !== 0 ? (
           <>
             <LightBox category={lightBox} />
             <PosterStack
               movies={movies}
-              onLightBoxClick={setLightBox}
-              onLightBoxClickComplete={set}
+              onClick={setLightBox}
+              onRelease={set}
               nuxStates={nuxStates}
             />
           </>
