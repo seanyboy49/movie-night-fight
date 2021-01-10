@@ -12,6 +12,10 @@ import {
 import { useHouses } from '../../providers/Houses'
 import Button from './Button'
 
+function getHouseNames(allUsersHouses) {
+  return allUsersHouses.map((house) => house.name)
+}
+
 const HouseDetails = () => {
   const { allUserHouses } = useHouses()
   const location = useLocation()
@@ -19,18 +23,6 @@ const HouseDetails = () => {
   const houseNames = getHouseNames(allUserHouses)
 
   const totalHouseMates = houseDetail['users'].length
-
-  // function getHouseName(allUserHouses) {
-  //   const HouseNames = []
-  //   allUserHouses.forEach((house) => {
-  //     HouseNames.push(house.name)
-  //   })
-  //   return HouseNames
-  // }
-
-  function getHouseNames(allUsersHouses) {
-    return allUsersHouses.map((house) => house.name)
-  }
 
   return (
     <HouseNameContainer>
