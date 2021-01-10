@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { TicketButtonContainer } from './styled'
 import {
@@ -11,10 +13,8 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
-import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
-const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
+const Button = ({ onClick, userHouseNames, houseDetail }) => {
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -29,9 +29,9 @@ const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
         method: 'DELETE',
       })
       const data = await response.json()
-      console.log(data)
       getUserHouses()
       setIsLoading(false)
+      // if user is the last person in house, redirect back to house route
       if (!data.houseDetail) {
         dispatch({
           type: 'REMOVE',
@@ -39,7 +39,7 @@ const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
         })
         return history.push('/houses')
       } else {
-        setViewingHouse(data.houseDetail)
+        onClick(data.houseDetail)
       }
     } catch (error) {
       console.log('error', error)
@@ -54,7 +54,7 @@ const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
         method: 'POST',
       })
       const data = await response.json()
-      setViewingHouse(data)
+      onClick(data)
       getUserHouses()
       setIsLoading(false)
     } catch (error) {
@@ -68,12 +68,12 @@ const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
         <LeftCutout />
         {isLoading && <ReelImage />}
         {!isLoading &&
-          (!userHouseNames.includes(viewingHouse.name) ? (
-            <TicketButton onClick={() => joinHouse(viewingHouse.id)}>
+          (!userHouseNames.includes(houseDetail.name) ? (
+            <TicketButton onClick={() => joinHouse(houseDetail.id)}>
               join this house
             </TicketButton>
           ) : (
-            <TicketButton onClick={() => leaveHouse(viewingHouse.id)}>
+            <TicketButton onClick={() => leaveHouse(houseDetail.id)}>
               leave this house
             </TicketButton>
           ))}

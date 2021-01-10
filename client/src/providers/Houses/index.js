@@ -12,7 +12,7 @@ export const useHouses = () => {
 const HouseProviders = ({ children }) => {
   const { apiUrl } = useConfiguration()
   const [currentHouse, setCurrentHouse] = useState()
-  const [allUsersHouses, setAllUserHouses] = useState([])
+  const [allUserHouses, setAllUserHouses] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   const getUserHouses = useCallback(async () => {
@@ -36,7 +36,7 @@ const HouseProviders = ({ children }) => {
     <HouseContext.Provider
       value={{
         currentHouse,
-        allUsersHouses,
+        allUserHouses,
         isLoading,
         setCurrentHouse,
         getUserHouses,

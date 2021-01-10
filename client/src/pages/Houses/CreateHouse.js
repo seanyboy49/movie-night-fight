@@ -35,7 +35,7 @@ const CreateHouse = ({ inputValue }) => {
       const data = await response.json()
       dispatch({
         type: 'SUCCESS',
-        message: `success! you have created ${inputValue}`,
+        message: `Success! You have created ${inputValue}`,
       })
       localStorage.setItem('currentHouse', JSON.stringify(data))
       getUserHouses()
@@ -44,12 +44,11 @@ const CreateHouse = ({ inputValue }) => {
         pathname: housePath,
         state: data,
       }
-      console.log(location)
       return history.push(location)
     } catch (error) {
       dispatch({
         type: 'FAIL',
-        message: 'something went wrong. please try again.',
+        message: 'Something went wrong. Please try again.',
       })
       console.log('error', error)
     }
@@ -58,7 +57,7 @@ const CreateHouse = ({ inputValue }) => {
   return (
     <CreateHouseContainer>
       <p>
-        <b>{inputValue}</b> does not exist yet. would you like to create the
+        <b>{inputValue}</b> Does not exist yet. Would you like to create the
         house?
       </p>
       <Ticket width={'250'}>

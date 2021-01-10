@@ -10,8 +10,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { useHouses } from '../../providers/Houses'
 
 const Houses = () => {
-  const { allUsersHouses, isLoading } = useHouses()
-  const [isHouses] = useState(allUsersHouses === 0)
+  const { allUserHouses, isLoading } = useHouses()
 
   if (isLoading) {
     return (
@@ -26,7 +25,11 @@ const Houses = () => {
 
   return (
     <HousesContainer>
-      {isHouses ? <NoHouses /> : <YourHouses houses={allUsersHouses} />}
+      {allUserHouses.length === 0 ? (
+        <NoHouses />
+      ) : (
+        <YourHouses houses={allUserHouses} />
+      )}
       <HouseSearch />
     </HousesContainer>
   )

@@ -15,23 +15,26 @@ import { authFetch } from '../../auth'
 import HouseResults from './HouseResults'
 import CreateHouse from './CreateHouse'
 
-function CheckExactHouseNameMatch(searchInput, searchResults) {
-  for (let house of searchResults) {
-    if (house.name.toLowerCase() === searchInput.toLowerCase()) {
-      return false
-    }
-  }
-  return true
-}
+// function CheckExactHouseNameMatch(searchInput, searchResults) {
+//   for (let house of searchResults) {
+//     if (house.name.toLowerCase() === searchInput.toLowerCase()) {
+//       return false
+//     }
+//   }
+//   return true
+// }
 
 const HouseSearch = () => {
   const { apiUrl } = useConfiguration()
   const [searchHouseResult, setSearchHouseResult] = useState([])
   const [inputValue, setInputValue] = useState('')
-  const [isHouseNameAvailable, setisHouseNameAvailable] = useState(false)
+  const [isHouseNameAvailable, setisHouseNameAvailable] = useState(true)
+
+  // const checkExactHouseNameMatch = searchResults.some((result)=> result.name.toLowerCase() === searchInput.toLowerCase())
 
   const searchHouses = async (currentValue) => {
     if (!currentValue) {
+      setisHouseNameAvailable(true)
       setSearchHouseResult([])
       return
     }
@@ -41,7 +44,10 @@ const HouseSearch = () => {
         `${apiUrl}/houses?search=${currentValue}`
       )
       const data = await response.json()
-      const houseNameAvailable = CheckExactHouseNameMatch(currentValue, data)
+      const houseNameAvailable = data.some(
+        (result) => result.name.toLowerCase() === currentValue.toLowerCase()
+      )
+      // const houseNameAvailable = CheckExactHouseNameMatch(currentValue, data)
       setisHouseNameAvailable(houseNameAvailable)
       setSearchHouseResult(data)
     } catch (error) {
@@ -62,7 +68,7 @@ const HouseSearch = () => {
   function clearInput() {
     setInputValue('')
     setSearchHouseResult([])
-    setisHouseNameAvailable(false)
+    setisHouseNameAvailable(true)
   }
 
   return (
@@ -76,7 +82,7 @@ const HouseSearch = () => {
         </Button>
       </SearchBar>
       <HouseResults searchHouseResult={searchHouseResult} />
-      {isHouseNameAvailable && <CreateHouse inputValue={inputValue} />}
+      {!isHouseNameAvailable && <CreateHouse inputValue={inputValue} />}
     </HousesComponentContainer>
   )
 }
