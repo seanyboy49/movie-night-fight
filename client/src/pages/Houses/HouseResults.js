@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { ResultLi, ResultUl } from '../../styles/SearchBar'
+import { HouseRedirectLink } from './styled'
 
 const HouseResults = ({ searchHouseResult }) => {
   return (
@@ -13,9 +14,9 @@ const HouseResults = ({ searchHouseResult }) => {
           state: houseResult,
         }
         return (
-          <Link key={houseResult.id} to={location}>
+          <HouseRedirectLink color={'black'} key={houseResult.id} to={location}>
             <ResultLi>{houseResult.name}</ResultLi>
-          </Link>
+          </HouseRedirectLink>
         )
       })}
     </ResultUl>

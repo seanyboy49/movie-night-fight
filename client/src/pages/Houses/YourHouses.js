@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import { BebasText } from '../../styles/Text'
-import { HousesComponentContainer } from './styled'
+import { HousesComponentContainer, HouseRedirectLink } from './styled'
 import House from './House'
 
 const YourHouses = ({ houses }) => {
@@ -17,9 +16,9 @@ const YourHouses = ({ houses }) => {
             state: house,
           }
           return (
-            <Link key={house.id} to={location}>
+            <HouseRedirectLink key={house.id} to={location}>
               <House name={house.name} members={house.users} />
-            </Link>
+            </HouseRedirectLink>
           )
         })}
       </div>
