@@ -17,14 +17,6 @@ const categoryMap = {
   nuxSwipeDown: 'nuxSwipeDown',
 }
 
-// Returns and object generated from categoryMap keys where
-// the keys and values are the same
-// example return value
-// {
-//  nuxSwipeLeft: "nuxSwipeLeft"
-//  nuxSwipeRight: "nuxSwipeRight"
-// }
-
 export const categories = Object.keys(categoryMap).reduce((acc, curr) => {
   return { ...acc, [curr]: curr }
 }, {})

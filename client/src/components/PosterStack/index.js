@@ -34,9 +34,6 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
         if (down) {
           if (!isSwipeRightComplete && dir === 1) {
             onClick(lightBoxCategories.nuxSwipeRight)
-            if (gone.has(index)) {
-              console.log('gone left!')
-            }
           } else if (!isSwipeLeftComplete && dir === -1) {
             onClick(lightBoxCategories.nuxSwipeLeft)
           }
