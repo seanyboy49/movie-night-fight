@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
+import PropTypes from 'prop-types'
 
 import Poster from './Poster'
 import { StackContainer } from './styled'
@@ -18,7 +19,7 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
 
-const PosterStack = ({ movies }) => {
+const PosterStack = ({ movies, includeNUX, onClickNux }) => {
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -38,6 +39,15 @@ const PosterStack = ({ movies }) => {
       const dir = xDir < 0 ? -1 : 1
       if (!down && trigger) gone.add(index)
 
+      if (includeNUX) {
+        if (down && dir === 1) {
+          onClickNux('right')
+        } else if (down && dir === -1) {
+          onClickNux('left')
+        }
+        onClickNux(undefined)
+      }
+
       set((i) => {
         if (index !== i) return
         const isGone = gone.has(index)
@@ -54,8 +64,10 @@ const PosterStack = ({ movies }) => {
         }
       })
 
-      if (!down && gone.size === movies.length)
+      // All cards from stack have been removed
+      if (!down && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
+      }
     }
   )
 
@@ -73,6 +85,11 @@ const PosterStack = ({ movies }) => {
       ))}
     </StackContainer>
   )
+}
+
+PosterStack.propTypes = {
+  includeNUX: PropTypes.bool,
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default PosterStack

@@ -33,3 +33,11 @@ export const PosterContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 `
+
+export const NUXLayer = styled.div`
+  position: absolute;
+  background: black;
+  opacity: 0.5;
+  height: 100%;
+  width: 100%;
+`
