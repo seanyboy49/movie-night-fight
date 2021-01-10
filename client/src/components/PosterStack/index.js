@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import Poster from './Poster'
 import { StackContainer } from './styled'
+import { categories as lightBoxCategories } from '../LightBox'
 
 const to = (i) => ({
   x: 0,
@@ -19,7 +20,7 @@ const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
 
-const PosterStack = ({ movies, includeNUX, onClickNux }) => {
+const PosterStack = ({ movies, onLightBoxClick }) => {
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -39,15 +40,15 @@ const PosterStack = ({ movies, includeNUX, onClickNux }) => {
       const dir = xDir < 0 ? -1 : 1
       if (!down && trigger) gone.add(index)
 
-      if (includeNUX && Math.abs(mx) >= 20) {
+      if (onLightBoxClick && Math.abs(mx) >= 20) {
         if (down) {
           if (dir === 1) {
-            onClickNux('right')
+            onLightBoxClick(lightBoxCategories.nuxSwipeRight)
           } else if (dir === -1) {
-            onClickNux('left')
+            onLightBoxClick(lightBoxCategories.nuxSwipeLeft)
           }
         } else {
-          onClickNux(undefined)
+          onLightBoxClick(undefined)
         }
       }
 
@@ -91,7 +92,7 @@ const PosterStack = ({ movies, includeNUX, onClickNux }) => {
 }
 
 PosterStack.propTypes = {
-  includeNUX: PropTypes.bool,
+  onLightBoxClick: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 

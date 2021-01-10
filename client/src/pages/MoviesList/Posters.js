@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import PosterStack from '../../components/PosterStack'
 import NoMovies from './NoMovies'
-import NUX from '../../components/NUX'
+import LightBox from '../../components/LightBox'
 
 import useLocalStorage from '../../hooks/useLocalStorage'
 import { useMovies } from '../../providers/Movies'
@@ -14,7 +14,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import reel from '../../images/film-reel.svg'
 
 const Posters = () => {
-  const [nuxInstructions, setNuxInstructions] = useState(undefined)
+  const [lightBox, setLightBox] = useState(undefined)
   const { movies, isLoading } = useMovies()
 
   const { get } = useLocalStorage()
@@ -36,11 +36,10 @@ const Posters = () => {
     <PosterContainer>
       {movies && movies.length !== 0 ? (
         <>
-          <NUX instructions={nuxInstructions} />
+          <LightBox category={lightBox} />
           <PosterStack
             movies={movies}
-            includeNUX={!isNUXCompleted}
-            onClickNux={setNuxInstructions}
+            onLightBoxClick={isNUXCompleted ? undefined : setLightBox}
           />
         </>
       ) : (
