@@ -7,17 +7,8 @@ import {
   HouseMates,
   HouseNameContainer,
   HouseNameData,
-  TicketButtonContainer,
 } from './styled'
-import {
-  Ticket,
-  LeftCutout,
-  RightCutout,
-  TicketButton,
-} from '../../styles/Ticket'
-import { ReelImage } from '../../styles/LoadingReel'
-import { authFetch } from '../../auth'
-import { useConfiguration } from '../../providers/Configuration'
+
 import { useHouses } from '../../providers/Houses'
 import Button from './Button'
 

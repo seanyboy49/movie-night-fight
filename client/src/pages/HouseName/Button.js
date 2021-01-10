@@ -32,12 +32,14 @@ const Button = ({ setViewingHouse, userHouseNames, viewingHouse }) => {
       console.log(data)
       getUserHouses()
       setIsLoading(false)
-      if (data.message === 'Successfully left and deleted plant kingdom') {
+      if (!data.houseDetail) {
         dispatch({
           type: 'REMOVE',
           message: '',
         })
         return history.push('/houses')
+      } else {
+        setViewingHouse(data.houseDetail)
       }
     } catch (error) {
       console.log('error', error)
