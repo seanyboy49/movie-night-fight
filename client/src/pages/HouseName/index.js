@@ -19,13 +19,12 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
+import Button from './Button'
 
 const HouseName = () => {
-  const { allUsersHouses, getUserHouses } = useHouses()
-  const { apiUrl } = useConfiguration()
+  const { allUsersHouses } = useHouses()
   const location = useLocation()
   const [viewingHouse, setViewingHouse] = useState(location.state)
-  const [isLoading, setIsLoading] = useState(false)
   const [userHouseNames, setUserHouseNames] = useState([])
 
   const totalHouseMates = viewingHouse['users'].length
@@ -37,42 +36,6 @@ const HouseName = () => {
     })
     return HouseNames
   }
-
-  const leaveHouse = async (id) => {
-    setIsLoading(true)
-    try {
-      const response = await authFetch(`${apiUrl}/houses/${id}/memberships`, {
-        method: 'DELETE',
-      })
-      const data = await response.json()
-      console.log(data)
-      getUserHouses()
-      setIsLoading(false)
-    } catch (error) {
-      console.log('error', error)
-      setIsLoading(false)
-    }
-  }
-
-  const joinHouse = async (id) => {
-    setIsLoading(true)
-    try {
-      const response = await authFetch(`${apiUrl}/houses/${id}/memberships`, {
-        method: 'POST',
-      })
-      const data = await response.json()
-      setViewingHouse(data)
-      getUserHouses()
-      setIsLoading(false)
-    } catch (error) {
-      console.log('error', error)
-      setIsLoading(false)
-    }
-  }
-
-  console.log('allUsersHouses', allUsersHouses)
-  console.log('userHouseNames', userHouseNames)
-  console.log(userHouseNames.includes(viewingHouse.name))
 
   useEffect(() => {
     setUserHouseNames(getHouseName(allUsersHouses))
@@ -90,23 +53,11 @@ const HouseName = () => {
             return <Housemate key={user.user}>{user.user}</Housemate>
           })}
         </HouseMates>
-        <TicketButtonContainer>
-          <Ticket width={'220'}>
-            <LeftCutout />
-            {isLoading && <ReelImage />}
-            {!isLoading &&
-              (!userHouseNames.includes(viewingHouse.name) ? (
-                <TicketButton onClick={() => joinHouse(viewingHouse.id)}>
-                  join this house
-                </TicketButton>
-              ) : (
-                <TicketButton onClick={() => leaveHouse(viewingHouse.id)}>
-                  leave this house
-                </TicketButton>
-              ))}
-            <RightCutout />
-          </Ticket>
-        </TicketButtonContainer>
+        <Button
+          setViewingHouse={setViewingHouse}
+          userHouseNames={userHouseNames}
+          viewingHouse={viewingHouse}
+        />
       </HouseNameData>
     </HouseNameContainer>
   )
