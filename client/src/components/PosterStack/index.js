@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import Poster from './Poster'
 import { to, from, trans } from './utility'
 import { StackContainer } from './styled'
-import { categories as lightBoxCategories } from '../LightBox'
+import useNuxSwipe from '../../hooks/useLocalStorage/useNuxSwipe'
 
 const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
   const [gone] = useState(() => new Set())
@@ -16,10 +16,12 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
   }))
   const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
 
+  const { applyNUX, updateStorage } = useNuxSwipe()
+
   const bind = useDrag(
     ({
       args: [index],
-      down,
+      down: isDown,
       movement: [mx],
       distance,
       direction: [xDir],
@@ -27,52 +29,46 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
     }) => {
       const trigger = velocity > 0.2
       const dir = xDir < 0 ? -1 : 1
-      if (!down && trigger) gone.add(index)
+      if (!isDown && trigger) gone.add(index)
 
-      // Custom click handling for NUX interactions
-      if (onClick && Math.abs(mx) >= 20) {
-        if (down) {
-          if (!isSwipeRightComplete && dir === 1) {
-            onClick(lightBoxCategories.nuxSwipeRight)
-          } else if (!isSwipeLeftComplete && dir === -1) {
-            onClick(lightBoxCategories.nuxSwipeLeft)
-          }
-        } else {
-          onClick(undefined)
-        }
-      }
+      // Hanlde NUX interactions if they user should experience NUX
+      applyNUX({
+        xMovement: mx,
+        onClick,
+        isDown,
+        xDir: dir,
+        isSwipeLeftComplete,
+        isSwipeRightComplete,
+      })
 
       // For updating local storage when user completes a NUX interaction
-      if (gone.has(index)) {
-        if (dir === 1) {
-          if (!isSwipeRightComplete) {
-            onRelease('isSwipeRightComplete', true)
-          }
-        } else if (dir === -1) {
-          if (!isSwipeLeftComplete) {
-            onRelease('isSwipeLeftComplete', true)
-          }
-        }
-      }
+      updateStorage({
+        swipedCards: gone,
+        cardIndex: index,
+        xDir: dir,
+        isSwipeLeftComplete,
+        isSwipeRightComplete,
+        onRelease,
+      })
 
       set((i) => {
         if (index !== i) return
         const isGone = gone.has(index)
-        const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0
+        const x = isGone ? (200 + window.innerWidth) * dir : isDown ? mx : 0
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
-        const scale = down ? 1.1 : 1
+        const scale = isDown ? 1.1 : 1
 
         return {
           x,
           rot,
           scale,
           delay: undefined,
-          config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
+          config: { friction: 50, tension: isDown ? 800 : isGone ? 200 : 500 },
         }
       })
 
       // All cards from stack have been removed
-      if (!down && gone.size === movies.length) {
+      if (!isDown && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
       }
     }
