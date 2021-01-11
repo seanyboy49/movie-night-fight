@@ -45,3 +45,13 @@ export const Content = styled(Link)`
   border: 4px solid white;
   padding: 5px 10px;
 `
+
+export const TicketButton = styled.button`
+  background-color: transparent;
+  border: 3px solid white;
+  color: white;
+  font-family: Bebas Neue;
+  font-size: 27px;
+  padding: 5px 10px;
+  cursor: pointer;
+`

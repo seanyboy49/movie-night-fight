@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { BebasText } from '../../styles/Text'
-import { HousesComponentContainer } from './styled'
+import { HousesComponentContainer, HouseRedirectLink } from './styled'
 import House from './House'
 
 const YourHouses = ({ houses }) => {
@@ -10,8 +10,15 @@ const YourHouses = ({ houses }) => {
       <BebasText size={'30px'}>Your Houses</BebasText>
       <div>
         {houses.map((house) => {
+          const housePath = `/houses/${house.name}`.replace(/\s+/g, '')
+          const location = {
+            pathname: housePath,
+            state: house,
+          }
           return (
-            <House key={house.id} name={house.name} members={house.users} />
+            <HouseRedirectLink key={house.id} to={location}>
+              <House name={house.name} members={house.users} />
+            </HouseRedirectLink>
           )
         })}
       </div>

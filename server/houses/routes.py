@@ -132,6 +132,10 @@ def leave_house(house_id):
             data['message'] = f'Successfully left {house_to_leave.name}'
 
         db.session.commit()
+        updated_house = House.query.get(house_id)
+        if updated_house:
+            data['houseDetail'] = updated_house.serialize()
+            
         return make_response(jsonify(data), 200)
 
     except Exception as e:
