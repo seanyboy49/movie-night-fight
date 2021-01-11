@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 
 export const Menu = styled.div`
   background: ${(props) => props.background || 'white'};
+  left: 0;
   position: absolute;
-  width: 100%;
+  width: 100vw;
   transition: transform 0.3s ease-in-out;
   color: ${(props) => props.color || 'black'};
   z-index: 1;
