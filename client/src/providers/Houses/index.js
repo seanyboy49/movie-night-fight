@@ -12,16 +12,24 @@ export const useHouses = () => {
 
 const HouseProviders = ({ children }) => {
   const { apiUrl } = useConfiguration()
-  const { get } = useLocalStorage()
+  const { get, set } = useLocalStorage()
 
   const [allUserHouses, setAllUserHouses] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
+  // referencing current house
   const getCurrentHouse = get('currentHouse')
   const firstHouse = allUserHouses ? allUserHouses[0] : {}
-  const currentHouse = getCurrentHouse
-    ? JSON.parse(getCurrentHouse)
-    : firstHouse
+  let currentHouse = getCurrentHouse ? JSON.parse(getCurrentHouse) : firstHouse
+  // check if house in local storage is part of the current user house
+  if (currentHouse) {
+    const houseIDs = allUserHouses.map((house) => house.id)
+    if (!houseIDs.includes(currentHouse.id)) {
+      currentHouse = firstHouse ? firstHouse : {}
+    }
+  }
+
+  // set('currentHouse', JSON.stringify(currentHouse))
 
   const getUserHouses = useCallback(async () => {
     setIsLoading(true)
