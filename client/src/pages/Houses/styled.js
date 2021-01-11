@@ -38,6 +38,15 @@ export const HouseContainer = styled.div`
   &:hover {
     background-color: black;
   }
+
+  ${(props) => {
+    return (
+      props.isActive &&
+      css`
+        border: 3px solid #ff0e0e;
+      `
+    )
+  }}
 `
 
 export const CreateHouseContainer = styled.div`

@@ -37,7 +37,6 @@ const CreateHouse = ({ inputValue }) => {
         type: 'SUCCESS',
         message: `Success! You have created ${inputValue}`,
       })
-      localStorage.setItem('currentHouse', JSON.stringify(data))
       getUserHouses()
       const housePath = `/houses/${data.name}`.replace(/\s+/g, '')
       const location = {
