@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import {
   HouseNameText,
@@ -7,10 +8,13 @@ import {
   HouseMates,
   HouseNameContainer,
   HouseNameData,
+  TicketButtonContainer,
+  AssignCurrentHouseButton,
 } from './styled'
 
 import { useHouses } from '../../providers/Houses'
 import Button from './Button'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 function getHouseNames(allUsersHouses) {
   return allUsersHouses.map((house) => house.name)
@@ -19,10 +23,18 @@ function getHouseNames(allUsersHouses) {
 const HouseDetails = () => {
   const { allUserHouses } = useHouses()
   const location = useLocation()
+  const { set, get } = useLocalStorage()
+  const history = useHistory()
+
   const [houseDetail, setHouseDetail] = useState(location.state)
   const houseNames = getHouseNames(allUserHouses)
 
   const totalHouseMates = houseDetail['users'].length
+
+  function setCurrentHouse() {
+    set('currentHouse', JSON.stringify(houseDetail))
+    return history.push('/houses')
+  }
 
   return (
     <HouseNameContainer>
@@ -36,11 +48,18 @@ const HouseDetails = () => {
             return <Housemate key={user.user}>{user.user}</Housemate>
           })}
         </HouseMates>
-        <Button
-          onClick={setHouseDetail}
-          userHouseNames={houseNames}
-          houseDetail={houseDetail}
-        />
+        <TicketButtonContainer>
+          <Button
+            onClick={setHouseDetail}
+            userHouseNames={houseNames}
+            houseDetail={houseDetail}
+            setCurrentHouse={set}
+            getCurrentHouse={get}
+          />
+          <AssignCurrentHouseButton onClick={setCurrentHouse}>
+            set as current house
+          </AssignCurrentHouseButton>
+        </TicketButtonContainer>
       </HouseNameData>
     </HouseNameContainer>
   )
