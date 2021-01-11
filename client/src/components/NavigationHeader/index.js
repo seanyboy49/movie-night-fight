@@ -10,8 +10,6 @@ const NavigationHeader = ({ background, color, backLink }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [logged] = useAuth()
 
-  console.log('logged', logged)
-
   const titleLink = logged ? '/movies-list' : '/'
 
   return (

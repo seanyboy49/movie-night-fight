@@ -1,5 +1,5 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
-import { Redirect, useLocation, useRouteMatch } from 'react-router-dom'
+import { Redirect, useRouteMatch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import NavigationHeader from '../../components/NavigationHeader'
@@ -48,7 +48,7 @@ const MoviesProvider = ({ children }) => {
   }
 
   const previousUrlInHistory = getPreviousUrlInHistory({ isHouseDetailRoute })
-  console.log('previousUrlInHistory', previousUrlInHistory)
+
   return (
     <MoviesContext.Provider value={{ movies, isLoading, getUserSavedMovies }}>
       <NavigationHeader backLink={previousUrlInHistory} />
