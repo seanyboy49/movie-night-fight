@@ -1,10 +1,8 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
-import { Redirect, useRouteMatch } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import NavigationHeader from '../../components/NavigationHeader'
 import { useConfiguration } from '../Configuration'
-
 import { useAuth, authFetch } from '../../auth'
 
 const MoviesContext = React.createContext()
@@ -13,18 +11,11 @@ export const useMovies = () => {
   return useContext(MoviesContext) || {}
 }
 
-function getPreviousUrlInHistory({ isHouseDetailRoute }) {
-  if (isHouseDetailRoute) {
-    return '/houses'
-  }
-}
-
 const MoviesProvider = ({ children }) => {
   const [logged] = useAuth()
   const { apiUrl } = useConfiguration()
   const [movies, setMovies] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const isHouseDetailRoute = useRouteMatch('/houses/:houseName')?.isExact
 
   const getUserSavedMovies = useCallback(async () => {
     setIsLoading(true)
@@ -47,12 +38,8 @@ const MoviesProvider = ({ children }) => {
     return <Redirect to="/login" />
   }
 
-  const previousUrlInHistory = getPreviousUrlInHistory({ isHouseDetailRoute })
-
   return (
     <MoviesContext.Provider value={{ movies, isLoading, getUserSavedMovies }}>
-      <NavigationHeader backLink={previousUrlInHistory} />
-
       {children}
     </MoviesContext.Provider>
   )
