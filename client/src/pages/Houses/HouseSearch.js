@@ -15,22 +15,11 @@ import { authFetch } from '../../auth'
 import HouseResults from './HouseResults'
 import CreateHouse from './CreateHouse'
 
-// function CheckExactHouseNameMatch(searchInput, searchResults) {
-//   for (let house of searchResults) {
-//     if (house.name.toLowerCase() === searchInput.toLowerCase()) {
-//       return false
-//     }
-//   }
-//   return true
-// }
-
 const HouseSearch = () => {
   const { apiUrl } = useConfiguration()
   const [searchHouseResult, setSearchHouseResult] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [isHouseNameAvailable, setisHouseNameAvailable] = useState(true)
-
-  // const checkExactHouseNameMatch = searchResults.some((result)=> result.name.toLowerCase() === searchInput.toLowerCase())
 
   const searchHouses = async (currentValue) => {
     if (!currentValue) {
@@ -47,7 +36,6 @@ const HouseSearch = () => {
       const houseNameAvailable = data.some(
         (result) => result.name.toLowerCase() === currentValue.toLowerCase()
       )
-      // const houseNameAvailable = CheckExactHouseNameMatch(currentValue, data)
       setisHouseNameAvailable(houseNameAvailable)
       setSearchHouseResult(data)
     } catch (error) {
