@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/signup">
             <Signup />
           </Route>
+
           <MoviesProvider>
             <Route path="/movies-list">
               <MoviesList />
