@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { HousesContainer } from './styled'
 import NoHouses from './NoHouses'

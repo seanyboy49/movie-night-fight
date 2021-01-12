@@ -18,6 +18,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
   const { apiUrl } = useConfiguration()
   const history = useHistory()
   const [logged] = useAuth()

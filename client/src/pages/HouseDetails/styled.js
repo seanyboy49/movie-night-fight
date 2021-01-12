@@ -34,4 +34,18 @@ export const TicketButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 25px;
+  flex-direction: column;
+`
+
+export const AssignCurrentHouseButton = styled.div`
+  background-color: transparent;
+  border: none;
+  margin: 20px 0;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 5px;
+
+  &:hover {
+    border-bottom: 2px solid black;
+  }
 `

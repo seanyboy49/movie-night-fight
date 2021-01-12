@@ -58,6 +58,6 @@ export const ResultLi = styled.li`
   padding: 10px;
 
   &:hover {
-    background-color: #e5e5e5;
+    background-color: ${(props) => props.background || 'white'};
   }
 `
