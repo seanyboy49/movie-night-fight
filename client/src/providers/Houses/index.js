@@ -3,6 +3,7 @@ import React, { useContext, useState, useCallback, useEffect } from 'react'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import { determineCurrentHouse } from './utils'
 
 const HouseContext = React.createContext()
 
@@ -17,19 +18,14 @@ const HouseProviders = ({ children }) => {
   const [allUserHouses, setAllUserHouses] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  // referencing current house
-  const getCurrentHouse = get('currentHouse')
-  const firstHouse = allUserHouses ? allUserHouses[0] : {}
-  let currentHouse = getCurrentHouse ? JSON.parse(getCurrentHouse) : firstHouse
-  // check if house in local storage is part of the current user house
-  if (currentHouse) {
-    const houseIDs = allUserHouses.map((house) => house.id)
-    if (!houseIDs.includes(currentHouse.id)) {
-      currentHouse = firstHouse ? firstHouse : {}
-    }
-  }
+  const storageCurrentHouse = get('currentHouse')
+    ? JSON.parse(get('currentHouse'))
+    : undefined
+  const currentHouse = determineCurrentHouse(allUserHouses, storageCurrentHouse)
 
-  // set('currentHouse', JSON.stringify(currentHouse))
+  if (!storageCurrentHouse && currentHouse) {
+    set('currentHouse', JSON.stringify(currentHouse))
+  }
 
   const getUserHouses = useCallback(async () => {
     setIsLoading(true)
