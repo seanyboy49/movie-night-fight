@@ -23,7 +23,7 @@ function getHouseNames(allUsersHouses) {
 const HouseDetails = () => {
   const { allUserHouses } = useHouses()
   const location = useLocation()
-  const { set, get } = useLocalStorage()
+  const { remove, get, set } = useLocalStorage()
   const history = useHistory()
 
   const [houseDetail, setHouseDetail] = useState(location.state)
@@ -53,12 +53,12 @@ const HouseDetails = () => {
             onClick={setHouseDetail}
             userHouseNames={houseNames}
             houseDetail={houseDetail}
-            setCurrentHouse={set}
+            removeCurrentHouse={remove}
             getCurrentHouse={get}
           />
           {houseNames.includes(houseDetail.name) && (
             <AssignCurrentHouseButton onClick={setCurrentHouse}>
-              set as current house
+              Set as current house
             </AssignCurrentHouseButton>
           )}
         </TicketButtonContainer>

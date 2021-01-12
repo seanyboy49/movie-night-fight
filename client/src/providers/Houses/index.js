@@ -11,7 +11,7 @@ export const useHouses = () => {
   return useContext(HouseContext) || {}
 }
 
-const HouseProviders = ({ children }) => {
+const HousesProvider = ({ children }) => {
   const { apiUrl } = useConfiguration()
   const { get, set } = useLocalStorage()
 
@@ -58,4 +58,4 @@ const HouseProviders = ({ children }) => {
   )
 }
 
-export default HouseProviders
+export default HousesProvider

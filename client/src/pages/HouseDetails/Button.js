@@ -17,7 +17,7 @@ const Button = ({
   onClick,
   userHouseNames,
   houseDetail,
-  setCurrentHouse,
+  removeCurrentHouse,
   getCurrentHouse,
 }) => {
   const history = useHistory()
@@ -39,7 +39,7 @@ const Button = ({
       // if house is set as current house, remove it from local storage
       const currentHouse = JSON.parse(getCurrentHouse('currentHouse'))
       if (currentHouse.id === houseDetail.id) {
-        setCurrentHouse('currentHouse', '')
+        removeCurrentHouse('currentHouse')
       }
 
       // if user is the last person in house, redirect back to house route
@@ -80,11 +80,11 @@ const Button = ({
       {!isLoading &&
         (!userHouseNames.includes(houseDetail.name) ? (
           <TicketButton onClick={() => joinHouse(houseDetail.id)}>
-            join this house
+            Join this house
           </TicketButton>
         ) : (
           <TicketButton onClick={() => leaveHouse(houseDetail.id)}>
-            leave this house
+            Leave this house
           </TicketButton>
         ))}
       <RightCutout />
