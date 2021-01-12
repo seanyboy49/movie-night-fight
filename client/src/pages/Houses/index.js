@@ -10,9 +10,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { useHouses } from '../../providers/Houses'
 
 const Houses = () => {
-  const { allUserHouses, isLoading, currentHouse } = useHouses()
-
-  console.log(currentHouse)
+  const { allUserHouses, isLoading } = useHouses()
 
   if (isLoading) {
     return (

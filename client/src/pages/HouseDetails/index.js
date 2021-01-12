@@ -21,7 +21,7 @@ function getHouseNames(allUsersHouses) {
 }
 
 const HouseDetails = () => {
-  const { allUserHouses, currentHouse } = useHouses()
+  const { allUserHouses } = useHouses()
   const location = useLocation()
   const { set, get } = useLocalStorage()
   const history = useHistory()
@@ -31,11 +31,8 @@ const HouseDetails = () => {
 
   const totalHouseMates = houseDetail['users'].length
 
-  console.log('currentHouse', currentHouse)
-
   function setCurrentHouse() {
     set('currentHouse', JSON.stringify(houseDetail))
-    // currentHouse = JSON.parse(get('currentHouse'))
     return history.push('/houses')
   }
 
