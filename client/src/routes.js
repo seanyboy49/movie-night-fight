@@ -9,7 +9,7 @@ const routes = {
     root: '/',
     moviesList: '/movies-list',
     houses: '/houses',
-    houseDetail: '/houses/houseName',
+    houseDetail: '/houses/:houseName',
     searchMovies: '/search-movies',
   },
 }
