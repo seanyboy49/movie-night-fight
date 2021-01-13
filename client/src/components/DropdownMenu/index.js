@@ -48,13 +48,18 @@ const DropdownMenu = ({
 }) => {
   if (!isLogged) {
     return (
-      <Menu background={background} color={color} isOpen={isOpen}>
+      <Menu
+        background={background}
+        color={color}
+        isOpen={isOpen}
+        onClick={() => toggleIsOpen(!isOpen)}
+      >
         {loggedOutLinks.map((link, i) => {
           const notLast = i !== loggedOutLinks.length - 1
 
           return (
             <>
-              <SmallText>
+              <SmallText onClick={() => toggleIsOpen(!isOpen)}>
                 <NavLink to={link.to}>{link.text}</NavLink>
               </SmallText>
               {notLast && <Divider />}
@@ -74,7 +79,14 @@ const DropdownMenu = ({
         return (
           <>
             <SmallText>
-              <NavLink color="black" to={to} onClick={onClick}>
+              <NavLink
+                color="black"
+                to={to}
+                onClick={() => {
+                  onClick && onClick()
+                  toggleIsOpen(!isOpen)
+                }}
+              >
                 {text}
               </NavLink>
             </SmallText>
