@@ -40,10 +40,9 @@ const LoggedIn = () => {
       <NavigationHeader backLink={previousUrlInHistory} />
       <Switch>
         <MoviesProvider>
-          <Route exact path={appRoot} component={MoviesList} />
-          <Route path={moviesList} component={MoviesList} />
-
           <HousesProvider>
+            <Route exact path={appRoot} component={MoviesList} />
+            <Route path={moviesList} component={MoviesList} />
             <Route exact path={houses} component={Houses} />
             <Route path={houseDetail} component={HouseDetails} />
           </HousesProvider>

@@ -2,11 +2,17 @@ import React from 'react'
 
 import { BebasText } from '../../styles/Text'
 import { HouseContainer } from './styled'
+import { useHouses } from '../../providers/Houses'
 
 const House = ({ name, members }) => {
+  const { currentHouse } = useHouses()
+
   const memberCount = members.length
+  const isCurrentHouse =
+    currentHouse && currentHouse.name === name ? true : false
+
   return (
-    <HouseContainer>
+    <HouseContainer isActive={isCurrentHouse}>
       <BebasText align={'left'} size={'30px'}>
         {name}
       </BebasText>

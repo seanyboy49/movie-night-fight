@@ -2,6 +2,8 @@ import React, { useContext, useState, useCallback, useEffect } from 'react'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
+import useLocalStorage from '../../hooks/useLocalStorage'
+import { determineCurrentHouse } from './utils'
 
 const HouseContext = React.createContext()
 
@@ -9,11 +11,21 @@ export const useHouses = () => {
   return useContext(HouseContext) || {}
 }
 
-const HouseProviders = ({ children }) => {
+const HousesProvider = ({ children }) => {
   const { apiUrl } = useConfiguration()
-  const [currentHouse, setCurrentHouse] = useState()
+  const { get, set } = useLocalStorage()
+
   const [allUserHouses, setAllUserHouses] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const storageCurrentHouse = get('currentHouse')
+    ? JSON.parse(get('currentHouse'))
+    : undefined
+  const currentHouse = determineCurrentHouse(allUserHouses, storageCurrentHouse)
+
+  if (!storageCurrentHouse && currentHouse) {
+    set('currentHouse', JSON.stringify(currentHouse))
+  }
 
   const getUserHouses = useCallback(async () => {
     setIsLoading(true)
@@ -38,7 +50,6 @@ const HouseProviders = ({ children }) => {
         currentHouse,
         allUserHouses,
         isLoading,
-        setCurrentHouse,
         getUserHouses,
       }}
     >
@@ -47,4 +58,4 @@ const HouseProviders = ({ children }) => {
   )
 }
 
-export default HouseProviders
+export default HousesProvider

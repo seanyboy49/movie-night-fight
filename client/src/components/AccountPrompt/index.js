@@ -13,11 +13,15 @@ import {
 } from './styled'
 import { H2 } from '../../styles/Text'
 import { login } from '../../auth'
+import routes from '../../routes'
+
+const { moviesList } = routes.app
 
 const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
   const { apiUrl } = useConfiguration()
   const history = useHistory()
 
@@ -40,7 +44,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
       const { access_token } = await response.json()
       await login(access_token)
       setIsLoading(false)
-      history.push('/movies-list')
+      history.push(moviesList)
     } catch (error) {
       setIsLoading(false)
       console.log('error', error)

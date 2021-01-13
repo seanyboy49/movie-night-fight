@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { TicketButtonContainer } from './styled'
 import {
   Ticket,
   LeftCutout,
@@ -14,7 +13,13 @@ import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
 
-const Button = ({ onClick, userHouseNames, houseDetail }) => {
+const Button = ({
+  onClick,
+  userHouseNames,
+  houseDetail,
+  removeCurrentHouse,
+  getCurrentHouse,
+}) => {
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -31,6 +36,12 @@ const Button = ({ onClick, userHouseNames, houseDetail }) => {
       const data = await response.json()
       getUserHouses()
       setIsLoading(false)
+      // if house is set as current house, remove it from local storage
+      const currentHouse = JSON.parse(getCurrentHouse('currentHouse'))
+      if (currentHouse.id === houseDetail.id) {
+        removeCurrentHouse('currentHouse')
+      }
+
       // if user is the last person in house, redirect back to house route
       if (!data.houseDetail) {
         dispatch({
@@ -63,23 +74,21 @@ const Button = ({ onClick, userHouseNames, houseDetail }) => {
     }
   }
   return (
-    <TicketButtonContainer>
-      <Ticket width={'220'}>
-        <LeftCutout />
-        {isLoading && <ReelImage />}
-        {!isLoading &&
-          (!userHouseNames.includes(houseDetail.name) ? (
-            <TicketButton onClick={() => joinHouse(houseDetail.id)}>
-              join this house
-            </TicketButton>
-          ) : (
-            <TicketButton onClick={() => leaveHouse(houseDetail.id)}>
-              leave this house
-            </TicketButton>
-          ))}
-        <RightCutout />
-      </Ticket>
-    </TicketButtonContainer>
+    <Ticket width={'220'}>
+      <LeftCutout />
+      {isLoading && <ReelImage />}
+      {!isLoading &&
+        (!userHouseNames.includes(houseDetail.name) ? (
+          <TicketButton onClick={() => joinHouse(houseDetail.id)}>
+            Join this house
+          </TicketButton>
+        ) : (
+          <TicketButton onClick={() => leaveHouse(houseDetail.id)}>
+            Leave this house
+          </TicketButton>
+        ))}
+      <RightCutout />
+    </Ticket>
   )
 }
 

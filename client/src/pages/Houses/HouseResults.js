@@ -14,7 +14,7 @@ const HouseResults = ({ searchHouseResult }) => {
         }
         return (
           <HouseRedirectLink color={'black'} key={houseResult.id} to={location}>
-            <ResultLi>{houseResult.name}</ResultLi>
+            <ResultLi background={'#e5e5e5'}>{houseResult.name}</ResultLi>
           </HouseRedirectLink>
         )
       })}

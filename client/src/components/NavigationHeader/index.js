@@ -17,11 +17,7 @@ const NavigationHeader = ({ background, color, backLink }) => {
       <NavContainer background={background}>
         <BackArrow backLink={backLink} />
 
-        <AppTitle
-          to={titleLink}
-          color={color}
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <AppTitle to={titleLink} color={color} onClick={() => setIsOpen(false)}>
           Movie Night Fight
         </AppTitle>
 
