@@ -28,6 +28,7 @@ function checkAddedMovies(movieIds, movieData) {
 }
 
 const SearchMovie = () => {
+  console.log('search')
   const { apiUrl } = useConfiguration()
   const { movies } = useMovies()
   const [inputValue, setInputValue] = useState('')

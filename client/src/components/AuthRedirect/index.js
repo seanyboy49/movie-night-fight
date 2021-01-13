@@ -20,6 +20,7 @@ const AuthRedirect = ({ children, loggedOutRoutes = false }) => {
   if (!logged) {
     return <Redirect to="/" />
   }
+
   return children
 }
 

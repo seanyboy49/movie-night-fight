@@ -43,6 +43,7 @@ const HouseSearch = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((currentValue) => searchHouses(currentValue), 1000),
     []
