@@ -11,11 +11,18 @@ import HousesProvider from '../../providers/Houses'
 import { useAuth } from '../../auth'
 import routes from '../../routes'
 
-const { root, moviesList, houses, houseDetail, searchMovies } = routes.app
+const {
+  root: appRoot,
+  moviesList,
+  houses,
+  houseDetail,
+  searchMovies,
+} = routes.app
+const { root: publicRoot } = routes.public
 
 function getPreviousUrlInHistory({ isHouseDetailRoute }) {
   if (isHouseDetailRoute) {
-    return '/houses'
+    return houses
   }
 }
 
@@ -25,7 +32,7 @@ const LoggedIn = () => {
   const previousUrlInHistory = getPreviousUrlInHistory({ isHouseDetailRoute })
 
   if (!logged) {
-    return <Redirect to="/public" />
+    return <Redirect to={publicRoot} />
   }
 
   return (
@@ -33,7 +40,7 @@ const LoggedIn = () => {
       <NavigationHeader backLink={previousUrlInHistory} />
       <Switch>
         <MoviesProvider>
-          <Route exact path={root} component={MoviesList} />
+          <Route exact path={appRoot} component={MoviesList} />
           <Route path={moviesList} component={MoviesList} />
 
           <HousesProvider>
