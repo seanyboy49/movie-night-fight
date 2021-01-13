@@ -8,11 +8,11 @@ import { logout } from '../../auth'
 const loggedOutLinks = [
   {
     text: 'Log In',
-    to: '/login',
+    to: '/public/login',
   },
   {
     text: 'Sign Up',
-    to: '/signup',
+    to: '/public/signup',
   },
 ]
 

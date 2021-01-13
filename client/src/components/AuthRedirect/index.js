@@ -8,8 +8,11 @@ const AuthRedirect = ({ children, loggedOutRoutes = false }) => {
   const [logged] = useAuth()
 
   // Logged-out routes. e.g, "/", "/login", "/signup"
+  console.log('loggedOutRoutes', loggedOutRoutes)
   if (loggedOutRoutes) {
     if (logged) {
+      console.log('window.location.href', window.location.href)
+      console.log('redirect')
       return <Redirect to="/movies-list" />
     }
 
