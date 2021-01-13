@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom'
 
 import MoviesList from '../MoviesList'
 import Houses from '../Houses'
@@ -9,32 +9,38 @@ import NavigationHeader from '../../components/NavigationHeader'
 import MoviesProvider from '../../providers/Movies'
 import HousesProvider from '../../providers/Houses'
 import { useAuth } from '../../auth'
+import routes from '../../routes'
+
+const { root, moviesList, houses, houseDetail, searchMovies } = routes.app
+
+function getPreviousUrlInHistory({ isHouseDetailRoute }) {
+  if (isHouseDetailRoute) {
+    return '/houses'
+  }
+}
 
 const LoggedIn = () => {
   const [logged] = useAuth()
+  const isHouseDetailRoute = useRouteMatch('/houses/:houseName')?.isExact
+  const previousUrlInHistory = getPreviousUrlInHistory({ isHouseDetailRoute })
 
   if (!logged) {
     return <Redirect to="/public" />
   }
+
   return (
     <>
-      <NavigationHeader background="#D70808" color={'white'} />
+      <NavigationHeader backLink={previousUrlInHistory} />
       <Switch>
         <MoviesProvider>
-          <Route exact path={`/movies-list`}>
-            <MoviesList />
-          </Route>
+          <Route exact path={root} component={MoviesList} />
+          <Route path={moviesList} component={MoviesList} />
+
           <HousesProvider>
-            <Route path={`/houses`}>
-              <Houses />
-            </Route>
-            <Route path={`/houses/:houseName`}>
-              <HouseDetails />
-            </Route>
+            <Route exact path={houses} component={Houses} />
+            <Route path={houseDetail} component={HouseDetails} />
           </HousesProvider>
-          <Route path={`/search-movies`}>
-            <SearchMovie />
-          </Route>
+          <Route path={searchMovies} component={SearchMovie} />
         </MoviesProvider>
       </Switch>
     </>
