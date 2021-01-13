@@ -58,12 +58,12 @@ const DropdownMenu = ({
           const notLast = i !== loggedOutLinks.length - 1
 
           return (
-            <>
+            <React.Fragment key={i}>
               <SmallText onClick={() => toggleIsOpen(!isOpen)}>
                 <NavLink to={link.to}>{link.text}</NavLink>
               </SmallText>
               {notLast && <Divider />}
-            </>
+            </React.Fragment>
           )
         })}
       </Menu>
@@ -76,12 +76,13 @@ const DropdownMenu = ({
         const notLast = i !== loggedInLinks.length - 1
 
         const { text, to, onClick } = link
+
         return (
-          <>
+          <React.Fragment key={i}>
             <SmallText>
               <NavLink
                 color="black"
-                to={to}
+                to={to || ''}
                 onClick={() => {
                   onClick && onClick()
                   toggleIsOpen(!isOpen)
@@ -91,7 +92,7 @@ const DropdownMenu = ({
               </NavLink>
             </SmallText>
             {notLast && <Divider />}
-          </>
+          </React.Fragment>
         )
       })}
     </Menu>
@@ -100,6 +101,10 @@ const DropdownMenu = ({
 
 DropdownMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isLogged: PropTypes.bool.isRequired,
+  toggleIsOpen: PropTypes.func.isRequired,
+  background: PropTypes.string,
+  color: PropTypes.string,
 }
 
 export default DropdownMenu
