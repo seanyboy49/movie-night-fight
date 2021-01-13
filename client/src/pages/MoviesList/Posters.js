@@ -15,7 +15,7 @@ import reel from '../../images/film-reel.svg'
 
 const Posters = () => {
   const [lightBox, setLightBox] = useState(undefined)
-  const { movies, isLoading } = useMovies()
+  const { movies, isLoading, getUserSavedMovies } = useMovies()
 
   const { get, set } = useLocalStorage()
 
@@ -48,6 +48,7 @@ const Posters = () => {
               onClick={setLightBox}
               onRelease={set}
               nuxStates={nuxStates}
+              getUserSavedMovies={getUserSavedMovies}
             />
           </>
         ) : (

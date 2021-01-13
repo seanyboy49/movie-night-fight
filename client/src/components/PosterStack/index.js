@@ -4,11 +4,20 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans } from './utility'
+import { to, from, trans, removeMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
+import { authFetch } from '../../auth'
+import { useConfiguration } from '../../providers/Configuration'
 
-const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
+const PosterStack = ({
+  movies,
+  onClick,
+  onRelease,
+  nuxStates,
+  getUserSavedMovies,
+}) => {
+  const { apiUrl } = useConfiguration()
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -23,7 +32,7 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
       down: isDown,
       movement: [mx],
       distance,
-      direction: [xDir],
+      direction: [xDir, yDir],
       velocity,
     }) => {
       const trigger = velocity > 0.2
@@ -55,6 +64,15 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
+        console.log('yDir', yDir)
+        console.log('xDir', xDir)
+
+        if (isGone && dir > 0) {
+          const currentMovieOmdbId = movies[i].id
+          // removeMovie(currentMovieOmdbId, authFetch, apiUrl)
+          console.log('removed yay')
+        }
+
         return {
           x,
           rot,
@@ -67,9 +85,12 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
       // All cards from stack have been removed
       if (!isDown && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
+        getUserSavedMovies()
       }
     }
   )
+
+  console.log('movies', movies)
 
   return (
     <StackContainer>

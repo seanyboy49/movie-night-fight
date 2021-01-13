@@ -14,7 +14,7 @@ export const Ticket = styled.div`
 
 export const LeftCutout = styled.div`
   position: absolute;
-  background-color: white;
+  background-color: ${(props) => props.color || 'white'};
   left: -1%;
   top: 30%;
   width: ${(props) => props.width || '10'}px;
@@ -26,7 +26,7 @@ export const LeftCutout = styled.div`
 
 export const RightCutout = styled.div`
   position: absolute;
-  background-color: white;
+  background-color: ${(props) => props.color || 'white'};
   right: -1%;
   top: 30%;
   width: ${(props) => props.width || '10'}px;
@@ -52,6 +52,6 @@ export const TicketButton = styled.button`
   color: white;
   font-family: Bebas Neue;
   font-size: 27px;
-  padding: 5px 10px;
+  padding: ${(props) => props.padding || '5px 10px'};
   cursor: pointer;
 `

@@ -22,3 +22,27 @@ export const NoMoviePoster = styled.div`
   height: 314px;
   border: 1px solid black;
 `
+
+export const SelectedMovieContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+`
+export const MovieDetailContainer = styled.div`
+  background-color: white;
+  width: 252px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 15px 0px;
+  border-radius: 5px;
+`
+
+export const MovieTitle = styled.p`
+  font-size: 25px;
+  margin: 5px 0 0 0;
+  text-align: center;
+`

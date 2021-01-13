@@ -12,3 +12,16 @@ export const trans = (r, s) =>
   `perspective(1500px) rotateX(30deg) rotateY(${
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
+
+export const removeMovie = async (removeMovieOmdbId, authFetch, apiUrl) => {
+  try {
+    await authFetch(`${apiUrl}/watchlist/${removeMovieOmdbId}`, {
+      method: 'DELETE',
+    })
+  } catch (error) {
+    console.log('error', error)
+  }
+
+  // fetch request to remove movie from user db
+  // when stack finish, function to get updated movie list
+}
