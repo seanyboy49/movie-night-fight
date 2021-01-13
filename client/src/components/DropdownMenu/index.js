@@ -7,6 +7,7 @@ import { logout } from '../../auth'
 import routes from '../../routes'
 
 const { login, signup } = routes.public
+const { moviesList, houses, searchMovies } = routes.app
 
 const loggedOutLinks = [
   {
@@ -22,19 +23,19 @@ const loggedOutLinks = [
 const loggedInLinks = [
   {
     text: 'Movies list',
-    to: '/movies-list',
+    to: moviesList,
   },
   {
     text: 'View past choices',
-    to: '/movies-list', // TODO: replace
+    to: moviesList, // TODO: replace
   },
   {
     text: 'Switch houses',
-    to: '/houses',
+    to: houses,
   },
   {
     text: 'Search movies',
-    to: '/search-movies',
+    to: searchMovies,
   },
   {
     text: 'Log out',
