@@ -59,6 +59,7 @@ const SearchMovie = () => {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce(
       (currentValue, movieIds) => searchMovies(currentValue, movieIds),

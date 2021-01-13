@@ -3,60 +3,112 @@ import PropTypes from 'prop-types'
 
 import { Menu, NavLink } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
-import { logout, useAuth } from '../../auth'
+import { logout } from '../../auth'
+import routes from '../../routes'
 
-const DropdownMenu = ({ isOpen, background, color, onClick }) => {
-  const [logged] = useAuth()
+const { login, signup } = routes.public
+const { moviesList, houses, searchMovies } = routes.app
 
-  if (!logged) {
+const loggedOutLinks = [
+  {
+    text: 'Log In',
+    to: login,
+  },
+  {
+    text: 'Sign Up',
+    to: signup,
+  },
+]
+
+const loggedInLinks = [
+  {
+    text: 'Movies list',
+    to: moviesList,
+  },
+  {
+    text: 'View past choices',
+    to: moviesList, // TODO: replace
+  },
+  {
+    text: 'Switch houses',
+    to: houses,
+  },
+  {
+    text: 'Search movies',
+    to: searchMovies,
+  },
+  {
+    text: 'Log out',
+    onClick: logout,
+  },
+]
+
+const DropdownMenu = ({
+  isOpen,
+  isLogged,
+  background,
+  color,
+  toggleIsOpen,
+}) => {
+  if (!isLogged) {
     return (
-      <Menu background={background} color={color} isOpen={isOpen}>
-        <SmallText>
-          <NavLink to="/">Home</NavLink>
-        </SmallText>
-        <Divider />
-        <SmallText>
-          <NavLink to="/login">Log In</NavLink>
-        </SmallText>
-        <Divider />
-        <SmallText>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </SmallText>
+      <Menu
+        background={background}
+        color={color}
+        isOpen={isOpen}
+        onClick={() => toggleIsOpen(!isOpen)}
+      >
+        {loggedOutLinks.map((link, i) => {
+          const notLast = i !== loggedOutLinks.length - 1
+
+          return (
+            <React.Fragment key={i}>
+              <SmallText onClick={() => toggleIsOpen(!isOpen)}>
+                <NavLink to={link.to}>{link.text}</NavLink>
+              </SmallText>
+              {notLast && <Divider />}
+            </React.Fragment>
+          )
+        })}
       </Menu>
     )
   }
 
   return (
-    <Menu isOpen={isOpen} onClick={() => onClick(!isOpen)}>
-      <SmallText>
-        <NavLink color={'black'} to="/movies-list">
-          Movie List
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText>View past choices</SmallText>
-      <Divider />
-      <SmallText>
-        <NavLink color={'black'} to="/houses">
-          Switch houses
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText>
-        <NavLink color={'black'} to="/search-movies">
-          Search Movies
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText test-attr="logout-button" onClick={logout}>
-        Log out
-      </SmallText>
+    <Menu isOpen={isOpen} onClick={() => toggleIsOpen(!isOpen)}>
+      {loggedInLinks.map((link, i) => {
+        const notLast = i !== loggedInLinks.length - 1
+
+        const { text, to, onClick } = link
+
+        return (
+          <React.Fragment key={i}>
+            <SmallText>
+              <NavLink
+                color="black"
+                to={to || ''}
+                onClick={() => {
+                  onClick && onClick()
+                  toggleIsOpen(!isOpen)
+                }}
+              >
+                {text}
+              </NavLink>
+            </SmallText>
+            {notLast && <Divider />}
+          </React.Fragment>
+        )
+      })}
     </Menu>
   )
 }
 
 DropdownMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isLogged: PropTypes.bool.isRequired,
+  toggleIsOpen: PropTypes.func.isRequired,
+  background: PropTypes.string,
+  color: PropTypes.string,
 }
 
 export default DropdownMenu
