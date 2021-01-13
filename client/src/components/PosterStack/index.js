@@ -4,11 +4,20 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans } from './utility'
+import { to, from, trans, useWatchMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
 
-const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
+const PosterStack = ({
+  movies,
+  onClick,
+  onRelease,
+  nuxStates,
+  getUserSavedMovies,
+  setSelectedMovie,
+}) => {
+  const { markMovieAsWatched } = useWatchMovie()
+
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -23,7 +32,7 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
       down: isDown,
       movement: [mx],
       distance,
-      direction: [xDir],
+      direction: [xDir, yDir],
       velocity,
     }) => {
       const trigger = velocity > 0.2
@@ -55,6 +64,12 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
+        // if swipe right, user select movie and set to next user's turn
+        if (isGone && dir > 0) {
+          const movieSelected = movies[i]
+          markMovieAsWatched(movieSelected, setSelectedMovie)
+        }
+
         return {
           x,
           rot,
@@ -67,6 +82,7 @@ const PosterStack = ({ movies, onClick, onRelease, nuxStates }) => {
       // All cards from stack have been removed
       if (!isDown && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
+        getUserSavedMovies()
       }
     }
   )
