@@ -4,15 +4,18 @@ import PropTypes from 'prop-types'
 import { Menu, NavLink } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
 import { logout } from '../../auth'
+import routes from '../../routes'
+
+const { login, signup } = routes.public
 
 const loggedOutLinks = [
   {
     text: 'Log In',
-    to: '/public/login',
+    to: login,
   },
   {
     text: 'Sign Up',
-    to: '/public/signup',
+    to: signup,
   },
 ]
 

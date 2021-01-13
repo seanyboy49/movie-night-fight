@@ -12,8 +12,6 @@ import HousesProvider from '../../providers/Houses'
 const LoggedIn = () => {
   const { path } = useRouteMatch()
 
-  console.log('path', path)
-
   return (
     <>
       <NavigationHeader background="#D70808" color={'white'} />

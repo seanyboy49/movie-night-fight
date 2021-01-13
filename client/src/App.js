@@ -23,12 +23,12 @@ const App = () => {
             <LoggedOut />
           </Route>
 
-          <Route path="/movies-list">
+          <Route path="/app">
             <LoggedIn />
           </Route>
 
           {/* Catchall redirect */}
-          <Redirect from="/" to="/movies-list" />
+          {/* <Redirect from="/" to="/movies-list" /> */}
         </Switch>
       </Router>
       <Toast />
