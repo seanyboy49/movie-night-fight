@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import ConfigurationProvider from './providers/Configuration'
 import Toast from './components/Toast'
@@ -23,12 +18,9 @@ const App = () => {
             <LoggedOut />
           </Route>
 
-          <Route path="/app">
+          <Route path="/">
             <LoggedIn />
           </Route>
-
-          {/* Catchall redirect */}
-          {/* <Redirect from="/" to="/movies-list" /> */}
         </Switch>
       </Router>
       <Toast />
