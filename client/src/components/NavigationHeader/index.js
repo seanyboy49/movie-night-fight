@@ -23,10 +23,11 @@ const NavigationHeader = ({ background, color, backLink }) => {
 
         <Hamburger color={color} onClick={setIsOpen} isOpen={isOpen} />
         <DropdownMenu
+          isLogged={logged}
           background={background}
           color={color}
           isOpen={isOpen}
-          onClick={setIsOpen}
+          toggleIsOpen={setIsOpen}
         />
       </NavContainer>
     </Nav>

@@ -3,50 +3,85 @@ import PropTypes from 'prop-types'
 
 import { Menu, NavLink } from './styled'
 import { SmallText, Divider } from '../../styles/Text'
-import { logout, useAuth } from '../../auth'
+import { logout } from '../../auth'
 
-const DropdownMenu = ({ isOpen, background, color, onClick }) => {
-  const [logged] = useAuth()
+const loggedOutLinks = [
+  {
+    text: 'Log In',
+    to: '/login',
+  },
+  {
+    text: 'Sign Up',
+    to: '/signup',
+  },
+]
 
-  if (!logged) {
+const loggedInLinks = [
+  {
+    text: 'Movies list',
+    to: '/movies-list',
+  },
+  {
+    text: 'View past choices',
+    to: '/movies-list', // TODO: replace
+  },
+  {
+    text: 'Switch houses',
+    to: '/houses',
+  },
+  {
+    text: 'Search movies',
+    to: '/search-movies',
+  },
+  {
+    text: 'Log out',
+    onClick: logout,
+  },
+]
+
+const DropdownMenu = ({
+  isOpen,
+  isLogged,
+  background,
+  color,
+  toggleIsOpen,
+}) => {
+  if (!isLogged) {
     return (
       <Menu background={background} color={color} isOpen={isOpen}>
-        <SmallText>
-          <NavLink to="/login">Log In</NavLink>
-        </SmallText>
-        <Divider />
-        <SmallText>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </SmallText>
+        {loggedOutLinks.map((link, i) => {
+          const notLast = i !== loggedOutLinks.length - 1
+
+          return (
+            <>
+              <SmallText>
+                <NavLink to={link.to}>{link.text}</NavLink>
+              </SmallText>
+              {notLast && <Divider />}
+            </>
+          )
+        })}
       </Menu>
     )
   }
 
   return (
-    <Menu isOpen={isOpen} onClick={() => onClick(!isOpen)}>
-      <SmallText>
-        <NavLink color={'black'} to="/movies-list">
-          Movies list
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText>View past choices</SmallText>
-      <Divider />
-      <SmallText>
-        <NavLink color={'black'} to="/houses">
-          Switch houses
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText>
-        <NavLink color={'black'} to="/search-movies">
-          Search movies
-        </NavLink>
-      </SmallText>
-      <Divider />
-      <SmallText test-attr="logout-button" onClick={logout}>
-        Log out
-      </SmallText>
+    <Menu isOpen={isOpen} onClick={() => toggleIsOpen(!isOpen)}>
+      {loggedInLinks.map((link, i) => {
+        const notLast = i !== loggedInLinks.length - 1
+
+        const { text, to, onClick } = link
+        return (
+          <>
+            <SmallText>
+              <NavLink color="black" to={to} onClick={onClick}>
+                {text}
+              </NavLink>
+            </SmallText>
+            {notLast && <Divider />}
+          </>
+        )
+      })}
     </Menu>
   )
 }
