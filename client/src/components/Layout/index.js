@@ -24,6 +24,7 @@ const Layout = ({ children }) => {
       </>
     )
   }
+
   return (
     <>
       <NavigationHeader background="#D70808" color={'white'} />

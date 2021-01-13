@@ -12,7 +12,7 @@ import {
   PromptContainer,
 } from './styled'
 import { H2 } from '../../styles/Text'
-import { login, useAuth } from '../../auth'
+import { login } from '../../auth'
 
 const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +20,6 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const [password, setPassword] = useState('')
   const { apiUrl } = useConfiguration()
   const history = useHistory()
-  const [logged] = useAuth()
 
   const isFormInvalid = !username || !password
 
@@ -46,10 +45,6 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
       setIsLoading(false)
       console.log('error', error)
     }
-  }
-
-  if (logged) {
-    history.push('/movies-list')
   }
 
   return (

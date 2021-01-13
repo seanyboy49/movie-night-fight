@@ -8,9 +8,12 @@ import Houses from './pages/Houses'
 import SearchMovie from './pages/SearchMovie'
 import Signup from './pages/SignUp'
 import HouseDetails from './pages/HouseDetails'
+
 import ConfigurationProvider from './providers/Configuration'
 import MoviesProvider from './providers/Movies'
 import HouseProvider from './providers/Houses'
+
+import AuthRedirect from './components/AuthRedirect'
 import Toast from './components/Toast'
 import Layout from './components/Layout'
 import config from './config'
@@ -22,34 +25,40 @@ const App = () => {
     <ConfigurationProvider value={{ apiUrl }}>
       <Router>
         <Layout>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
+          <AuthRedirect loggedOutRoutes>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/signup">
+                <Signup />
+              </Route>
+            </Switch>
+          </AuthRedirect>
 
+          <AuthRedirect>
             <MoviesProvider>
-              <Route path="/movies-list">
-                <MoviesList />
-              </Route>
-              <HouseProvider>
-                <Route exact path="/houses">
-                  <Houses />
+              <Switch>
+                <Route path="/movies-list">
+                  <MoviesList />
                 </Route>
-                <Route exact path="/houses/:houseName">
-                  <HouseDetails />
+                <HouseProvider>
+                  <Route exact path="/houses">
+                    <Houses />
+                  </Route>
+                  <Route exact path="/houses/:houseName">
+                    <HouseDetails />
+                  </Route>
+                </HouseProvider>
+                <Route path="/search-movies">
+                  <SearchMovie />
                 </Route>
-              </HouseProvider>
-              <Route path="/search-movies">
-                <SearchMovie />
-              </Route>
+              </Switch>
             </MoviesProvider>
-          </Switch>
+          </AuthRedirect>
         </Layout>
       </Router>
       <Toast />

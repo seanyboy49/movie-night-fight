@@ -1,9 +1,8 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { useConfiguration } from '../Configuration'
-import { useAuth, authFetch } from '../../auth'
+import { authFetch } from '../../auth'
 
 const MoviesContext = React.createContext()
 
@@ -12,7 +11,6 @@ export const useMovies = () => {
 }
 
 const MoviesProvider = ({ children }) => {
-  const [logged] = useAuth()
   const { apiUrl } = useConfiguration()
   const [movies, setMovies] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -33,10 +31,6 @@ const MoviesProvider = ({ children }) => {
   useEffect(() => {
     getUserSavedMovies()
   }, [getUserSavedMovies])
-
-  if (!logged) {
-    return <Redirect to="/login" />
-  }
 
   return (
     <MoviesContext.Provider value={{ movies, isLoading, getUserSavedMovies }}>
