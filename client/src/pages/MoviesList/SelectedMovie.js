@@ -4,6 +4,7 @@ import {
   SelectedMovieContainer,
   MovieDetailContainer,
   MovieTitle,
+  SuccessBanner,
 } from './styled'
 import {
   Ticket,
@@ -24,6 +25,7 @@ const SelectedMovie = ({ selectedMovie }) => {
         <TicketButton padding={'5px 25px'}>Cool</TicketButton>
         <RightCutout color={'#FFECB4'} />
       </Ticket>
+      <SuccessBanner />
     </SelectedMovieContainer>
   )
 }

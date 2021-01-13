@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import successBannerPath from '../../images/success-banner.svg'
 
 export const NoMovieContainer = styled.div`
   display: flex;
@@ -39,10 +40,18 @@ export const MovieDetailContainer = styled.div`
   flex-direction: column;
   padding: 15px 0px;
   border-radius: 5px;
+  position: relative;
 `
 
 export const MovieTitle = styled.p`
   font-size: 25px;
   margin: 5px 0 0 0;
   text-align: center;
+`
+
+export const SuccessBanner = styled.img.attrs({
+  src: `${successBannerPath}`,
+  alt: 'success banner',
+})`
+  position: absolute;
 `
