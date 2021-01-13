@@ -24,7 +24,7 @@ export const useWatchMovie = () => {
   const { currentHouse } = useHouses()
   const dispatch = useDispatch()
 
-  async function markMovieAsWatched(movieSelected, setSelectedMovie) {
+  async function markMovieAsWatched(movieSelected, onSuccess) {
     const currentHouseId = currentHouse.id
     const currentMovieId = movieSelected.id
     try {
@@ -35,7 +35,7 @@ export const useWatchMovie = () => {
         }
       )
       if (response.status === 201) {
-        setSelectedMovie(movieSelected)
+        onSuccess(movieSelected)
       } else {
         const data = await response.json()
         dispatch({
