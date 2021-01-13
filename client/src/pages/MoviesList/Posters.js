@@ -13,7 +13,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 
 import reel from '../../images/film-reel.svg'
 
-const Posters = () => {
+const Posters = ({ setSelectedMovie, setIsSelected }) => {
   const [lightBox, setLightBox] = useState(undefined)
   const { movies, isLoading, getUserSavedMovies } = useMovies()
 
@@ -49,6 +49,8 @@ const Posters = () => {
               onRelease={set}
               nuxStates={nuxStates}
               getUserSavedMovies={getUserSavedMovies}
+              setSelectedMovie={setSelectedMovie}
+              setIsSelected={setIsSelected}
             />
           </>
         ) : (

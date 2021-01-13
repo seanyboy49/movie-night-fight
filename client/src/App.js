@@ -31,10 +31,10 @@ const App = () => {
             <Signup />
           </Route>
           <MoviesProvider>
-            <Route path="/movies-list">
-              <MoviesList />
-            </Route>
             <HousesProvider>
+              <Route path="/movies-list">
+                <MoviesList />
+              </Route>
               <Route exact path="/houses">
                 <Houses />
               </Route>

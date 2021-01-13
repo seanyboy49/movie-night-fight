@@ -14,13 +14,18 @@ const mockMovie = {
 }
 
 const MoviesList = () => {
-  const [isSelected, setIsSelected] = useState(true)
+  const [isSelected, setIsSelected] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(mockMovie)
 
   return (
     <MovieListBackground>
       <Marquee />
-      {!isSelected && <Posters setSelectedMovie={setSelectedMovie} />}
+      {!isSelected && (
+        <Posters
+          setSelectedMovie={setSelectedMovie}
+          setIsSelected={setIsSelected}
+        />
+      )}
       {isSelected && <SelectedMovie selectedMovie={selectedMovie} />}
     </MovieListBackground>
   )

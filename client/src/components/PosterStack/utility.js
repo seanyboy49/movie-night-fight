@@ -13,15 +13,20 @@ export const trans = (r, s) =>
     r / 10
   }deg) rotateZ(${r}deg) scale(${s})`
 
-export const removeMovie = async (removeMovieOmdbId, authFetch, apiUrl) => {
+export const selectWatchMovie = async (
+  currentMovieId,
+  currentHouseId,
+  authFetch,
+  apiUrl
+) => {
   try {
-    await authFetch(`${apiUrl}/watchlist/${removeMovieOmdbId}`, {
-      method: 'DELETE',
-    })
+    await authFetch(
+      `${apiUrl}/watchlist?movieId=${currentMovieId}&houseId=${currentHouseId}`,
+      {
+        method: 'PATCH',
+      }
+    )
   } catch (error) {
     console.log('error', error)
   }
-
-  // fetch request to remove movie from user db
-  // when stack finish, function to get updated movie list
 }

@@ -4,11 +4,12 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans, removeMovie } from './utility'
+import { to, from, trans, selectWatchMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
+import { useHouses } from '../../providers/Houses'
 
 const PosterStack = ({
   movies,
@@ -16,8 +17,11 @@ const PosterStack = ({
   onRelease,
   nuxStates,
   getUserSavedMovies,
+  setSelectedMovie,
+  setIsSelected,
 }) => {
   const { apiUrl } = useConfiguration()
+  const { currentHouse } = useHouses()
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
     ...to(i),
@@ -64,13 +68,13 @@ const PosterStack = ({
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
-        console.log('yDir', yDir)
-        console.log('xDir', xDir)
-
+        // if swipe right, user select movie and set to next user's turn
         if (isGone && dir > 0) {
-          const currentMovieOmdbId = movies[i].id
-          // removeMovie(currentMovieOmdbId, authFetch, apiUrl)
-          console.log('removed yay')
+          const currentMovieId = movies[i].id
+          const currentHouseId = currentHouse.id
+          selectWatchMovie(currentMovieId, currentHouseId, authFetch, apiUrl)
+          setSelectedMovie(movies[i])
+          setIsSelected(true)
         }
 
         return {
@@ -89,8 +93,6 @@ const PosterStack = ({
       }
     }
   )
-
-  console.log('movies', movies)
 
   return (
     <StackContainer>
