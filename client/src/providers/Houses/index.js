@@ -25,7 +25,7 @@ const HousesProvider = ({ children }) => {
   const currentHouse = determineCurrentHouse(allUserHouses, storageCurrentHouse)
 
   const token = get('REACT_TOKEN_AUTH_KEY')
-  var userId = jwt_decode(token).id
+  const userId = jwt_decode(token).id
 
   if (!storageCurrentHouse && currentHouse) {
     set('currentHouse', JSON.stringify(currentHouse))
