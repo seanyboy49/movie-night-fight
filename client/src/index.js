@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import allReducers from './reducers'
+import { allReducers } from './state'
 
 const store = createStore(
   allReducers,
