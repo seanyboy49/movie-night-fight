@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import { useHouses } from '../../providers/Houses'
+import { failure } from '../../state/actions'
 
 export const to = (i) => ({
   x: 0,
@@ -38,10 +39,7 @@ export const useWatchMovie = () => {
         onSuccess(movieSelected)
       } else {
         const data = await response.json()
-        dispatch({
-          type: 'FAIL',
-          message: data.message,
-        })
+        dispatch(failure(data.message))
       }
     } catch (error) {
       console.log('error', error)
