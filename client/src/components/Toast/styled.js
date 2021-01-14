@@ -19,6 +19,7 @@ const slideDown = keyframes`
 `
 
 export const ToastWrapper = styled.div`
+  cursor: pointer;
   background-color: ${(props) => props.backgroundColor};
   color: white;
   border-top-left-radius: 27px;
@@ -29,8 +30,13 @@ export const ToastWrapper = styled.div`
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  animation: ${(p) => (p.trigger ? slideUp : slideDown)} 2s linear;
+  animation: ${({ isActive }) => (isActive ? slideUp : slideDown)} 0.1s ease-in;
+  animation-fill-mode: forwards;
 `
+// animation-fill-mode: forwards;
+// Preserves final state of keyframe animation, otherwise
+// the element reverts to initial state.
+// https://stackoverflow.com/questions/12991164/maintaining-the-final-state-at-end-of-a-css3-animation
 
 export const ToastText = styled.p`
   overflow-wrap: break-word;

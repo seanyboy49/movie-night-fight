@@ -12,6 +12,7 @@ import { CreateHouseContainer } from './styled'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
+import { success, failure } from '../../state/actions'
 
 const CreateHouse = ({ inputValue }) => {
   const { getUserHouses } = useHouses()
@@ -33,10 +34,7 @@ const CreateHouse = ({ inputValue }) => {
         body: JSON.stringify(body),
       })
       const data = await response.json()
-      dispatch({
-        type: 'SUCCESS',
-        message: `Success! You have created ${inputValue}`,
-      })
+      dispatch(success(`Success! You have created ${inputValue}`))
       getUserHouses()
       const housePath = `/houses/${data.name}`.replace(/\s+/g, '')
       const location = {
@@ -45,10 +43,7 @@ const CreateHouse = ({ inputValue }) => {
       }
       return history.push(location)
     } catch (error) {
-      dispatch({
-        type: 'FAIL',
-        message: 'Something went wrong. Please try again.',
-      })
+      dispatch(failure('Something went wrong. Please try again.'))
       console.log('error', error)
     }
   }
