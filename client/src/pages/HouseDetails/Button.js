@@ -12,6 +12,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
+import { remove } from '../../state/actions'
 
 const Button = ({
   onClick,
@@ -44,10 +45,7 @@ const Button = ({
 
       // if user is the last person in house, redirect back to house route
       if (!data.houseDetail) {
-        dispatch({
-          type: 'REMOVE',
-          message: '',
-        })
+        dispatch(remove())
         return history.push('/houses')
       } else {
         onClick(data.houseDetail)

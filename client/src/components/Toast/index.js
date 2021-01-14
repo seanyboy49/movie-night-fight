@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ToastWrapper, ToastText } from './styled'
+import { remove } from '../../state/actions'
 
 const Toast = () => {
   const toastState = useSelector((state) => state.toast)
@@ -15,7 +16,7 @@ const Toast = () => {
 
   return (
     <ToastWrapper
-      onClick={() => dispatch({ type: 'REMOVE' })}
+      onClick={() => dispatch(remove())}
       backgroundColor={toastState.color}
       trigger={isActive}
     >
