@@ -55,3 +55,39 @@ export const SuccessBanner = styled.img.attrs({
 })`
   position: absolute;
 `
+export const TurnsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`
+
+export const TurnsBoard = styled.div`
+  width: 324px;
+  // height: 347px;
+  background-color: #d70808;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const InfoContainer = styled.div`
+  width: 288px;
+  // height: 307px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 11px;
+  background-color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-family: Bevan;
+  font-size: 18px;
+  margin: 15px 0;
+`
+
+export const Categories = styled.div`
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`

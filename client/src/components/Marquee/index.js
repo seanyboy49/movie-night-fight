@@ -10,7 +10,7 @@ import {
 } from './styled'
 import AddButton from './AddButton'
 
-const Marquee = () => {
+const Marquee = ({ currentTurn, nextTurn }) => {
   return (
     <MarqueeBackground>
       <DotBorder>
@@ -20,11 +20,11 @@ const Marquee = () => {
           </MarqueeSide>
           <MarqueeCenter>
             <Text size={'24'}>Now Showing</Text>
-            <Text size={'36'}>Sean's Choice</Text>
+            <Text size={'36'}>{currentTurn}'s Choice</Text>
           </MarqueeCenter>
           <MarqueeSide border={'none'}>
             <Text size={'18'}>next up:</Text>
-            <Text size={'24'}>Jina</Text>
+            <Text size={'24'}>{nextTurn}</Text>
           </MarqueeSide>
         </InfoContainer>
       </DotBorder>
