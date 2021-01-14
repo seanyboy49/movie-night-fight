@@ -12,7 +12,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 const MoviesList = () => {
   const [selectedMovie, setSelectedMovie] = useState()
 
-  const { currentHouse } = useHouses()
+  const { currentHouse, userId } = useHouses()
   const { getHouseTurns, houseTurns } = useTurns()
 
   useEffect(() => {
@@ -20,8 +20,6 @@ const MoviesList = () => {
       getHouseTurns(currentHouse.id)
     }
   }, [getHouseTurns, houseTurns, currentHouse])
-
-  console.log('houseTurns', houseTurns)
 
   if (!currentHouse || !houseTurns) {
     return (
@@ -35,11 +33,27 @@ const MoviesList = () => {
     <MovieListBackground>
       <Marquee
         currentTurn={houseTurns.current_turn.username}
-        nextTurn={houseTurns.next_turn.username}
+        nextTurn={
+          houseTurns.next_turn
+            ? houseTurns.next_turn.username
+            : houseTurns.current_turn.username
+        }
       />
-      {/* {!selectedMovie && <Posters setSelectedMovie={setSelectedMovie} />}
-      {selectedMovie && <SelectedMovie selectedMovie={selectedMovie} />} */}
-      <TurnsTable />
+      {userId !== houseTurns.current_turn.id ? (
+        <TurnsTable
+          turnHistory={houseTurns.history}
+          turnUser={houseTurns.current_turn.username}
+        />
+      ) : !selectedMovie ? (
+        <Posters setSelectedMovie={setSelectedMovie} />
+      ) : (
+        <SelectedMovie
+          selectedMovie={selectedMovie}
+          getHouseTurns={getHouseTurns}
+          currentHouse={currentHouse}
+          setSelectedMovie={setSelectedMovie}
+        />
+      )}
     </MovieListBackground>
   )
 }

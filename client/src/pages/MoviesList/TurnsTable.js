@@ -1,8 +1,17 @@
 import React from 'react'
 
-import { TurnsBoard, TurnsContainer, InfoContainer, Categories } from './styled'
+import {
+  TurnsBoard,
+  TurnsContainer,
+  InfoContainer,
+  Categories,
+  Turn,
+  User,
+  Title,
+} from './styled'
 
-const TurnsTable = () => {
+const TurnsTable = ({ turnHistory, turnUser }) => {
+  console.log('turnHistory', turnHistory)
   return (
     <TurnsContainer>
       <TurnsBoard>
@@ -11,6 +20,18 @@ const TurnsTable = () => {
             <p>User</p>
             <p>Choice</p>
           </Categories>
+          <Turn>
+            <User>{turnUser}</User>
+            <Title>???</Title>
+          </Turn>
+          {turnHistory.reverse().map((turn) => {
+            return (
+              <Turn key={turn.created_at}>
+                <User>{turn.user}</User>
+                <Title>{turn.movie}</Title>
+              </Turn>
+            )
+          })}
         </InfoContainer>
       </TurnsBoard>
     </TurnsContainer>

@@ -78,8 +78,9 @@ export const InfoContainer = styled.div`
   border-radius: 11px;
   background-color: white;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  flex-direction: column;
   font-family: Bevan;
   font-size: 18px;
   margin: 15px 0;
@@ -90,4 +91,28 @@ export const Categories = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`
+
+export const Turn = styled.div`
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Bebas Neue;
+  font-size: 18px;
+  border-top: 1px solid #e5e5e5;
+`
+
+export const User = styled.p`
+  margin: 10px 5px;
+`
+
+export const Title = styled.p`
+  margin: 10px 5px;
+  overflow-x: scroll;
+  user-select: none;
+  will-change: transform;
+  white-space: nowrap;
+  width: 60%;
+  text-align: right;
 `
