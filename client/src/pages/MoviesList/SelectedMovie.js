@@ -12,8 +12,21 @@ import {
   RightCutout,
   TicketButton,
 } from '../../styles/Ticket'
+import { useMovies } from '../../providers/Movies'
 
-const SelectedMovie = ({ selectedMovie }) => {
+const SelectedMovie = ({
+  selectedMovie,
+  getHouseTurns,
+  currentHouse,
+  setSelectedMovie,
+}) => {
+  const { getUserSavedMovies } = useMovies()
+
+  function onSubmit() {
+    getHouseTurns(currentHouse.id)
+    setSelectedMovie(undefined)
+    getUserSavedMovies()
+  }
   return (
     <SelectedMovieContainer>
       <MovieDetailContainer>
@@ -22,7 +35,9 @@ const SelectedMovie = ({ selectedMovie }) => {
       </MovieDetailContainer>
       <Ticket width={'150'}>
         <LeftCutout color={'#FFECB4'} />
-        <TicketButton padding={'5px 25px'}>Cool</TicketButton>
+        <TicketButton padding={'5px 25px'} onClick={onSubmit}>
+          Cool
+        </TicketButton>
         <RightCutout color={'#FFECB4'} />
       </Ticket>
       <SuccessBanner />

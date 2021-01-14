@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
+import jwt_decode from 'jwt-decode'
 
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
@@ -22,6 +23,9 @@ const HousesProvider = ({ children }) => {
     ? JSON.parse(get('currentHouse'))
     : undefined
   const currentHouse = determineCurrentHouse(allUserHouses, storageCurrentHouse)
+
+  const token = get('REACT_TOKEN_AUTH_KEY')
+  const userId = jwt_decode(token).id
 
   if (!storageCurrentHouse && currentHouse) {
     set('currentHouse', JSON.stringify(currentHouse))
@@ -50,6 +54,7 @@ const HousesProvider = ({ children }) => {
         currentHouse,
         allUserHouses,
         isLoading,
+        userId,
         getUserHouses,
       }}
     >

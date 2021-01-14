@@ -3,18 +3,22 @@
 **Maintainer(s):** [@seanyboy49](https://github.com/seanyboy49), [@jinazhu](https://github.com/JinaZhu)
 
 ## Never fight about which movie to watch again!
+
 Movie Night Fight is a mobile-first app for groups of movie lovers who can never figure out which movie to watch when it's their turn to choose. It keeps track of whose turn it is to choose the evening's entertainment, and allows each person to keep a curated list of movies to choose from when it's their turn.
 
 ## Architecture
-There are two main components of this app. A [Flask app](https://flask.palletsprojects.com/en/1.1.x/) which serves as an API, and a[ React App](https://reactjs.org/) which serves as the client. 
+
+There are two main components of this app. A [Flask app](https://flask.palletsprojects.com/en/1.1.x/) which serves as an API, and a[ React App](https://reactjs.org/) which serves as the client.
 
 The Flask app uses [pipenv](https://pipenv.pypa.io/en/latest/) to manage its virtual environment and python packages. So make sure that any Flask command you run (e.g, `flask run, flask shell`) are run in the context of a pipenv shell.
 The React app is created from an [ejected create-react-app](https://create-react-app.dev/docs/available-scripts/#npm-run-eject), and is served statically from the Flask app.
 
 ## Auth
+
 We use [flask praetorian](https://flask-praetorian.readthedocs.io/en/latest/) to manage authentication and authorization. It uses JWT's to make sure that users accessing the APIs protected endpoints are provisioned with the correct roles for access.
 
 We can protect API routes using a simple decorator function from this library. For example:
+
 ```py
 @api.route('/api/protected')
 @flask_praetorian.auth_required
@@ -30,12 +34,15 @@ def protected():
     return {"message": f'protected endpoint (allowed user {flask_praetorian.current_user().username})'}
 
 ```
-This is used in conjunction with [react token auth](https://www.npmjs.com/package/react-token-auth) to manage the auth token on the frontend. 
+
+This is used in conjunction with [react token auth](https://www.npmjs.com/package/react-token-auth) to manage the auth token on the frontend.
 
 The auth setup for this app is heavily inspired by [this article](https://yasoob.me/posts/how-to-setup-and-deploy-jwt-auth-using-react-and-flask/).
 
 ## Local Development
+
 **Create your local database**
+
 ```
 createdb movie_night_fight
 ```
@@ -43,6 +50,7 @@ createdb movie_night_fight
 **Run migrations**
 We use [flask migrate](https://flask-migrate.readthedocs.io/en/latest/) to handle database migrations. It generates migration files based on detected changes to your models that you can then run to upgrade or downgrade your database.
 When you run the app locally for the first time, make sure to run migrations in order to create the necessary tables in your local database
+
 ```
 // activate your pipenv environment
 pipenv shell
@@ -53,6 +61,7 @@ flask db migrate
 
 **Populate the database**
 This app exposes custom CLI commands through [click](https://flask.palletsprojects.com/en/1.1.x/cli/). You can populate the database with a seeds file using one of these commands.
+
 ```
 pipenv run flask run_seeds
 ```
@@ -62,7 +71,7 @@ Make sure you have a `.env` file with the required values, as the flask app will
 
 ```
 // activate your pipenv environment
-pipenv shell 
+pipenv shell
 
 // start the flask server
 flask run
@@ -70,6 +79,7 @@ flask run
 
 **Run the frontend**
 The client is in a subfolder so make sure to cd into the right directory.
+
 ```
 cd client
 
@@ -77,27 +87,28 @@ npm run start
 ```
 
 ## Updating Frontend Code
+
 [Flask will serve the React](server/routes/main.py) app by looking for static assets in the `/client/build` folder.
 
 Previously we had to remember to run `npm run build` before pushing changes to Github. [This commit](https://github.com/seanyboy49/movie-night-fight/pull/29) adds a `package.json` to the root of the project with a `heroku-postbuild` script that will build the react app and generate the `build` folder in the client in Heroku's file system.
 
-
 ## API
+
 ### Movies
 
-#### GET /watchlist 
+#### GET /watchlist
+
 Fetch a user's watchlist
 
 There is no need to send a `user_id`, since the server keeps track of the currently logged in user making the request.
 
 Returns a list of movies filtered where `movie.watched_at` is not `Null`
 
-
 [200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
 
 ```json
 [
-  { 
+  {
     "id": 1,
     "name": "Star Wars: Episode V - The Empire Strikes Back",
     "omdb_id": "tt0080684",
@@ -118,19 +129,22 @@ Returns a list of movies filtered where `movie.watched_at` is not `Null`
 ]
 ```
 
-#### POST /watchlist 
+#### POST /watchlist
+
 Add to a user's watchlist. Expects `content-type: application/json`.
 
 **Example Request Body**
+
 ```json
-    {
-      "poster_url": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-      "name": "The Social Network",
-      "omdb_id": "tt1285016"
-    }
+{
+  "poster_url": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+  "name": "The Social Network",
+  "omdb_id": "tt1285016"
+}
 ```
 
 [201 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)
+
 ```json
 {
   "message": "Movie added to watchlist"
@@ -140,6 +154,7 @@ Add to a user's watchlist. Expects `content-type: application/json`.
 If the user's watchlist already contains the movie, the endpoint will return 200.
 
 [200 Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)
+
 ```json
 {
   "message": "Movie already added to watchlist"
@@ -154,31 +169,35 @@ Remove a movie from a user's watchlist.
 Failure to supply a `movie_id` in the url will result in [405 Method Not Allowed Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405).
 
 #### PATCH /watchlist
+
 Marks a movie in a watchlist as watched by updating the `watched_at` field with the current time.
 
 **Query Parameters**
+
 - `houseId` (required)
-Specifies which house the user is choosing a movie for. This is to generate a history of turns for each house.
+  Specifies which house the user is choosing a movie for. This is to generate a history of turns for each house.
 
 - `movieId` (required)
-Specify which movie to mark as watched in the user's watchlist.
-
+  Specify which movie to mark as watched in the user's watchlist.
 
 This endpoint first verifies if the user making the request is indeed allowed to to make the request, since the app should keep track of whose turn it is.
 
 Returns [204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)
 
-#### GET /movies?search=<search_string> 
+#### GET /movies?search=<search_string>
+
 Search for movies by name
 
 This endpoint makes a request to [OMDB's free movie database api](http://www.omdbapi.com/) with the query string sent by the client.
 Clients should be prepared to handle movies that do **not** have a Poster url.
 
 **Query Parameters**
+
 - search (required)
-A string sent by the client that specifies a movie title to search for.
+  A string sent by the client that specifies a movie title to search for.
 
 **Example request**
+
 ```js
 curl http://0.0.0.0:8000/api/movies?search=batman
 ```
@@ -211,26 +230,25 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
       "Type": "movie",
       "Year": "1997",
       "imdbID": "tt0118688"
-    },
+    }
   ],
   "totalResults": "399"
 }
 ```
 
-
-
 Movie not found response
+
 ```json
 {
   "Error": "Movie not found!",
   "Response": "False"
 }
-
 ```
 
 ### Houses
 
-#### GET /joined-houses 
+#### GET /joined-houses
+
 Get all houses that a user has joined
 
 Returns a list of houses and its users.
@@ -243,37 +261,40 @@ Returns a list of houses and its users.
     "id": 1,
     "name": "Winterfell",
     "users": [
-        {
-            "role": "admin",
-            "user": "sean"
-        },
-        {
-            "role": "house_mate",
-            "user": "jina"
-        }
+      {
+        "role": "admin",
+        "user": "sean"
+      },
+      {
+        "role": "house_mate",
+        "user": "jina"
+      }
     ]
   },
   {
     "id": 2,
     "name": "House of Mirrors",
     "users": [
-        {
-            "role": "admin",
-            "user": "sean"
-        },
+      {
+        "role": "admin",
+        "user": "sean"
+      }
     ]
   }
 ]
 ```
 
 #### GET /houses?search=<search_string>
+
 Search for a house by name.
 
 **Query Parameters**
+
 - search (required)
-A string sent by the client that specifies a house name to search for.
+  A string sent by the client that specifies a house name to search for.
 
 **Example request**
+
 ```js
 curl http://0.0.0.0:8000/api/houses?search=mirrors
 ```
@@ -286,21 +307,23 @@ Successful [200 response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Stat
     "id": 2,
     "name": "House of Mirrors",
     "users": [
-        {
-            "role": "admin",
-            "user": "sean"
-        },
+      {
+        "role": "admin",
+        "user": "sean"
+      }
     ]
   }
 ]
 ```
 
 #### POST /houses
+
 Create a house.
 
 A user who creates a house will automatically join the house as `admin`.
 
 **Example request body**
+
 ```json
 {
   "name": "Rich Mohagany"
@@ -313,19 +336,19 @@ Returns the newly created house.
 
 ```json
 {
-    "id": 11,
-    "name": "The Batcave",
-    "users": [
-        {
-            "role": "admin",
-            "user": "sean"
-        }
-    ]
+  "id": 11,
+  "name": "The Batcave",
+  "users": [
+    {
+      "role": "admin",
+      "user": "sean"
+    }
+  ]
 }
-
 ```
 
 #### POST /houses/<house_id>/memberships
+
 Join a house.
 
 A user who joins a house will automatically join the house as a `house_mate` role.
@@ -333,8 +356,9 @@ A user who joins a house will automatically join the house as a `house_mate` rol
 The route will add the current_user to the house's `users` list.
 
 **Example request**
+
 ```js
-curl -X POST http://0.0.0.0:8000/api/houses/7/memberships -X 
+curl -X POST http://0.0.0.0:8000/api/houses/7/memberships -X
 ```
 
 Returns the house with the new user.
@@ -342,25 +366,27 @@ Returns the house with the new user.
 
 ```json
 {
-    "id": 11,
-    "name": "The Batcave",
-    "users": [
-        {
-            "role": "admin",
-            "user": "sean"
-        },
-        {
-            "role": "house_mate",
-            "user": "seb"
-        }
-    ]
+  "id": 11,
+  "name": "The Batcave",
+  "users": [
+    {
+      "role": "admin",
+      "user": "sean"
+    },
+    {
+      "role": "house_mate",
+      "user": "seb"
+    }
+  ]
 }
 ```
 
 #### DELETE /houses/<house_id>/memberships
+
 Leave a house.
 
 **Example request**
+
 ```js
 curl -X DELETE http://0.0.0.0:8000/api/houses/7/memberships
 ```
@@ -369,10 +395,9 @@ There are three possible outcomes to this. All are [200 Response](https://develo
 
 1. The user is the last person left in the house. Therefore, house gets deleted when the last user leaves.
 
-
 ```json
 {
-    "message": "Successfully left and deleted House of Mirrors"
+  "message": "Successfully left and deleted House of Mirrors"
 }
 ```
 
@@ -380,21 +405,19 @@ There are three possible outcomes to this. All are [200 Response](https://develo
 
 ```json
 {
-    "message": "Successfully left House of Mirrors. Jina is now admin."
+  "message": "Successfully left House of Mirrors. Jina is now admin."
 }
 ```
 
 3. The user is just a `house_mate`. The user leaves the house.
 
-
 ```json
 {
-    "message": "Successfully left House of Mirrors."
+  "message": "Successfully left House of Mirrors."
 }
 ```
 
-
-#### GET /houses<house_id>/turns
+#### GET /houses/<house_id>/turns
 
 Get current and next turns for a house, as well as a history of turns.
 
@@ -423,6 +446,6 @@ A house with only one user will simply return `null` for the `next_turn`.
             "movie": "Aladdin",
             "user": "jina"
         }
-    ],    
+    ],
 }
 ```
