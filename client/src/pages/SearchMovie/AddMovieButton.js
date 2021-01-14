@@ -1,10 +1,12 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 import { Ticket, LeftCutout, RightCutout } from '../../styles/Ticket'
 import { AddButton } from './styled'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useMovies } from '../../providers/Movies'
+import { success, failure } from '../../state/actions'
 
 function findMovieById(movies, movieOmdbId) {
   return movies.find((m) => m.omdb_id === movieOmdbId)
@@ -13,6 +15,7 @@ function findMovieById(movies, movieOmdbId) {
 const AddMovieButton = ({ movie }) => {
   const { apiUrl } = useConfiguration()
   const { movies, getUserSavedMovies } = useMovies()
+  const dispatch = useDispatch()
 
   async function addMovie(movie) {
     const body = {
@@ -30,8 +33,9 @@ const AddMovieButton = ({ movie }) => {
       })
       getUserSavedMovies()
       movie.isAdded = true
+      dispatch(success(`Success! You have added ${movie.Title}`))
     } catch (error) {
-      console.log('error', error)
+      dispatch(failure('Something went wrong. Please try again.'))
     }
   }
 
@@ -45,8 +49,9 @@ const AddMovieButton = ({ movie }) => {
         getUserSavedMovies()
         movie.isAdded = false
       }
+      dispatch(success(`Success! You have removed ${movie.Title}`))
     } catch (error) {
-      console.log('error', error)
+      dispatch(failure('Something went wrong. Please try again.'))
     }
   }
 

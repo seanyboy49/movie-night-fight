@@ -8,10 +8,10 @@ const Toast = () => {
   const { color, message, isActive } = useSelector((state) => state.toast)
   const dispatch = useDispatch()
 
-  // Auto remove the toast after 3 seconds
+  // Auto remove the toast after 2 seconds
   useEffect(() => {
     if (isActive) {
-      setTimeout(() => dispatch(remove()), 3000)
+      setTimeout(() => dispatch(remove()), 2000)
     }
   }, [isActive, dispatch])
 
