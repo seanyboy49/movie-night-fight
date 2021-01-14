@@ -12,7 +12,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import { authFetch } from '../../auth'
 import { useConfiguration } from '../../providers/Configuration'
 import { useHouses } from '../../providers/Houses'
-import { remove } from '../../state/actions'
+import { failure, success } from '../../state/actions'
 
 const Button = ({
   onClick,
@@ -36,6 +36,7 @@ const Button = ({
       })
       const data = await response.json()
       getUserHouses()
+      dispatch(success(data.message))
       setIsLoading(false)
       // if house is set as current house, remove it from local storage
       const currentHouse = JSON.parse(getCurrentHouse('currentHouse'))
@@ -45,13 +46,12 @@ const Button = ({
 
       // if user is the last person in house, redirect back to house route
       if (!data.houseDetail) {
-        dispatch(remove())
         return history.push('/houses')
       } else {
         onClick(data.houseDetail)
       }
     } catch (error) {
-      console.log('error', error)
+      dispatch(failure('Something went wrong. Please try again'))
       setIsLoading(false)
     }
   }
@@ -64,10 +64,11 @@ const Button = ({
       })
       const data = await response.json()
       onClick(data)
+      dispatch(success(`Success! You have joined ${data.name}`))
       getUserHouses()
       setIsLoading(false)
     } catch (error) {
-      console.log('error', error)
+      dispatch(failure('Something went wrong. Please try again'))
       setIsLoading(false)
     }
   }

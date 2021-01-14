@@ -1,14 +1,18 @@
+const green = '#33DDA8'
+const red = '#FF0E0E'
+
 const toastType = (state = {}, action) => {
   switch (action.type) {
     case 'SUCCESS':
-      return { color: '#33DDA8', message: action.payload }
+      return { color: green, message: action.payload, isActive: true }
     case 'FAILURE':
       return {
-        color: '#FF0E0E',
+        color: red,
         message: action.payload,
+        isActive: true,
       }
     case 'REMOVE':
-      return {}
+      return { ...state, isActive: false }
     default:
       return state
   }
