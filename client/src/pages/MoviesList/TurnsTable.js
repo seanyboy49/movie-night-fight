@@ -11,7 +11,6 @@ import {
 } from './styled'
 
 const TurnsTable = ({ turnHistory, turnUser }) => {
-  console.log('turnHistory', turnHistory)
   return (
     <TurnsContainer>
       <TurnsBoard>
