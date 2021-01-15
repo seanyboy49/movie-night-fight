@@ -30,7 +30,7 @@ const TurnsTable = () => {
   }
 
   return (
-    <MovieListBackground>
+    <MovieListBackground height={'100%'}>
       <Marquee
         currentTurn={`${houseTurns.current_turn.username}'s`}
         nextTurn={

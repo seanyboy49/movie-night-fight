@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 
 import { MovieListBackground } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
@@ -38,7 +38,7 @@ const MoviesList = () => {
   }
 
   if (userId !== houseTurns.current_turn.id) {
-    history.push(turnHistory)
+    return <Redirect to={turnHistory} />
   }
 
   return (
