@@ -13,7 +13,6 @@ export const useTurns = () => {
     try {
       const response = await authFetch(`${apiUrl}/houses/${houseId}/turns`)
       const data = await response.json()
-      console.log('data', data)
       setHouseTurns(data)
       setIsLoading(false)
     } catch (error) {

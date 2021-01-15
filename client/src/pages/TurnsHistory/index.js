@@ -8,7 +8,7 @@ import TurnTable from './TurnTable'
 import { ReelImage } from '../../styles/LoadingReel'
 
 const TurnsTable = () => {
-  const { currentHouse, userId, isLoading: isHousesLoading } = useHouses()
+  const { currentHouse, isLoading: isHousesLoading } = useHouses()
   const { getHouseTurns, houseTurns, isLoading: isTurnsLoading } = useTurns()
 
   const isLoading =

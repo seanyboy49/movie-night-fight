@@ -19,6 +19,8 @@ const SelectedMovie = ({
   getHouseTurns,
   currentHouse,
   setSelectedMovie,
+  turnHistory,
+  history,
 }) => {
   const { getUserSavedMovies } = useMovies()
 
