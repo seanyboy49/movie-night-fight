@@ -11,7 +11,8 @@ import {
 } from './styled'
 
 const TurnTable = ({ turnUser, turnHistory }) => {
-  const ascendingTurns = turnHistory.reverse()
+  const turnsCopy = [...turnHistory]
+  const ascendingTurns = turnsCopy.reverse()
 
   return (
     <TurnsContainer>

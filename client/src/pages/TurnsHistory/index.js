@@ -7,7 +7,7 @@ import Marquee from '../../components/Marquee'
 import TurnTable from './TurnTable'
 import { ReelImage } from '../../styles/LoadingReel'
 
-const TurnsTable = () => {
+const TurnHistory = () => {
   const { currentHouse, isLoading: isHousesLoading } = useHouses()
   const { getHouseTurns, houseTurns, isLoading: isTurnsLoading } = useTurns()
 
@@ -47,4 +47,4 @@ const TurnsTable = () => {
   )
 }
 
-export default TurnsTable
+export default TurnHistory
