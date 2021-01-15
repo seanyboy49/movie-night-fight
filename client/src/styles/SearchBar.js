@@ -19,6 +19,7 @@ export const SearchBar = styled.div`
 export const SearchInput = styled.input`
   border: none;
   width: 390px;
+  height: 25px;
   outline: none;
   font-family: Bebas Neue;
   font-size: 24px;

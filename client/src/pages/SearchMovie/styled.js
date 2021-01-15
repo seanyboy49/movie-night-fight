@@ -5,7 +5,7 @@ export const SearchMovieContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  height: 80vh;
+  min-height: 80vh;
 `
 
 export const MovieTitleContainer = styled.div`
