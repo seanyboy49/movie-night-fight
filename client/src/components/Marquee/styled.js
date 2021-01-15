@@ -51,6 +51,10 @@ export const MarqueeCenter = styled.div`
 
 export const Text = styled.div`
   font-size: ${(props) => props.size}px;
+
+  @media screen and (max-width: 414px) {
+    font-size: ${(props) => props.mediaSize}px;
+  }
 `
 
 export const AddTicket = styled.div`

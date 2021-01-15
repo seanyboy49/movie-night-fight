@@ -11,6 +11,7 @@ const routes = {
     houses: '/houses',
     houseDetail: '/houses/:houseName',
     searchMovies: '/search-movies',
+    turnHistory: '/turnsHistory',
   },
 }
 

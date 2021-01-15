@@ -19,12 +19,20 @@ const Marquee = ({ currentTurn, nextTurn }) => {
             <AddButton />
           </MarqueeSide>
           <MarqueeCenter>
-            <Text size={'24'}>Now Showing</Text>
-            <Text size={'36'}>{currentTurn}'s Choice</Text>
+            <Text size={'24'} mediaSize={'18'}>
+              Now Showing
+            </Text>
+            <Text size={'36'} mediaSize={'28'}>
+              {currentTurn} Choice
+            </Text>
           </MarqueeCenter>
           <MarqueeSide border={'none'}>
-            <Text size={'18'}>next up:</Text>
-            <Text size={'24'}>{nextTurn}</Text>
+            <Text size={'18'} mediaSize={'18'}>
+              next up:
+            </Text>
+            <Text size={'24'} mediaSize={'28'}>
+              {nextTurn}
+            </Text>
           </MarqueeSide>
         </InfoContainer>
       </DotBorder>

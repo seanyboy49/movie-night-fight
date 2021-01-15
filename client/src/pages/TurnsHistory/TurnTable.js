@@ -10,7 +10,10 @@ import {
   Title,
 } from './styled'
 
-const TurnsTable = ({ turnHistory, turnUser }) => {
+const TurnTable = ({ turnUser, turnHistory }) => {
+  const turnsCopy = [...turnHistory]
+  const ascendingTurns = turnsCopy.reverse()
+
   return (
     <TurnsContainer>
       <TurnsBoard>
@@ -23,7 +26,7 @@ const TurnsTable = ({ turnHistory, turnUser }) => {
             <User>{turnUser}</User>
             <Title>???</Title>
           </Turn>
-          {turnHistory.reverse().map((turn) => {
+          {ascendingTurns.map((turn) => {
             return (
               <Turn key={turn.created_at}>
                 <User>{turn.user}</User>
@@ -37,4 +40,4 @@ const TurnsTable = ({ turnHistory, turnUser }) => {
   )
 }
 
-export default TurnsTable
+export default TurnTable
