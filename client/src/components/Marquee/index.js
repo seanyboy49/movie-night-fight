@@ -7,7 +7,6 @@ import {
   MarqueeSide,
   MarqueeCenter,
   Text,
-  DotBorderImage,
 } from './styled'
 import AddButton from './AddButton'
 

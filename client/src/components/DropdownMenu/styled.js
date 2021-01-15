@@ -14,7 +14,7 @@ export const Menu = styled.div`
     isOpen ? '0 8px 6px -6px black' : 'undefined'};
 
   transform: ${({ isOpen }) =>
-    isOpen ? 'translateY(60%)' : 'translateY(-100%)'};
+    isOpen ? 'translateY(57%)' : 'translateY(-100%)'};
 
   p {
     text-align: center;

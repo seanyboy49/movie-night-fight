@@ -20,34 +20,20 @@ export const MarqueeBackground = styled.div`
     background-position: center;
     height: 165px;
   }
+  @media screen and (max-width: 375px) {
+    height: 150px;
+  }
 `
 export const DotBorder = styled.div`
   border: 10px dotted #fcff72;
   height: 90px;
   width: 98vw;
-  // background-image: url(${borderImagePath});
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // background-position: center;
   ${alignCenter};
 
   @media screen and (max-width: 414px) {
     border: none;
   }
 `
-
-// export const DotBorderImage = styled.img.attrs({
-//   src: `${borderImagePath}`,
-//   alt: 'border',
-// })`
-//   width: 0px;
-//   display: hidden;
-
-//   @media screen and (max-width: 414px) {
-//     width: 93vw;
-//     display: block;
-//   }
-// `
 
 export const InfoContainer = styled.div`
   height: 85px;
@@ -58,6 +44,11 @@ export const InfoContainer = styled.div`
 
   @media screen and (max-width: 414px) {
     width: 91vw;
+    height: 85px;
+  }
+
+  @media screen and (max-width: 375px) {
+    height: 80px;
   }
 `
 
