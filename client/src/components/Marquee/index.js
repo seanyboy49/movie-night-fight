@@ -7,6 +7,7 @@ import {
   MarqueeSide,
   MarqueeCenter,
   Text,
+  DotBorderImage,
 } from './styled'
 import AddButton from './AddButton'
 
@@ -36,6 +37,7 @@ const Marquee = ({ currentTurn, nextTurn }) => {
           </MarqueeSide>
         </InfoContainer>
       </DotBorder>
+      {/* <DotBorderImage /> */}
     </MarqueeBackground>
   )
 }

@@ -7,7 +7,7 @@ export const SmallText = styled.p`
 `
 
 export const H2 = styled.h2`
-  font-family: bebas neue;
+  font-family: $bebas neue;
   font-size: 30px;
 `
 
