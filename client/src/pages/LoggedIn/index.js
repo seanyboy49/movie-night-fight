@@ -18,7 +18,7 @@ const {
   houses,
   houseDetail,
   searchMovies,
-  turnsHistory,
+  turnHistory,
 } = routes.app
 const { root: publicRoot } = routes.public
 
@@ -47,7 +47,7 @@ const LoggedIn = () => {
             <Route path={moviesList} component={MoviesList} />
             <Route exact path={houses} component={Houses} />
             <Route path={houseDetail} component={HouseDetails} />
-            <Route path={turnsHistory} component={TurnHistory} />
+            <Route path={turnHistory} component={TurnHistory} />
           </HousesProvider>
           <Route path={searchMovies} component={SearchMovie} />
         </MoviesProvider>
