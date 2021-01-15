@@ -16,13 +16,13 @@ export const ReelImage = styled.img.attrs({
 })`
   animation: ${spin} 3s linear infinite;
   width: 92px;
-
-  ${(props) => {
-    return (
-      !props.isActive &&
-      css`
-        opacity: 0;
-      `
-    )
-  }}
+  margin-top: ${(props) => props.margin || 0}
+    ${(props) => {
+      return (
+        !props.isActive &&
+        css`
+          opacity: 0;
+        `
+      )
+    }};
 `

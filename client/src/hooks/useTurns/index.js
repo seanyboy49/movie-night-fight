@@ -9,7 +9,6 @@ export const useTurns = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   async function getHouseTurns(houseId) {
-    console.log('inside get house turns')
     setIsLoading(true)
     try {
       const response = await authFetch(`${apiUrl}/houses/${houseId}/turns`)
