@@ -14,7 +14,7 @@ const NoMoviesOrHouse = ({ text, redirectTo, Add }) => {
         </BebasText>
         <img src={confused} alt="rain" width="65" />
       </NoMoviePoster>
-      <TicketLink text={`Add a ${text[1]}`} toLink={redirectTo} />
+      <TicketLink text={`Add ${text[1]}`} toLink={redirectTo} />
     </NoMovieContainer>
   )
 }
