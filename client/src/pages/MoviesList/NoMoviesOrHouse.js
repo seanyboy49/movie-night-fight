@@ -5,16 +5,18 @@ import { BebasText } from '../../styles/Text'
 import confused from '../../images/confused.svg'
 import TicketLink from './TicketLink'
 
-const NoMovies = () => {
+const NoMoviesOrHouse = ({ text, redirectTo, Add }) => {
   return (
     <NoMovieContainer>
       <NoMoviePoster>
-        <BebasText size={'36px'}>You haven't added any movies yet</BebasText>
+        <BebasText size={'36px'}>
+          You haven't {text[0]} any {text[1]} yet
+        </BebasText>
         <img src={confused} alt="rain" width="65" />
       </NoMoviePoster>
-      <TicketLink text={'Add a movie'} toLink={'/'} />
+      <TicketLink text={`Add a ${text[1]}`} toLink={redirectTo} />
     </NoMovieContainer>
   )
 }
 
-export default NoMovies
+export default NoMoviesOrHouse

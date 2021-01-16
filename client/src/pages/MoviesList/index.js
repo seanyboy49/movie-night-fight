@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, Redirect } from 'react-router-dom'
 
 import { MovieListBackground } from '../../styles/Background'
+import { NoHouseContainer } from './styled'
 import Marquee from '../../components/Marquee'
 import Posters from './Posters'
 import SelectedMovie from './SelectedMovie'
@@ -9,8 +10,9 @@ import { useHouses } from '../../providers/Houses'
 import { useTurns } from '../../hooks/useTurns'
 import { ReelImage } from '../../styles/LoadingReel'
 import routes from '../../routes'
+import NoMoviesOrHouse from './NoMoviesOrHouse'
 
-const { turnHistory } = routes.app
+const { turnHistory, houses } = routes.app
 
 const MoviesList = () => {
   const [selectedMovie, setSelectedMovie] = useState()
@@ -27,6 +29,17 @@ const MoviesList = () => {
       getHouseTurns(currentHouse.id)
     }
   }, [getHouseTurns, houseTurns, currentHouse])
+
+  if (!currentHouse && !isHousesLoading) {
+    return (
+      <MovieListBackground>
+        <Marquee currentTurn={'loading...'} nextTurn={'loading...'} />
+        <NoHouseContainer>
+          <NoMoviesOrHouse text={['join', 'houses']} redirectTo={houses} />
+        </NoHouseContainer>
+      </MovieListBackground>
+    )
+  }
 
   if (isLoading) {
     return (
