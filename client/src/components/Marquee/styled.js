@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
+import borderImagePath from '../../images/dotted-border.svg'
 
 const alignCenter = css`
   display: flex;
@@ -9,15 +10,29 @@ const alignCenter = css`
 
 export const MarqueeBackground = styled.div`
   background-color: #d70808;
-  height: 121px;
+  height: 140px;
   width: 100vw;
-  ${alignCenter}
+  ${alignCenter};
+  @media screen and (max-width: 414px) {
+    background-image: url(${borderImagePath});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 165px;
+  }
+  @media screen and (max-width: 375px) {
+    height: 150px;
+  }
 `
 export const DotBorder = styled.div`
   border: 10px dotted #fcff72;
   height: 90px;
   width: 98vw;
-  ${alignCenter}
+  ${alignCenter};
+
+  @media screen and (max-width: 414px) {
+    border: none;
+  }
 `
 
 export const InfoContainer = styled.div`
@@ -28,7 +43,12 @@ export const InfoContainer = styled.div`
   ${alignCenter}
 
   @media screen and (max-width: 414px) {
-    width: 93vw;
+    width: 91vw;
+    height: 85px;
+  }
+
+  @media screen and (max-width: 375px) {
+    height: 80px;
   }
 `
 
@@ -65,6 +85,11 @@ export const AddTicket = styled.div`
   position: relative;
   ${alignCenter}
   transform: rotate(-15deg);
+
+  @media screen and (max-width: 414px) {
+    width: 60px;
+    height: 25px;
+  }
 `
 
 export const Add = styled(Link)`
@@ -74,4 +99,8 @@ export const Add = styled(Link)`
   outline: none;
   cursor: pointer;
   text-decorator: none;
+
+  @media screen and (max-width: 414px) {
+    padding: 0px 9px 0px 9px;
+  }
 `

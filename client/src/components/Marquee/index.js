@@ -36,6 +36,7 @@ const Marquee = ({ currentTurn, nextTurn }) => {
           </MarqueeSide>
         </InfoContainer>
       </DotBorder>
+      {/* <DotBorderImage /> */}
     </MarqueeBackground>
   )
 }

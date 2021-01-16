@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 export const Background = styled.div`
-  min-height: 100vh;
+  min-height: 90vh;
   background-color: #d70808;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 `
 

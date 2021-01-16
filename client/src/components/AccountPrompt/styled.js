@@ -11,6 +11,7 @@ const alignCenter = css`
 export const PromptContainer = styled.div`
   background-color: white;
   border-radius: 10%;
+  margin-top: 30px;
 `
 
 export const FormContainer = styled.div`

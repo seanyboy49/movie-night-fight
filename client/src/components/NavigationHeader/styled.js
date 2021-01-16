@@ -12,10 +12,11 @@ export const AppTitle = styled(Link)`
 export const NavContainer = styled.div`
   background-color: ${(props) => props.background || 'white'};
   display: flex;
-  padding: 1rem;
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid ${(props) => props.background || '#e5e5e5'};
+  width: 100%;
+  height: 10vh;
 `
 
 export const Nav = styled.div`
