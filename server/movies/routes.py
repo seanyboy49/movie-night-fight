@@ -132,7 +132,7 @@ def mark_as_watched():
 @auth_required
 def get_movies():
     api_key = current_app.config['OMDB_API_KEY']
-    omdb_url = f"http://www.omdbapi.com/?apikey={api_key}"
+    omdb_url = f"http://www.omdbapi.com/?apikey={api_key}&type=movie"
     search_params = request.args.get('search')
 
     if not search_params:
