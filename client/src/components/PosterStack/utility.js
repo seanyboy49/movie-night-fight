@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import { useHouses } from '../../providers/Houses'
-import { failure } from '../../state/actions'
+import { success, failure } from '../../state/actions'
 
 export const to = (i) => ({
   x: 0,
@@ -46,4 +46,22 @@ export const useWatchMovie = () => {
     }
   }
   return { markMovieAsWatched }
+}
+
+export const useRemoveMovie = () => {
+  const { apiUrl } = useConfiguration()
+  const dispatch = useDispatch()
+
+  async function removeMovie(movieId) {
+    try {
+      await authFetch(`${apiUrl}/watchlist/${movieId}`, {
+        method: 'DELETE',
+      })
+      dispatch(success('Movie been successfully removed.'))
+    } catch (error) {
+      console.log('error', error)
+      dispatch(failure('Unable to remove movie, please try again.'))
+    }
+  }
+  return { removeMovie }
 }

@@ -4,9 +4,10 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans, useWatchMovie } from './utility'
+import { to, from, trans, useWatchMovie, useRemoveMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
+import { useConfiguration } from '../../providers/Configuration'
 
 const PosterStack = ({
   movies,
@@ -17,6 +18,9 @@ const PosterStack = ({
   setSelectedMovie,
 }) => {
   const { markMovieAsWatched } = useWatchMovie()
+  const { removeMovie } = useRemoveMovie()
+
+  const { apiUrl } = useConfiguration()
 
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
@@ -73,9 +77,10 @@ const PosterStack = ({
           markMovieAsWatched(movieSelected, setSelectedMovie)
         }
 
-        console.log(my)
+        // delete movie on swap downward
         if (my > 150) {
-          console.log('delete')
+          const movieId = movies[i].id
+          removeMovie(movieId, apiUrl)
         }
 
         return {
