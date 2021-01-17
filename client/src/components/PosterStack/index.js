@@ -7,7 +7,6 @@ import Poster from './Poster'
 import { to, from, trans, useWatchMovie, useRemoveMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
-import { useConfiguration } from '../../providers/Configuration'
 
 const PosterStack = ({
   movies,
@@ -19,8 +18,6 @@ const PosterStack = ({
 }) => {
   const { markMovieAsWatched } = useWatchMovie()
   const { removeMovie } = useRemoveMovie()
-
-  const { apiUrl } = useConfiguration()
 
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
@@ -78,9 +75,10 @@ const PosterStack = ({
         }
 
         // delete movie on swap downward
-        if (my > 150) {
+        const offset = 150
+        if (my > offset) {
           const movieId = movies[i].id
-          removeMovie(movieId, apiUrl)
+          removeMovie(movieId)
         }
 
         return {

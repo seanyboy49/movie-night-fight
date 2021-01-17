@@ -57,9 +57,8 @@ export const useRemoveMovie = () => {
       await authFetch(`${apiUrl}/watchlist/${movieId}`, {
         method: 'DELETE',
       })
-      dispatch(success('Movie been successfully removed.'))
+      dispatch(success('Movie has been successfully removed.'))
     } catch (error) {
-      console.log('error', error)
       dispatch(failure('Unable to remove movie, please try again.'))
     }
   }
