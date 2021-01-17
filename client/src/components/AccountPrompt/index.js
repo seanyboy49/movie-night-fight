@@ -31,11 +31,11 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
   const isFormInvalid = !username || !password
 
   async function onSubmit(e) {
-    const trimmedUsername = username.trim()
+    const sanitizedUsername = username.trim().toLowerCase()
     e.preventDefault()
     setIsLoading(true)
     const body = {
-      username: trimmedUsername,
+      username: sanitizedUsername,
       password,
     }
     try {

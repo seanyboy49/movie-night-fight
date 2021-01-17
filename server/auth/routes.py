@@ -16,7 +16,7 @@ def login():
     """
 
     req = request.get_json(force=True)
-    username = req.get('username')
+    username = req.get('username').lower()
     password = req.get('password')
     user = guard.authenticate(username, password)
     res = {'access_token': guard.encode_jwt_token(user)}
@@ -31,7 +31,7 @@ def signup():
     """
 
     req = request.get_json(force=True)
-    username = req.get('username')
+    username = req.get('username').lower()
     password = req.get('password')
 
     # Check if user exists
