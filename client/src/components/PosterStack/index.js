@@ -4,7 +4,7 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans, useWatchMovie } from './utility'
+import { to, from, trans, useWatchMovie, useRemoveMovie } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
 
@@ -17,6 +17,7 @@ const PosterStack = ({
   setSelectedMovie,
 }) => {
   const { markMovieAsWatched } = useWatchMovie()
+  const { removeMovie } = useRemoveMovie()
 
   const [gone] = useState(() => new Set())
   const [props, set] = useSprings(movies.length, (i) => ({
@@ -30,13 +31,15 @@ const PosterStack = ({
     ({
       args: [index],
       down: isDown,
-      movement: [mx],
+      movement: [mx, my],
       distance,
       direction: [xDir, yDir],
       velocity,
     }) => {
       const trigger = velocity > 0.2
       const dir = xDir < 0 ? -1 : 1
+      const dirY = yDir < 0 ? -1 : 1
+
       if (!isDown && trigger) gone.add(index)
 
       // Hanlde NUX interactions if they user should experience NUX
@@ -61,17 +64,26 @@ const PosterStack = ({
         if (index !== i) return
         const isGone = gone.has(index)
         const x = isGone ? (200 + window.innerWidth) * dir : isDown ? mx : 0
+        const y = isGone ? (200 + window.innerWidth) * dirY : isDown ? my : 0
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
         // if swipe right, user select movie and set to next user's turn
-        if (isGone && dir > 0) {
+        if (isGone && mx > 150) {
           const movieSelected = movies[i]
           markMovieAsWatched(movieSelected, setSelectedMovie)
         }
 
+        // delete movie on swap downward
+        const offset = 150
+        if (my > offset) {
+          const movieId = movies[i].id
+          removeMovie(movieId)
+        }
+
         return {
           x,
+          y,
           rot,
           scale,
           delay: undefined,
