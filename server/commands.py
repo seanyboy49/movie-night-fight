@@ -15,8 +15,8 @@ def create_tables():
 @click.command(name='run_seeds')
 @with_appcontext
 def run_seeds():
-    # create_users()
-    # create_movies()
-    # create_watchlist()
-    # create_houses()
+    create_users()
+    create_movies()
+    create_watchlist()
+    create_houses()
     create_user_houses()
