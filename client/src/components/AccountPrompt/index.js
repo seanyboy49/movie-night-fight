@@ -15,7 +15,7 @@ import {
 import { H2 } from '../../styles/Text'
 import { login } from '../../auth'
 import routes from '../../routes'
-import { success, failure } from '../../state/actions'
+import { failure } from '../../state/actions'
 
 const { moviesList } = routes.app
 
