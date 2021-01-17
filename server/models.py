@@ -5,7 +5,7 @@ class User(db.Model):
     __tablename__ = "users"
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.Text, unique=True)
     password = db.Column(db.Text)
     roles = db.Column(db.Text)
@@ -53,7 +53,7 @@ class Movie(db.Model):
     __tablename__ = "movies"
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(140), index=True, unique=True)
     omdb_id = db.Column(db.String)
     poster_url = db.Column(db.String(256))
@@ -72,6 +72,8 @@ class UserMovies(db.Model):
     __tablename__ = "user_movies"
     __table_args__ = {'extend_existing': True}
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.id"), primary_key=True)
     watched_at = db.Column(db.DateTime)
@@ -85,7 +87,7 @@ class House(db.Model):
     __tablename__ = "houses"
     __table_args__ = {'extend_existing': True}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(140), index=True, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     users = db.relationship('UserHouses',
@@ -144,6 +146,8 @@ class UserHouses(db.Model):
     __tablename__ = 'user_houses'
     __table_args__ = {'extend_existing': True}
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)
     user_role = db.Column(db.String(30), default="house_mate")
@@ -157,6 +161,8 @@ class UserHouses(db.Model):
 class HouseTurns(db.Model):
     __tablename__ = 'house_turns'
     __table_args__ = {'extend_existing': True}
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     house_id = db.Column(db.Integer, db.ForeignKey("houses.id"), primary_key=True)

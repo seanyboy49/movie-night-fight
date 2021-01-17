@@ -1,5 +1,5 @@
 from .extensions import db, guard
-from .models import User, Movie, UserMovies, House
+from .models import User, Movie, UserMovies, House, UserHouses
 
 
 def create_users():
@@ -88,7 +88,7 @@ def create_user_houses():
     houses = House.query.all()
 
     for h in houses:
-        if len(list(filter(lambda x: x.name == h.name, sean.houses))) < 1:
-            sean.houses.append(h)
+        if len(list(filter(lambda x: x.house.name == h.name, sean.houses))) < 1:
+            sean.houses.append(UserHouses(house=h, user_role="admin"))
 
     db.session.commit()
