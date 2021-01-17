@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { useConfiguration } from '../../providers/Configuration'
 import Button from '../Button'
@@ -14,6 +15,7 @@ import {
 import { H2 } from '../../styles/Text'
 import { login } from '../../auth'
 import routes from '../../routes'
+import { failure } from '../../state/actions'
 
 const { moviesList } = routes.app
 
@@ -24,6 +26,7 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
 
   const { apiUrl } = useConfiguration()
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const isFormInvalid = !username || !password
 
@@ -41,10 +44,15 @@ const AccountPrompt = ({ text, apiEndpoint, pageHeader, linkText, link }) => {
         body: JSON.stringify(body),
       })
 
-      const { access_token } = await response.json()
-      await login(access_token)
-      setIsLoading(false)
-      history.push(moviesList)
+      const data = await response.json()
+      if (data.access_token) {
+        await login(data.access_token)
+        setIsLoading(false)
+        history.push(moviesList)
+      } else {
+        dispatch(failure(data.message))
+        setIsLoading(false)
+      }
     } catch (error) {
       setIsLoading(false)
       console.log('error', error)

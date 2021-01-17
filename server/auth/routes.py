@@ -43,17 +43,14 @@ def signup():
                 roles='user'
             ))
             db.session.commit()
-            print('successfully added user')
         except:
-            return "There was a problem signing up", 400
+            return {"message": "There was a problem signing up"}, 400
 
         user = guard.authenticate(username, password)
         res = {'access_token': guard.encode_jwt_token(user)}
-
         return res, 200
-
     else:
-        return "That user already exists", 400
+        return {"message": "That user already exists"}, 400
 
 
 @auth_bp.route('/api/auth/refresh', methods=['POST'])

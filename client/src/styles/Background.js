@@ -19,6 +19,15 @@ export const MovieListBackground = styled.div`
   position: relative;
 `
 
+export const TurnBackground = styled.div`
+  background-color: #ffecb4;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+`
+
 export const PosterContainer = styled.div`
   position: relative;
   overflow: hidden;

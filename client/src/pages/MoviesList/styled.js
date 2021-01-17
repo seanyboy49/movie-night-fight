@@ -22,6 +22,7 @@ export const NoMoviePoster = styled.div`
   width: 192px;
   height: 314px;
   border: 1px solid black;
+  padding: 0 7px;
 `
 
 export const SelectedMovieContainer = styled.div`
@@ -54,4 +55,9 @@ export const SuccessBanner = styled.img.attrs({
   alt: 'success banner',
 })`
   position: absolute;
+`
+
+export const NoHouseContainer = styled.div`
+  height: 100%;
+  padding-top: 50px;
 `

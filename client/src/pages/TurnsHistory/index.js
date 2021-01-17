@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useHouses } from '../../providers/Houses'
 import { useTurns } from '../../hooks/useTurns'
-import { MovieListBackground } from '../../styles/Background'
+import { TurnBackground } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
 import TurnTable from './TurnTable'
 import { ReelImage } from '../../styles/LoadingReel'
@@ -22,15 +22,15 @@ const TurnHistory = () => {
 
   if (isLoading) {
     return (
-      <MovieListBackground>
+      <TurnBackground>
         <Marquee currentTurn={'loading...'} nextTurn={'loading...'} />
         <ReelImage width="50" isActive={true} margin={'50px'} />
-      </MovieListBackground>
+      </TurnBackground>
     )
   }
 
   return (
-    <MovieListBackground height={'100%'}>
+    <TurnBackground height={'100%'}>
       <Marquee
         currentTurn={`${houseTurns.current_turn.username}'s`}
         nextTurn={
@@ -43,7 +43,7 @@ const TurnHistory = () => {
         turnHistory={houseTurns.history}
         turnUser={houseTurns.current_turn.username}
       />
-    </MovieListBackground>
+    </TurnBackground>
   )
 }
 

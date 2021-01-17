@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
 import PosterStack from '../../components/PosterStack'
-import NoMovies from './NoMovies'
+import NoMoviesOrHouse from './NoMoviesOrHouse'
 import LightBox from '../../components/LightBox'
-
 import useLocalStorage from '../../hooks/useLocalStorage'
 import { useMovies } from '../../providers/Movies'
-
 import { LoadingText } from '../../styles/Text'
 import { PosterContainer } from '../../styles/Background'
 import { ReelImage } from '../../styles/LoadingReel'
-
 import reel from '../../images/film-reel.svg'
+import routes from '../../routes'
+
+const { searchMovies } = routes.app
 
 const Posters = ({ setSelectedMovie }) => {
   const [lightBox, setLightBox] = useState(undefined)
@@ -53,7 +53,7 @@ const Posters = ({ setSelectedMovie }) => {
             />
           </>
         ) : (
-          <NoMovies />
+          <NoMoviesOrHouse text={['add', 'movies']} redirectTo={searchMovies} />
         )}
       </PosterContainer>
     </>
