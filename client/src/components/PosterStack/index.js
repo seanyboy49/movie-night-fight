@@ -67,6 +67,7 @@ const PosterStack = ({
         swipedCards: gone,
         cardIndex: index,
         xDir: dirX,
+        yDir: dirY,
       })
 
       set((i) => {

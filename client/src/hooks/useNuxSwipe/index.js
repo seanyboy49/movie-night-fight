@@ -61,6 +61,7 @@ const useNuxSwipe = () => {
   function updateStorage({
     swipedCards,
     cardIndex,
+    yDir,
     xDir,
     nuxStates,
     onRelease,
@@ -68,7 +69,11 @@ const useNuxSwipe = () => {
     if (!nuxStates) return
     if (!swipedCards.has(cardIndex)) return
 
-    const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
+    const {
+      isSwipeLeftComplete,
+      isSwipeRightComplete,
+      isSwipeDownComplete,
+    } = nuxStates
 
     // The if above checks if the user hasn't swiped the card away.
     // If they have, then we can update local storage
@@ -76,6 +81,8 @@ const useNuxSwipe = () => {
       onRelease('isSwipeRightComplete', true)
     } else if (xDir === -1 && !isSwipeLeftComplete) {
       onRelease('isSwipeLeftComplete', true)
+    } else if (yDir === 1 && !isSwipeDownComplete) {
+      onRelease('isSwipeDownComplete', true)
     }
   }
 
