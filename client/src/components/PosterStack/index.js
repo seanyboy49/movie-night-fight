@@ -27,7 +27,6 @@ const PosterStack = ({
   const isPhoneWide = useMediaQuery({
     query: `(max-width: 600px)`,
   })
-  console.log('isPhoneWide', isPhoneWide)
   const isNotDemo = Boolean(
     onClick && onRelease && nuxStates && getUserSavedMovies && setSelectedMovie
   )
@@ -52,7 +51,6 @@ const PosterStack = ({
       direction: [xDir, yDir],
       velocity,
     }) => {
-      console.log('velocity', velocity)
       const trigger = velocity > 0.2
       const dirX = xDir < 0 ? -1 : 1
       const dirY = yDir < 0 ? -1 : 1
