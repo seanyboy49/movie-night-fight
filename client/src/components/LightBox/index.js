@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import SwipeRightImg from '../../images/SwipeRightImg'
 import SwipeLeftImg from '../../images/SwipeLeftImg'
+import SwipeDownImg from '../../images/SwipeDownImg'
 import { Layer, Text } from './styled'
 
 const categoryMap = {
@@ -14,7 +15,10 @@ const categoryMap = {
     texts: ['SWIPE RIGHT', 'TO CHOOSE', 'THIS FILM'],
     img: <SwipeRightImg />,
   },
-  nuxSwipeDown: 'nuxSwipeDown',
+  nuxSwipeDown: {
+    texts: ['SWIPE DOWN', 'TO REMOVE', 'THIS FILM'],
+    img: <SwipeDownImg />,
+  },
 }
 
 export const categories = Object.keys(categoryMap).reduce((acc, curr) => {
