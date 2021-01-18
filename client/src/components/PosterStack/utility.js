@@ -42,8 +42,7 @@ export const trans = (r, s) =>
  * @param {Boolean} isGone
  * @param {Boolean} isDown
  * @param {Number} dirX - the x direction. -1 is left and 1 is right
- * @param {Number} dirY - the y direction. -1 is down and 1 is up
- * @param {Number} dirY - the y direction. -1 is down and 1 is up
+ * @param {Number} dirY - the y direction. 1 is down and -1 is up
  * @param {Number} mx - x offset from center
  * @param {Number} my - y offset from center
  */

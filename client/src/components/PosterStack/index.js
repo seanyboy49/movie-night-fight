@@ -55,7 +55,9 @@ const PosterStack = ({
         isDown,
         nuxStates,
         xMovement: mx,
+        yMovement: my,
         xDir: dirX,
+        yDir: dirY,
       })
 
       // For updating local storage when user completes a NUX interaction

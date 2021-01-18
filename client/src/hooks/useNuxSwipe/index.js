@@ -10,24 +10,41 @@ const useNuxSwipe = () => {
    * the user has already completed the NUX and how great their xOffset is
    *
    * @param {Function} onClick - The callback to trigger the NUX
-   * @param {Number} xMovment - the amount of xOffset from the center
+   * @param {Number} xMovement - the amount of xOffset from the center
+   * @param {Number} yMovement - the amount of yOffset from the center
    * @param {Boolean} isDown - is the user pressing down
    * @param {Number} xDir - the direction the user is gesturing. 1 is right, -1 is left
+   * @param {Number} yDir - the direction the user is gesturing. 1 is down, -1 is up
    * @param {Object} nuxStates - an object with Boolean properties indicating which NUX states have been completed
    *
    */
-  function applyNUX({ onClick, xMovement, isDown, xDir, nuxStates }) {
+  function applyNUX({
+    onClick,
+    xMovement,
+    yMovement,
+    isDown,
+    xDir,
+    yDir,
+    nuxStates,
+  }) {
     if (!nuxStates) return
     if (!onClick) return
-    if (Math.abs(xMovement) <= 20) return
     if (!isDown) return onClick(undefined)
 
-    const { isSwipeLeftComplete, isSwipeRightComplete } = nuxStates
+    const {
+      isSwipeLeftComplete,
+      isSwipeRightComplete,
+      isSwipeDownComplete,
+    } = nuxStates
 
-    if (!isSwipeRightComplete && xDir === 1) {
+    const offset = 50
+
+    if (!isSwipeRightComplete && xMovement > offset) {
       onClick(lightBoxCategories.nuxSwipeRight)
-    } else if (!isSwipeLeftComplete && xDir === -1) {
+    } else if (!isSwipeLeftComplete && xMovement < -offset) {
       onClick(lightBoxCategories.nuxSwipeLeft)
+    } else if (!isSwipeDownComplete && yMovement > offset) {
+      onClick(lightBoxCategories.nuxSwipeDown)
     }
   }
 

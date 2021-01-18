@@ -21,11 +21,11 @@ const Posters = ({ setSelectedMovie }) => {
 
   const isSwipeLeftComplete = get('isSwipeLeftComplete')
   const isSwipeRightComplete = get('isSwipeRightComplete')
-  const isDownSwipeComplete = get('isDownSwipeComplete')
+  const isSwipeDownComplete = get('isSwipeDownComplete')
   const nuxStates = {
     isSwipeLeftComplete,
     isSwipeRightComplete,
-    isDownSwipeComplete,
+    isSwipeDownComplete,
   }
 
   if (isLoading) {
