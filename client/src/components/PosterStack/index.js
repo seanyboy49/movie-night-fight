@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
+import { useMediaQuery } from 'react-responsive'
 
 import Poster from './Poster'
 import {
@@ -23,6 +24,14 @@ const PosterStack = ({
   getUserSavedMovies,
   setSelectedMovie,
 }) => {
+  const isPhoneWide = useMediaQuery({
+    query: `(max-width: 600px)`,
+  })
+  console.log('isPhoneWide', isPhoneWide)
+  const isNotDemo = Boolean(
+    onClick && onRelease && nuxStates && getUserSavedMovies && setSelectedMovie
+  )
+
   const { markMovieAsWatched } = useWatchMovie()
   const { removeMovie } = useRemoveMovie()
 
@@ -43,53 +52,66 @@ const PosterStack = ({
       direction: [xDir, yDir],
       velocity,
     }) => {
+      console.log('velocity', velocity)
       const trigger = velocity > 0.2
       const dirX = xDir < 0 ? -1 : 1
       const dirY = yDir < 0 ? -1 : 1
 
       if (!isDown && trigger) gone.add(index)
 
-      // Hanlde NUX interactions if they user should experience NUX
-      applyNUX({
-        onClick,
-        isDown,
-        nuxStates,
-        xMovement: mx,
-        yMovement: my,
-        xDir: dirX,
-        yDir: dirY,
-      })
+      if (isNotDemo) {
+        // Handle NUX interactions if the user is eligible for NUX
+        applyNUX({
+          onClick,
+          isDown,
+          nuxStates,
+          xMovement: mx,
+          yMovement: my,
+          xDir: dirX,
+          yDir: dirY,
+        })
 
-      // For updating local storage when user completes a NUX interaction
-      updateStorage({
-        onRelease,
-        nuxStates,
-        swipedCards: gone,
-        cardIndex: index,
-        xDir: dirX,
-        yDir: dirY,
-      })
+        // For updating local storage when user completes a NUX interaction
+        updateStorage({
+          onRelease,
+          nuxStates,
+          swipedCards: gone,
+          cardIndex: index,
+          xDir: dirX,
+          yDir: dirY,
+        })
+      }
 
       set((i) => {
         if (index !== i) return
         const isGone = gone.has(index)
+        const swipeThreshold = isPhoneWide ? 20 : 150
 
-        const [x, y] = getXY({ isGone, dirX, dirY, isDown, mx, my })
+        const [x, y] = getXY({
+          isGone,
+          dirX,
+          dirY,
+          isDown,
+          mx,
+          my,
+          swipeThreshold,
+        })
         const rot = mx / 100 + (isGone ? dirX * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
-        // if swipe right, user select movie and set to next user's turn
-        const swipeThreshold = 150
-        if (isGone && mx > swipeThreshold) {
-          const movieSelected = movies[i]
-          markMovieAsWatched(movieSelected, setSelectedMovie)
-        }
+        if (isNotDemo) {
+          // if swipe right, user select movie and set to next user's turn
+          if (isGone && mx > swipeThreshold) {
+            const movieSelected = movies[i]
+            markMovieAsWatched(movieSelected, setSelectedMovie)
+          }
 
-        // delete movie on swipe downward
-        const notLeftSwipe = mx * dirX < swipeThreshold
-        if (isGone && my > swipeThreshold && notLeftSwipe) {
-          const movieId = movies[i].id
-          removeMovie(movieId)
+          // delete movie on swipe downward
+          const notLeftSwipe = mx * dirX < swipeThreshold
+          if (isGone && my > swipeThreshold && notLeftSwipe) {
+            const movieId = movies[i].id
+            removeMovie(movieId)
+          }
         }
 
         return {
@@ -105,7 +127,8 @@ const PosterStack = ({
       // All cards from stack have been removed
       if (!isDown && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
-        getUserSavedMovies()
+
+        isNotDemo && getUserSavedMovies()
       }
     }
   )
@@ -127,9 +150,12 @@ const PosterStack = ({
 }
 
 PosterStack.propTypes = {
-  nuxStates: PropTypes.object,
-  onLightBoxClick: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClick: PropTypes.func,
+  onRelease: PropTypes.func,
+  nuxStates: PropTypes.object,
+  getUserSavedMovies: PropTypes.func,
+  setSelectedMovie: PropTypes.func,
 }
 
 export default PosterStack

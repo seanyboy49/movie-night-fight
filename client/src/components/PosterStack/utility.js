@@ -45,15 +45,16 @@ export const trans = (r, s) =>
  * @param {Number} dirY - the y direction. 1 is down and -1 is up
  * @param {Number} mx - x offset from center
  * @param {Number} my - y offset from center
+ * @param {Number} swipeThreshold - the point at which a swipe action should occur
  */
-export function getXY({ isGone, isDown, dirX, dirY, mx, my }) {
+export function getXY({ isGone, isDown, dirX, dirY, mx, my, swipeThreshold }) {
   const pointOffScreen = 200 + window.innerWidth
   // horizontal swipes
-  if (isGone && Math.abs(mx) > 150) {
+  if (isGone && Math.abs(mx) > swipeThreshold) {
     return [pointOffScreen * dirX, my]
   }
   // vertical swipes
-  if (isGone && Math.abs(my) > 150) {
+  if (isGone && Math.abs(my) > swipeThreshold) {
     return [mx, pointOffScreen * dirY]
   }
 
