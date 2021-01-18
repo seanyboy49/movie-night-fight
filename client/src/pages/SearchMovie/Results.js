@@ -29,7 +29,7 @@ const Results = ({ error, movies, isSearchResultsLoading, handleSearch }) => {
     )
   }
 
-  if (!error) {
+  if (error) {
     return (
       <Error
         textArray={["Whoops! we couldn't", 'complete your search.']}

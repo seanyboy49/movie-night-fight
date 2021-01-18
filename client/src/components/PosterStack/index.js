@@ -4,7 +4,14 @@ import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
 
 import Poster from './Poster'
-import { to, from, trans, useWatchMovie, useRemoveMovie } from './utility'
+import {
+  to,
+  from,
+  trans,
+  useWatchMovie,
+  useRemoveMovie,
+  getXY,
+} from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
 
@@ -37,7 +44,7 @@ const PosterStack = ({
       velocity,
     }) => {
       const trigger = velocity > 0.2
-      const dir = xDir < 0 ? -1 : 1
+      const dirX = xDir < 0 ? -1 : 1
       const dirY = yDir < 0 ? -1 : 1
 
       if (!isDown && trigger) gone.add(index)
@@ -48,7 +55,7 @@ const PosterStack = ({
         isDown,
         nuxStates,
         xMovement: mx,
-        xDir: dir,
+        xDir: dirX,
       })
 
       // For updating local storage when user completes a NUX interaction
@@ -57,26 +64,27 @@ const PosterStack = ({
         nuxStates,
         swipedCards: gone,
         cardIndex: index,
-        xDir: dir,
+        xDir: dirX,
       })
 
       set((i) => {
         if (index !== i) return
         const isGone = gone.has(index)
-        const x = isGone ? (200 + window.innerWidth) * dir : isDown ? mx : 0
-        const y = isGone ? (200 + window.innerWidth) * dirY : isDown ? my : 0
-        const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0)
+
+        const [x, y] = getXY({ isGone, dirX, dirY, isDown, mx, my })
+        const rot = mx / 100 + (isGone ? dirX * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
 
         // if swipe right, user select movie and set to next user's turn
-        if (isGone && mx > 150) {
+        const swipeThreshold = 150
+        if (isGone && mx > swipeThreshold) {
           const movieSelected = movies[i]
           markMovieAsWatched(movieSelected, setSelectedMovie)
         }
 
-        // delete movie on swap downward
-        const offset = 150
-        if (my > offset) {
+        // delete movie on swipe downward
+        const notLeftSwipe = mx * dirX < swipeThreshold
+        if (isGone && my > swipeThreshold && notLeftSwipe) {
           const movieId = movies[i].id
           removeMovie(movieId)
         }

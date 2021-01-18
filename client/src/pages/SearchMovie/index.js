@@ -40,6 +40,7 @@ const SearchMovie = () => {
         </Button>
       </SearchBar>
       <Results
+        error={error}
         movies={searchResults}
         isSearchResultsLoading={isLoading}
         handleSearch={handleSearch}
