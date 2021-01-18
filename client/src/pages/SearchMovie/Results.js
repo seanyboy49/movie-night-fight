@@ -6,8 +6,9 @@ import openArrow from '../../images/arrow-down.svg'
 import { BebasText } from '../../styles/Text'
 import MovieDetails from './MovieDetails'
 import { ReelImage } from '../../styles/LoadingReel'
+import Error from '../../components/Error'
 
-const Results = ({ movies, isSearchResultsLoading }) => {
+const Results = ({ error, movies, isSearchResultsLoading, handleSearch }) => {
   const [selectedMovie, setSelectedMovie] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
@@ -25,6 +26,15 @@ const Results = ({ movies, isSearchResultsLoading }) => {
       <div>
         <ReelImage width="50" isActive={isSearchResultsLoading} />
       </div>
+    )
+  }
+
+  if (!error) {
+    return (
+      <Error
+        textArray={["Whoops! we couldn't", 'complete your search.']}
+        onClick={handleSearch}
+      />
     )
   }
 

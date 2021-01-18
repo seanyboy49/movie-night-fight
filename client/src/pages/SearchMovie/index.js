@@ -39,7 +39,11 @@ const SearchMovie = () => {
           <ClearImg />
         </Button>
       </SearchBar>
-      <Results movies={searchResults} isSearchResultsLoading={isLoading} />
+      <Results
+        movies={searchResults}
+        isSearchResultsLoading={isLoading}
+        handleSearch={handleSearch}
+      />
     </SearchMovieContainer>
   )
 }
