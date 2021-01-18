@@ -54,8 +54,10 @@ const PosterStack = ({
       const trigger = velocity > 0.2
       const dirX = xDir < 0 ? -1 : 1
       const dirY = yDir < 0 ? -1 : 1
+      const swipeThreshold = isPhoneWide ? 20 : 150
 
       if (!isDown && trigger) gone.add(index)
+      const isGone = gone.has(index)
 
       if (isNotDemo) {
         // Handle NUX interactions if the user is eligible for NUX
@@ -78,12 +80,28 @@ const PosterStack = ({
           xDir: dirX,
           yDir: dirY,
         })
+
+        // If swipe right, user select movie and set to next user's turn
+        if (isGone && mx > swipeThreshold) {
+          const movieSelected = movies[index]
+          // Let the animation finish before marking as watched
+          setTimeout(
+            () => markMovieAsWatched(movieSelected, setSelectedMovie),
+            600
+          )
+        }
+
+        // If swipe down, delete movie from watch list
+        const notLeftSwipe = mx * dirX < swipeThreshold
+        if (isGone && my > swipeThreshold && notLeftSwipe) {
+          const movieId = movies[index].id
+          removeMovie(movieId)
+        }
       }
 
+      // For updating the new animation props of each card
       set((i) => {
         if (index !== i) return
-        const isGone = gone.has(index)
-        const swipeThreshold = isPhoneWide ? 20 : 150
 
         const [x, y] = getXY({
           isGone,
@@ -96,21 +114,6 @@ const PosterStack = ({
         })
         const rot = mx / 100 + (isGone ? dirX * 10 * velocity : 0)
         const scale = isDown ? 1.1 : 1
-
-        if (isNotDemo) {
-          // if swipe right, user select movie and set to next user's turn
-          if (isGone && mx > swipeThreshold) {
-            const movieSelected = movies[i]
-            markMovieAsWatched(movieSelected, setSelectedMovie)
-          }
-
-          // delete movie on swipe downward
-          const notLeftSwipe = mx * dirX < swipeThreshold
-          if (isGone && my > swipeThreshold && notLeftSwipe) {
-            const movieId = movies[i].id
-            removeMovie(movieId)
-          }
-        }
 
         return {
           x,
