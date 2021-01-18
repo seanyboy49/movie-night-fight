@@ -14,6 +14,7 @@ import { useConfiguration } from '../../providers/Configuration'
 import { authFetch } from '../../auth'
 import Results from './Results'
 import { useMovies } from '../../providers/Movies'
+import useSearchMovies from '../../hooks/useSearchMovies'
 
 function checkAddedMovies(movieIds, movieData) {
   const transformed = movieData.map((movie) => {
@@ -30,56 +31,66 @@ function checkAddedMovies(movieIds, movieData) {
 const SearchMovie = () => {
   const { apiUrl } = useConfiguration()
   const { movies } = useMovies()
-  const [inputValue, setInputValue] = useState('')
-  const [searchResults, setSearchResults] = useState([])
-  const [isSearchResultsLoading, setIsSearchResultsLoading] = useState(false)
 
-  const searchMovies = async (currentValue, movieIds) => {
-    setIsSearchResultsLoading(true)
-    if (!currentValue) {
-      setSearchResults([])
-      setIsSearchResultsLoading(false)
-      return
-    }
+  const {
+    clearInput,
+    handleSearch,
+    searchResults,
+    isLoading,
+    error,
+    input,
+  } = useSearchMovies({ apiUrl, movies })
+  // const [inputValue, setInputValue] = useState('')
+  // const [searchResults, setSearchResults] = useState([])
+  // const [isSearchResultsLoading, setIsSearchResultsLoading] = useState(false)
 
-    try {
-      const response = await authFetch(
-        `${apiUrl}/movies?search=${currentValue}`
-      )
-      const data = await response.json()
+  // const searchMovies = async (currentValue, movieIds) => {
+  //   setIsSearchResultsLoading(true)
+  //   if (!currentValue) {
+  //     setSearchResults([])
+  //     setIsSearchResultsLoading(false)
+  //     return
+  //   }
 
-      if (data.Search) {
-        const updatedMovieData = checkAddedMovies(movieIds, data.Search)
-        setSearchResults(updatedMovieData)
-      }
-      setIsSearchResultsLoading(false)
-    } catch (error) {
-      setIsSearchResultsLoading(false)
-      console.log('error', error)
-    }
-  }
+  //   try {
+  //     const response = await authFetch(
+  //       `${apiUrl}/movies?search=${currentValue}`
+  //     )
+  //     const data = await response.json()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSearch = useCallback(
-    debounce(
-      (currentValue, movieIds) => searchMovies(currentValue, movieIds),
-      1000
-    ),
-    []
-  )
+  //     if (data.Search) {
+  //       const updatedMovieData = checkAddedMovies(movieIds, data.Search)
+  //       setSearchResults(updatedMovieData)
+  //     }
+  //     setIsSearchResultsLoading(false)
+  //   } catch (error) {
+  //     setIsSearchResultsLoading(false)
+  //     console.log('error', error)
+  //   }
+  // }
 
-  const handleChange = (e) => {
-    // todo: rethink this logic
-    const movieIds = movies.map((m) => m.omdb_id)
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const debouncedSearch = useCallback(
+  //   debounce(
+  //     (currentValue, movieIds) => searchMovies(currentValue, movieIds),
+  //     1000
+  //   ),
+  //   []
+  // )
 
-    setInputValue(e.target.value)
-    debouncedSearch(e.target.value, movieIds)
-  }
+  // const handleChange = (e) => {
+  //   setIsSearchResultsLoading(true)
+  //   // todo: rethink this logic
+  //   const movieIds = movies.map((m) => m.omdb_id)
 
-  function clearInput(e) {
-    setInputValue('')
-    setSearchResults([])
-  }
+  //   setInputValue(e.target.value)
+  //   debouncedSearch(e.target.value, movieIds)
+  // }
+
+  // function clearInput() {
+  //   setInputValue('')
+  //   setSearchResults([])
+  // }
 
   return (
     <SearchMovieContainer>
@@ -88,15 +99,12 @@ const SearchMovie = () => {
       </BebasText>
       <SearchBar>
         <SearchImg />
-        <SearchInput type="text" value={inputValue} onChange={handleChange} />
+        <SearchInput type="text" value={input} onChange={handleSearch} />
         <Button onClick={clearInput}>
           <ClearImg />
         </Button>
       </SearchBar>
-      <Results
-        movies={searchResults}
-        isSearchResultsLoading={isSearchResultsLoading}
-      />
+      <Results movies={searchResults} isSearchResultsLoading={isLoading} />
     </SearchMovieContainer>
   )
 }

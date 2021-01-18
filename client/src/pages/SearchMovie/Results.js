@@ -20,6 +20,10 @@ const Results = ({ movies, isSearchResultsLoading }) => {
     setIsOpen(true)
   }
 
+  if (!movies) {
+    return null
+  }
+
   if (isSearchResultsLoading) {
     return (
       <div>
