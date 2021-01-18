@@ -1,19 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import debounce from 'lodash.debounce'
 
 import { authFetch } from '../../auth'
-
-function checkAddedMovies(movieIds, movieData) {
-  const transformed = movieData.map((movie) => {
-    const isAdded = movieIds.includes(movie.imdbID)
-
-    return {
-      ...movie,
-      isAdded,
-    }
-  })
-  return transformed
-}
 
 const useSearchMovies = ({ apiUrl, movies }) => {
   const [searchResults, setSearchResults] = useState()
@@ -21,7 +9,21 @@ const useSearchMovies = ({ apiUrl, movies }) => {
   const [error, setError] = useState()
   const [input, setInput] = useState('')
 
-  async function searchMovies(currentValue, movieIds) {
+  const checkAddedMovies = useCallback((movieIds, movieData) => {
+    if (!movieData) return undefined
+
+    return movieData.map((movie) => {
+      const isAdded = movieIds.includes(movie.imdbID)
+
+      return {
+        ...movie,
+        isAdded,
+      }
+    })
+  }, [])
+
+  async function searchMovies(currentValue) {
+    console.log('search')
     setIsLoading(true)
     if (!currentValue) {
       setSearchResults([])
@@ -35,9 +37,9 @@ const useSearchMovies = ({ apiUrl, movies }) => {
       )
       const data = await response.json()
 
+      // data.Search could be empty if there are no search result matches
       if (data.Search) {
-        const updatedMovieData = checkAddedMovies(movieIds, data.Search)
-        setSearchResults(updatedMovieData)
+        setSearchResults(data.Search)
       }
       setIsLoading(false)
     } catch (error) {
@@ -48,10 +50,7 @@ const useSearchMovies = ({ apiUrl, movies }) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
-    debounce(
-      (currentValue, movieIds) => searchMovies(currentValue, movieIds),
-      1000
-    ),
+    debounce((currentValue) => searchMovies(currentValue), 1000),
     []
   )
 
@@ -62,14 +61,27 @@ const useSearchMovies = ({ apiUrl, movies }) => {
 
   function handleSearch(e) {
     setIsLoading(true)
-    // todo: rethink this logic
-    const movieIds = movies.map((m) => m.omdb_id)
+    const inputValue = e.target.value
 
-    setInput(e.target.value)
-    debouncedSearch(e.target.value, movieIds)
+    setInput(inputValue)
+    debouncedSearch(inputValue)
   }
 
-  return { clearInput, handleSearch, searchResults, isLoading, error, input }
+  // Only recompute movieIds if movies changes
+  const movieIds = useMemo(() => movies.map((m) => m.omdb_id), [movies])
+  const updatedMovieData = useMemo(
+    () => checkAddedMovies(movieIds, searchResults),
+    [checkAddedMovies, movieIds, searchResults]
+  )
+
+  return {
+    clearInput,
+    handleSearch,
+    searchResults: updatedMovieData,
+    isLoading,
+    error,
+    input,
+  }
 }
 
 export default useSearchMovies

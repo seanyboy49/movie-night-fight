@@ -20,16 +20,16 @@ const Results = ({ movies, isSearchResultsLoading }) => {
     setIsOpen(true)
   }
 
-  if (!movies) {
-    return null
-  }
-
   if (isSearchResultsLoading) {
     return (
       <div>
         <ReelImage width="50" isActive={isSearchResultsLoading} />
       </div>
     )
+  }
+
+  if (!movies) {
+    return null
   }
 
   return (
