@@ -86,11 +86,12 @@ const PosterStack = ({
         // If swipe right, user select movie and set to next user's turn
         if (isGone && mx > swipeThreshold) {
           const movieSelected = movies[index]
+          const remainingMovieLength = index
           shouldDisperse = true
           // Let the animation finish before marking as watched
           setTimeout(
             () => markMovieAsWatched(movieSelected, setSelectedMovie),
-            1000
+            remainingMovieLength * 100 + 200
           )
         }
 

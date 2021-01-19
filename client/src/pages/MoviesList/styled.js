@@ -39,14 +39,14 @@ export const MovieDetailContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 15px 0px;
+  padding: 10px;
   border-radius: 5px;
   position: relative;
 `
 
 export const MovieTitle = styled.p`
   font-size: 25px;
-  margin: 5px 0 0 0;
+  margin: 10px 0;
   text-align: center;
 `
 
