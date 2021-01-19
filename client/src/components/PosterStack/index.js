@@ -91,7 +91,7 @@ const PosterStack = ({
           // Let the animation finish before marking as watched
           setTimeout(
             () => markMovieAsWatched(movieSelected, setSelectedMovie),
-            remainingMovieLength * 100 + 200
+            remainingMovieLength * 100 + 500
           )
         }
 

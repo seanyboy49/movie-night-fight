@@ -1,5 +1,28 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import successBannerPath from '../../images/success-banner.svg'
+
+const moveLeft = keyframes`
+    0% {
+        left: 70%;
+        transform: rotate(100deg);
+    }
+    90% {
+      left: -2%;;
+      transform: rotate(2deg);
+    }
+    100% {
+        left: 0%;
+    }
+`
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0%
+    }
+    to {
+      opacity: 100%
+    }
+`
 
 export const NoMovieContainer = styled.div`
   display: flex;
@@ -31,6 +54,8 @@ export const SelectedMovieContainer = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   height: 100%;
+  width: 100vw;
+  overflow: hidden;
 `
 export const MovieDetailContainer = styled.div`
   background-color: white;
@@ -42,6 +67,8 @@ export const MovieDetailContainer = styled.div`
   padding: 10px;
   border-radius: 5px;
   position: relative;
+  animation: ${moveLeft} 1s ease-in;
+  animation-fill-mode: both;
 `
 
 export const MovieTitle = styled.p`
