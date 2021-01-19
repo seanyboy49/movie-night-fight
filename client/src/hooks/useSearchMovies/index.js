@@ -23,7 +23,6 @@ const useSearchMovies = ({ apiUrl, movies }) => {
   }, [])
 
   async function searchMovies(currentValue) {
-    console.log('search')
     setIsLoading(true)
     if (!currentValue) {
       setSearchResults([])
