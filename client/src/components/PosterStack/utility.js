@@ -25,6 +25,14 @@ export const to = (i) => ({
  */
 export const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 
+export const disperse = (i) => ({
+  x: i * Math.floor(Math.random() * 400 - 200),
+  rot: 0,
+  scale: 1.5,
+  y: -1000,
+  delay: i * 100,
+})
+
 /**
  *
  * @param {*} r - rotational degrees
