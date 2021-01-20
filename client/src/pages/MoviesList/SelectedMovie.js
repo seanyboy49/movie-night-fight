@@ -28,7 +28,6 @@ const SelectedMovie = ({
   const fadeIn = useSpring({
     opacity: 1,
     from: { opacity: 0 },
-    // delay: 1500,
     config: { duration: 1500 },
     ref: fadeInRef,
   })
@@ -38,13 +37,12 @@ const SelectedMovie = ({
   const moveIn = useSpring({
     from: { transform: 'translateX(350%) rotate(100deg)' },
     to: { transform: 'translateX(0%) rotate(0)' },
-    // config: { duration: 2000 },
     config: { tension: 300, mass: 1.5 },
     ref: moveInRef,
   })
 
   // need to store reference to current ref because we are running the chain on mount
-  //https://stackoverflow.com/questions/61149605/how-to-execute-two-animations-sequentially-using-react-spring
+  // See this article for explanation: https://stackoverflow.com/questions/61149605/how-to-execute-two-animations-sequentially-using-react-spring
   const moveInCurrent = !moveInRef.current
     ? moveInRef
     : { current: moveInRef.current }
