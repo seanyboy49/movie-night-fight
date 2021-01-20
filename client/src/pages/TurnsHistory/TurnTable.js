@@ -10,8 +10,8 @@ import {
   Title,
 } from './styled'
 
-const TurnTable = ({ turnUser, turnHistory }) => {
-  const turnsCopy = [...turnHistory]
+const TurnTable = ({ turnUser, turnsHistory }) => {
+  const turnsCopy = [...turnsHistory]
   const ascendingTurns = turnsCopy.reverse()
 
   return (

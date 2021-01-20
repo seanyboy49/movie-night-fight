@@ -7,7 +7,7 @@ import Marquee from '../../components/Marquee'
 import TurnTable from './TurnTable'
 import { ReelImage } from '../../styles/LoadingReel'
 
-const TurnHistory = () => {
+const TurnsHistory = () => {
   const { currentHouse, isLoading: isHousesLoading } = useHouses()
   const { getHouseTurns, houseTurns, isLoading: isTurnsLoading } = useTurns()
 
@@ -40,11 +40,11 @@ const TurnHistory = () => {
         }
       />
       <TurnTable
-        turnHistory={houseTurns.history}
+        turnsHistory={houseTurns.history}
         turnUser={houseTurns.current_turn.username}
       />
     </TurnBackground>
   )
 }
 
-export default TurnHistory
+export default TurnsHistory

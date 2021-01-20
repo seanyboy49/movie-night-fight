@@ -12,7 +12,7 @@ import { ReelImage } from '../../styles/LoadingReel'
 import routes from '../../routes'
 import NoMoviesOrHouse from './NoMoviesOrHouse'
 
-const { turnHistory, houses } = routes.app
+const { turnsHistory, houses } = routes.app
 
 const MoviesList = () => {
   const [selectedMovie, setSelectedMovie] = useState()
@@ -51,7 +51,7 @@ const MoviesList = () => {
   }
 
   if (userId !== houseTurns.current_turn.id) {
-    return <Redirect to={turnHistory} />
+    return <Redirect to={turnsHistory} />
   }
 
   return (
@@ -69,8 +69,6 @@ const MoviesList = () => {
         <Posters setSelectedMovie={setSelectedMovie} />
       ) : (
         <SelectedMovie
-          turnHistory={turnHistory}
-          history={history}
           selectedMovie={selectedMovie}
           getHouseTurns={getHouseTurns}
           currentHouse={currentHouse}
