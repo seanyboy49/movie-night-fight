@@ -1,29 +1,6 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { animated } from 'react-spring'
 import successBannerPath from '../../images/success-banner.svg'
-
-const moveLeft = keyframes`
-    0% {
-        left: 70%;
-        transform: rotate(100deg);
-    }
-    90% {
-      left: -2%;;
-      transform: rotate(2deg);
-    }
-    100% {
-        left: 0%;
-    }
-`
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0%;
-    }
-    to {
-      opacity: 100%
-    }
-`
 
 export const NoMovieContainer = styled.div`
   display: flex;
@@ -67,7 +44,6 @@ export const MovieDetailContainer = styled.div`
   flex-direction: column;
   padding: 10px;
   border-radius: 5px;
-  // animation: ${moveLeft} 1s ease-in;
   animation-fill-mode: both;
 `
 
@@ -82,7 +58,6 @@ export const SuccessBanner = styled(animated.img).attrs({
   alt: 'success banner',
 })`
   position: absolute;
-  // animation: ${fadeIn} 1.5s ease-in 1.5s;
   animation-fill-mode: both;
 `
 
@@ -90,8 +65,3 @@ export const NoHouseContainer = styled.div`
   height: 100%;
   padding-top: 50px;
 `
-
-// export const ButtonContainer = styled.div`
-//   animation: ${fadeIn} 1.5s ease-in 1.5s;
-//   animation-fill-mode: both;
-// `

@@ -64,7 +64,7 @@ const SelectedMovie = ({
           <MovieTitle>{selectedMovie.name}</MovieTitle>
         </MovieDetailContainer>
       </animated.div>
-      <SuccessBanner />
+      <SuccessBanner style={fadeIn} />
       <animated.div style={fadeIn}>
         <Ticket width={'150'}>
           <LeftCutout color={'#FFECB4'} />

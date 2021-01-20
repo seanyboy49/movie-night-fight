@@ -13,16 +13,9 @@ import routes from '../../routes'
 import NoMoviesOrHouse from './NoMoviesOrHouse'
 
 const { turnHistory, houses } = routes.app
-const movie = {
-  id: 36,
-  name: 'Shakespeare in Love',
-  omdb_id: 'tt0138097',
-  poster_url:
-    'https://m.media-amazon.com/images/M/MV5BM2ZkNjM5Mj…zhiNzY0XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg',
-}
 
 const MoviesList = () => {
-  const [selectedMovie, setSelectedMovie] = useState(movie)
+  const [selectedMovie, setSelectedMovie] = useState()
 
   const { currentHouse, userId, isLoading: isHousesLoading } = useHouses()
   const { getHouseTurns, houseTurns, isLoading: isTurnsLoading } = useTurns()
