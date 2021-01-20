@@ -17,7 +17,7 @@ const moveLeft = keyframes`
 
 const fadeIn = keyframes`
     from {
-        opacity: 0%
+        opacity: 0%;
     }
     to {
       opacity: 100%
@@ -66,8 +66,7 @@ export const MovieDetailContainer = styled.div`
   flex-direction: column;
   padding: 10px;
   border-radius: 5px;
-  position: relative;
-  animation: ${moveLeft} 1s ease-in;
+  // animation: ${moveLeft} 1s ease-in;
   animation-fill-mode: both;
 `
 
@@ -82,9 +81,16 @@ export const SuccessBanner = styled.img.attrs({
   alt: 'success banner',
 })`
   position: absolute;
+  animation: ${fadeIn} 1.5s ease-in 1.5s;
+  animation-fill-mode: both;
 `
 
 export const NoHouseContainer = styled.div`
   height: 100%;
   padding-top: 50px;
 `
+
+// export const ButtonContainer = styled.div`
+//   animation: ${fadeIn} 1.5s ease-in 1.5s;
+//   animation-fill-mode: both;
+// `
