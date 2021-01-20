@@ -12,6 +12,7 @@ import {
   useWatchMovie,
   useRemoveMovie,
   getXY,
+  disperse,
 } from './utility'
 import { StackContainer } from './styled'
 import useNuxSwipe from '../../hooks/useNuxSwipe'
@@ -58,6 +59,7 @@ const PosterStack = ({
 
       if (!isDown && trigger) gone.add(index)
       const isGone = gone.has(index)
+      let shouldDisperse = false
 
       if (isNotDemo) {
         // Handle NUX interactions if the user is eligible for NUX
@@ -84,10 +86,12 @@ const PosterStack = ({
         // If swipe right, user select movie and set to next user's turn
         if (isGone && mx > swipeThreshold) {
           const movieSelected = movies[index]
+          const remainingMovieLength = index
+          shouldDisperse = true
           // Let the animation finish before marking as watched
           setTimeout(
             () => markMovieAsWatched(movieSelected, setSelectedMovie),
-            600
+            remainingMovieLength * 100 + 500
           )
         }
 
@@ -97,6 +101,13 @@ const PosterStack = ({
           const movieId = movies[index].id
           removeMovie(movieId)
         }
+      }
+
+      if (shouldDisperse) {
+        movies.map((i) => {
+          const moviesLength = movies.length - 1
+          return set((i) => disperse(moviesLength - i))
+        })
       }
 
       // For updating the new animation props of each card

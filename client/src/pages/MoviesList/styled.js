@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { animated } from 'react-spring'
 import successBannerPath from '../../images/success-banner.svg'
 
 export const NoMovieContainer = styled.div`
@@ -31,6 +32,8 @@ export const SelectedMovieContainer = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   height: 100%;
+  width: 100vw;
+  overflow: hidden;
 `
 export const MovieDetailContainer = styled.div`
   background-color: white;
@@ -39,22 +42,23 @@ export const MovieDetailContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 15px 0px;
+  padding: 10px;
   border-radius: 5px;
-  position: relative;
+  animation-fill-mode: both;
 `
 
 export const MovieTitle = styled.p`
   font-size: 25px;
-  margin: 5px 0 0 0;
+  margin: 10px 0;
   text-align: center;
 `
 
-export const SuccessBanner = styled.img.attrs({
+export const SuccessBanner = styled(animated.img).attrs({
   src: `${successBannerPath}`,
   alt: 'success banner',
 })`
   position: absolute;
+  animation-fill-mode: both;
 `
 
 export const NoHouseContainer = styled.div`
