@@ -5,7 +5,7 @@ import MoviesList from '../MoviesList'
 import Houses from '../Houses'
 import SearchMovie from '../SearchMovie'
 import HouseDetails from '../HouseDetails'
-import TurnHistory from '../TurnsHistory'
+import TurnsHistory from '../TurnsHistory'
 import NavigationHeader from '../../components/NavigationHeader'
 import MoviesProvider from '../../providers/Movies'
 import HousesProvider from '../../providers/Houses'
@@ -18,7 +18,7 @@ const {
   houses,
   houseDetail,
   searchMovies,
-  turnHistory,
+  turnsHistory,
 } = routes.app
 const { root: publicRoot } = routes.public
 
@@ -47,7 +47,7 @@ const LoggedIn = () => {
             <Route path={moviesList} component={MoviesList} />
             <Route exact path={houses} component={Houses} />
             <Route path={houseDetail} component={HouseDetails} />
-            <Route path={turnHistory} component={TurnHistory} />
+            <Route path={turnsHistory} component={TurnsHistory} />
           </HousesProvider>
           <Route path={searchMovies} component={SearchMovie} />
         </MoviesProvider>

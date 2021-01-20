@@ -17,7 +17,7 @@ export const TurnsBoard = styled.div`
 `
 
 export const InfoContainer = styled.div`
-  width: 288px;
+  width: 300px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 11px;
   background-color: white;
@@ -37,7 +37,13 @@ export const Categories = styled.div`
   justify-content: space-between;
 `
 
-export const Turn = styled.div`
+export const ScollContainer = styled.div`
+  max-height: 60vh;
+  overflow-y: scroll;
+  padding: 10px;
+`
+
+export const TurnRow = styled.div`
   width: 250px;
   display: flex;
   align-items: center;
