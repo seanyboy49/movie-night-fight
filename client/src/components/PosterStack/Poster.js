@@ -11,6 +11,7 @@ const Poster = ({ i, springProps, trans, bind, movies }) => {
     <animated.div
       key={i}
       style={{
+        touchAction: 'none',
         transform: interpolate(
           [x, y],
           (x, y) => `translate3d(${x}px,${y}px,0)`
