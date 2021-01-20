@@ -4,7 +4,7 @@ import { useHouses } from '../../providers/Houses'
 import { useTurns } from '../../hooks/useTurns'
 import { TurnBackground } from '../../styles/Background'
 import Marquee from '../../components/Marquee'
-import TurnTable from './TurnTable'
+import TurnsTable from './TurnsTable'
 import { ReelImage } from '../../styles/LoadingReel'
 
 const TurnsHistory = () => {
@@ -39,7 +39,7 @@ const TurnsHistory = () => {
             : houseTurns.current_turn.username
         }
       />
-      <TurnTable
+      <TurnsTable
         turnsHistory={houseTurns.history}
         turnUser={houseTurns.current_turn.username}
       />

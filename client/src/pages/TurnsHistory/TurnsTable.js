@@ -5,13 +5,17 @@ import {
   TurnsContainer,
   InfoContainer,
   Categories,
-  Turn,
+  TurnRow,
   User,
   Title,
 } from './styled'
 
-const TurnTable = ({ turnUser, turnsHistory }) => {
-  const turnsCopy = [...turnsHistory]
+const TurnsTable = ({ turnUser, turnsHistory }) => {
+  const currentTurnPlaceholder = {
+    user: turnUser,
+    movie: '???',
+  }
+  const turnsCopy = [...turnsHistory, currentTurnPlaceholder]
   const ascendingTurns = turnsCopy.reverse()
 
   return (
@@ -22,16 +26,13 @@ const TurnTable = ({ turnUser, turnsHistory }) => {
             <p>User</p>
             <p>Choice</p>
           </Categories>
-          <Turn>
-            <User>{turnUser}</User>
-            <Title>???</Title>
-          </Turn>
-          {ascendingTurns.map((turn) => {
+
+          {ascendingTurns.map((turn, i) => {
             return (
-              <Turn key={turn.created_at}>
+              <TurnRow key={i}>
                 <User>{turn.user}</User>
                 <Title>{turn.movie}</Title>
-              </Turn>
+              </TurnRow>
             )
           })}
         </InfoContainer>
@@ -40,4 +41,4 @@ const TurnTable = ({ turnUser, turnsHistory }) => {
   )
 }
 
-export default TurnTable
+export default TurnsTable

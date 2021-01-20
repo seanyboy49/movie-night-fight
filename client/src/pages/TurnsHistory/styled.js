@@ -10,6 +10,7 @@ export const TurnsContainer = styled.div`
 
 export const TurnsBoard = styled.div`
   width: 324px;
+
   background-color: #d70808;
   display: flex;
   align-items: center;
@@ -37,7 +38,7 @@ export const Categories = styled.div`
   justify-content: space-between;
 `
 
-export const Turn = styled.div`
+export const TurnRow = styled.div`
   width: 250px;
   display: flex;
   align-items: center;
