@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { animated } from 'react-spring'
 import successBannerPath from '../../images/success-banner.svg'
 
 const moveLeft = keyframes`
@@ -76,12 +77,12 @@ export const MovieTitle = styled.p`
   text-align: center;
 `
 
-export const SuccessBanner = styled.img.attrs({
+export const SuccessBanner = styled(animated.img).attrs({
   src: `${successBannerPath}`,
   alt: 'success banner',
 })`
   position: absolute;
-  animation: ${fadeIn} 1.5s ease-in 1.5s;
+  // animation: ${fadeIn} 1.5s ease-in 1.5s;
   animation-fill-mode: both;
 `
 
