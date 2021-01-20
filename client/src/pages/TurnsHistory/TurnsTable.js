@@ -8,6 +8,7 @@ import {
   TurnRow,
   User,
   Title,
+  ScollContainer,
 } from './styled'
 
 const TurnsTable = ({ turnUser, turnsHistory }) => {
@@ -27,14 +28,16 @@ const TurnsTable = ({ turnUser, turnsHistory }) => {
             <p>Choice</p>
           </Categories>
 
-          {ascendingTurns.map((turn, i) => {
-            return (
-              <TurnRow key={i}>
-                <User>{turn.user}</User>
-                <Title>{turn.movie}</Title>
-              </TurnRow>
-            )
-          })}
+          <ScollContainer>
+            {ascendingTurns.map((turn, i) => {
+              return (
+                <TurnRow key={i}>
+                  <User>{turn.user}</User>
+                  <Title>{turn.movie}</Title>
+                </TurnRow>
+              )
+            })}
+          </ScollContainer>
         </InfoContainer>
       </TurnsBoard>
     </TurnsContainer>
