@@ -6,6 +6,7 @@ from server.auth import auth_bp
 from server.main import main_bp
 from server.movies import movies_bp
 from server.houses import houses_bp
+from server.misc import misc_bp
 
 from .commands import create_tables, run_seeds
 from .extensions import db, guard, migrate
@@ -34,6 +35,7 @@ def create_app(config_file='settings.py'):
     app.register_blueprint(auth_bp)
     app.register_blueprint(movies_bp)
     app.register_blueprint(houses_bp)
+    app.register_blueprint(misc_bp)
 
     # add cli commands
     app.cli.add_command(create_tables)
