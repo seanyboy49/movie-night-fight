@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
@@ -56,6 +56,15 @@ const PosterStack = ({
       const dirX = xDir < 0 ? -1 : 1
       const dirY = yDir < 0 ? -1 : 1
       const swipeThreshold = isPhoneWide ? 20 : 150
+
+      // Prevent default text-selection behavior on mobile devices
+      // while the user is swiping a card.
+      // See https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting
+      if (isDown) {
+        document.body.classList.add('unselectable')
+      } else {
+        document.body.classList.remove('unselectable')
+      }
 
       if (!isDown && trigger) gone.add(index)
       const isGone = gone.has(index)
