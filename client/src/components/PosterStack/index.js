@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSprings } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import PropTypes from 'prop-types'
