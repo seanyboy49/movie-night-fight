@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/">
             <LoggedIn />
           </Route>
-          <Route path="/ping">
+          <Route exact path="/ping">
             <Ping />
           </Route>
         </Switch>
