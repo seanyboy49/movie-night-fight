@@ -112,7 +112,7 @@ const PosterStack = ({
         }
       }
 
-      if (shouldDisperse) {
+      if (shouldDisperse && gone.size !== movies.length) {
         movies.map((i) => {
           const moviesLength = movies.length - 1
           return set((i) => disperse(moviesLength - i))
@@ -146,7 +146,7 @@ const PosterStack = ({
       })
 
       // All cards from stack have been removed
-      if (!isDown && gone.size === movies.length) {
+      if (!shouldDisperse && !isDown && gone.size === movies.length) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
 
         isNotDemo && getUserSavedMovies()
