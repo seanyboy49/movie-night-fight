@@ -54,7 +54,7 @@ class Movie(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(140), index=True, unique=True)
+    name = db.Column(db.String(140), index=True)
     omdb_id = db.Column(db.String)
     poster_url = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
