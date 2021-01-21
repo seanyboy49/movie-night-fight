@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import { MovieListBackground } from '../../styles/Background'
 import { NoHouseContainer } from './styled'
@@ -19,7 +19,6 @@ const MoviesList = () => {
 
   const { currentHouse, userId, isLoading: isHousesLoading } = useHouses()
   const { getHouseTurns, houseTurns, isLoading: isTurnsLoading } = useTurns()
-  const history = useHistory()
 
   const isLoading =
     isHousesLoading || isTurnsLoading || !currentHouse || !houseTurns
