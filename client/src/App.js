@@ -5,6 +5,7 @@ import ConfigurationProvider from './providers/Configuration'
 import Toast from './components/Toast'
 import LoggedOut from './pages/LoggedOut'
 import LoggedIn from './pages/LoggedIn'
+import Ping from './pages/Ping'
 import config from './config'
 
 const { apiUrl } = config
@@ -20,6 +21,9 @@ const App = () => {
 
           <Route path="/">
             <LoggedIn />
+          </Route>
+          <Route path="/ping">
+            <Ping />
           </Route>
         </Switch>
       </Router>
